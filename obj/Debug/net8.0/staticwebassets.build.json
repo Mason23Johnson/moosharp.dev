@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mpHC5ROpj+JO1rP3ka4nnD0Em45SB8IK2hqQf9Uduvw=",
+  "Hash": "ORJdPA/1Qfwgf29hWlQOqlEhPZdqJs/a4mbBoyAhSoU=",
   "Source": "moosharp.dev",
   "BasePath": "/",
   "Mode": "Root",
@@ -8035,12 +8035,12 @@
       "OriginalItemSpec": "wwwroot\\scripts\\indexOuterUI.js"
     },
     {
-      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\matrixHover.js",
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\matrixText.js",
       "SourceId": "moosharp.dev",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "scripts/matrixHover.js",
+      "RelativePath": "scripts/matrixText.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8051,7 +8051,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\scripts\\matrixHover.js"
+      "OriginalItemSpec": "wwwroot\\scripts\\matrixText.js"
     },
     {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\terminalTyping.js",

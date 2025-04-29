@@ -1,41 +1,41 @@
 @page "/"
-@using Terminal.Components
 @inject IJSRuntime JS
-@inject NavigationManager Nav
-
-<div class="boot-screen">
-    <div class="terminal-window">
-        <Terminal />
-    </div>
-</div>
 
 <div class="banner-container">
     <img src="MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
     <div id="welcomeBase" class="banner-title"></div>
 </div>
 
-<!-- Hidden Dev Button (Top Right) -->
-<button @onclick="TriggerDevMode" class="hidden-dev-button">Hidden</button>
+<div class="terminal-container">
+    <div class="terminal-text" style="white-space: pre-wrap; font-family: 'VT323', monospace; text-align: left;">
+        <div id="terminalText"></div>
+        <span id="blinkingCursor">_</span>
+    </div>
+</div>
 
-@code {
+@code 
+{
+    private bool introSkipped = false;
+
+    [JSInvokable]
+    public void CompleteTyping()
+    {
+        if (!introSkipped)
+        {
+            introSkipped = true;
+            JS.InvokeVoidAsync("completeTerminalIntro");
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            var reference = DotNetObjectReference.Create(this);
             await JS.InvokeVoidAsync("startOuterUI");
+            await JS.InvokeVoidAsync("startCheatCodeListener", reference);
             await JS.InvokeVoidAsync("startTerminalTyping");
-            await JS.InvokeVoidAsync("startCheatCodeListener", DotNetObjectReference.Create(this));
+            await JS.InvokeVoidAsync("addKeypressListener", reference);
         }
-    }
-
-    private void TriggerDevMode()
-    {
-        JS.InvokeVoidAsync("unlockDevMode");
-    }
-
-    [JSInvokable]
-    public async Task UnlockSecret()
-    {
-        await JS.InvokeVoidAsync("displayAccessGranted");
     }
 }

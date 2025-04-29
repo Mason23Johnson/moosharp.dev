@@ -155,3 +155,11 @@ body {
     vertical-align: middle;
     margin-right: 15px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.matrix-font {
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ff00; /* Matrix green */
+    letter-spacing: 2px;
+}
