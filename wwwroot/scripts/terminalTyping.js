@@ -90,9 +90,14 @@ function typeNextIntroLine() {
 }
 
 // Updates terminal display
-function updateTerminal() {
-    document.getElementById("terminalText").innerText = terminalContent;
+function updateTerminal() 
+{
+    const terminal = document.getElementById("terminalText");
+    if (!terminal) return;
+
+    terminal.innerHTML = terminalContent + '<span id="blinkingCursor">_</span>';
 }
+
 
 // Enables user typing
 function enableUserTyping() {
@@ -161,10 +166,18 @@ function handleCommand(command)
 
 // Blinks cursor
 function blinkCursor() {
-    setInterval(() => {
+    setInterval(() => 
+    {
         const cursor = document.getElementById("blinkingCursor");
-        if (cursor) {
-            cursor.style.visibility = (cursor.style.visibility === "visible") ? "hidden" : "visible";
+        if (!cursor) return; // Make sure cursor exists
+
+        if (cursor.style.visibility === "visible") 
+        {
+            cursor.style.visibility = "hidden";
+        } 
+        else 
+        {
+            cursor.style.visibility = "visible";
         }
     }, 500);
 }
