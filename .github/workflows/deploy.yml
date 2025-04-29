@@ -1,4 +1,4 @@
-name: Deploy Blazor to GitHub Pages
+name: Deploy Blazor to GitHub Pages (main/docs)
 
 on:
   push:
@@ -17,16 +17,22 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Clean old /docs
-      run: rm -rf docs && mkdir docs
+    - name: Publish Blazor App to /publish
+      run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
 
-    - name: Publish Blazor App to /docs
-      run: dotnet publish ./moosharp.dev.csproj -c Release -o docs
+    - name: Clear old /docs folder
+      run: |
+        rm -rf docs
+        mkdir docs
+
+    - name: Move build output to /docs
+      run: |
+        cp -r publish/wwwroot/* docs/
 
     - name: Check if build succeeded
       run: test -f docs/index.html
 
-    - name: Add CNAME, .nojekyll, 404.html
+    - name: Add CNAME, .nojekyll, and 404.html
       run: |
         echo "moosharp.dev" > docs/CNAME
         echo "" > docs/.nojekyll
@@ -37,5 +43,5 @@ jobs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add docs
-        git commit -m "Deploy Blazor to /docs" || echo "No changes to commit"
+        git commit -m "Deploy Blazor site to /docs" || echo "No changes to commit"
         git push

@@ -818,7 +818,6 @@ C:\Users\Mason\moosharp.dev\obj\Release\net8.0\staticwebassets\msbuild.buildMult
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\staticwebassets\msbuild.buildTransitive.moosharp.dev.props
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\staticwebassets.pack.json
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\scopedcss\Layout\MainLayout.razor.rz.scp.css
-C:\Users\Mason\moosharp.dev\obj\Release\net8.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\scopedcss\bundle\moosharp.dev.styles.css
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\scopedcss\projectbundle\moosharp.dev.bundle.scp.css
 C:\Users\Mason\moosharp.dev\obj\Release\net8.0\compressed\80wfgvqkvp.gz
