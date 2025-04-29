@@ -1,0 +1,41 @@
+@page "/"
+@using Terminal.Components
+@inject IJSRuntime JS
+@inject NavigationManager Nav
+
+<div class="boot-screen">
+    <div class="terminal-window">
+        <Terminal />
+    </div>
+</div>
+
+<div class="banner-container">
+    <img src="MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
+    <div id="welcomeBase" class="banner-title"></div>
+</div>
+
+<!-- Hidden Dev Button (Top Right) -->
+<button @onclick="TriggerDevMode" class="hidden-dev-button">Hidden</button>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("startOuterUI");
+            await JS.InvokeVoidAsync("startTerminalTyping");
+            await JS.InvokeVoidAsync("startCheatCodeListener", DotNetObjectReference.Create(this));
+        }
+    }
+
+    private void TriggerDevMode()
+    {
+        JS.InvokeVoidAsync("unlockDevMode");
+    }
+
+    [JSInvokable]
+    public async Task UnlockSecret()
+    {
+        await JS.InvokeVoidAsync("displayAccessGranted");
+    }
+}

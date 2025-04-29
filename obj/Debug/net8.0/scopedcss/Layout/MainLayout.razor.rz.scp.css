@@ -1,9 +1,3 @@
-.page[b-dp5lvpjfyd] {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
 main[b-dp5lvpjfyd] {
     flex: 1;
 }
@@ -47,16 +41,6 @@ main[b-dp5lvpjfyd] {
 }
 
 @media (min-width: 641px) {
-    .page[b-dp5lvpjfyd] {
-        flex-direction: row;
-    }
-
-    .sidebar[b-dp5lvpjfyd] {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
 
     .top-row[b-dp5lvpjfyd] {
         position: sticky;

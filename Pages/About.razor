@@ -1,0 +1,94 @@
+@page "/about"
+@using Microsoft.AspNetCore.Components.Web
+@inject IJSRuntime JS
+
+<PageTitle>About</PageTitle>
+
+<div class="boot-screen">
+    <div class="terminal-window">
+        <div class="terminal-text" style="white-space: pre-wrap; font-family: 'VT323', monospace;">@typedContent</div>
+    </div>
+</div>
+
+@code 
+{
+    private string[] lines = new[]
+    {
+		"",
+		"",
+        ">> Loading About.exe...",
+        ">> SYSTEM: Initializing LambdaMOO VM...",
+        ">> USER CONNECTING.",
+        ">> STATUS: Connected to Backend. Preparing Full Stack...",
+        "",
+        "Welcome to MooSharp — the digital headquarters of Mason Johnson, a full stack developer with a backend core.",
+        "",
+        "My nickname “Moo” traces back to the early 1990s when my father programmed using LambdaMOO.",
+        "Programming is in my blood and traces back 30 years.",
+        "",
+        "Today, MooSharp represents everything I build:",
+        "• Modern backend systems with C#, .NET, and EF Core",
+        "• Fully responsive Blazor web apps",
+        "• Indie games using Godot (with C# scripting)",
+        "• Freelance contracts and custom backend tools",
+        "• YouTube content under the alias MooSharp",
+        "",
+        "This site may look like a retro 90s executable, but under the hood, it's powered by modern funcionalities.",
+        "This is only the beginning of my frontend specialties. I can make your website look however you'd like.",
+        "",
+        ">> SYSTEM: Ready...",
+        ">> Type '/help' for help"
+    };
+
+    private string typedContent = "";
+    private int lineIndex = 0;
+    private int charIndex = 0;
+    private bool isTyping = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TypeText();
+    }
+
+    private async Task TypeText()
+    {
+        while (isTyping && lineIndex < lines.Length)
+        {
+            if (charIndex < lines[lineIndex].Length)
+            {
+                typedContent += lines[lineIndex][charIndex];
+                charIndex++;
+            }
+            else
+            {
+                typedContent += "\n";
+                lineIndex++;
+                charIndex = 0;
+            }
+
+            StateHasChanged();
+            await Task.Delay(30);
+        }
+    }
+
+    [JSInvokable]
+    public void CompleteTyping()
+    {
+        if (isTyping)
+        {
+            isTyping = false;
+            typedContent = string.Join("\n", lines);
+            lineIndex = lines.Length;
+            charIndex = 0;
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("addKeypressListener", DotNetObjectReference.Create(this));
+        }
+    }
+}

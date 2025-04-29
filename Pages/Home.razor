@@ -1,7 +1,25 @@
-﻿@page "/"
+@page "/home"
+@inject IJSRuntime JS
+@inject NavigationManager Nav
 
-<PageTitle>Home</PageTitle>
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var accessGranted = await JS.InvokeAsync<string>("localStorage.getItem", "access");
+            if (accessGranted != "granted")
+            {
+                Nav.NavigateTo("/");
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("startTypingBanner");
+            }
+        }
+    }
+}
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="home-container">
+    <h1 id="bannerTitle"></h1>
+</div>

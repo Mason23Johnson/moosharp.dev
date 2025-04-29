@@ -1,16 +1,25 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject NavigationManager Nav
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+@if (!IsOnIndexPage)
+{
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="/home">
+                <img src="MooSharpWhiteCircle.png" alt="MooSharp Logo" class="nav-logo" />
+            </a>
+            <a href="/home" class="matrix-hover">Home</a>
+            <a href="/about" class="matrix-hover">About</a>
+            <a href="/projects" class="matrix-hover">Projects</a>
+            <a href="/contact" class="matrix-hover">Contact</a>
+        </nav>
+    </header>
+}
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<main class="main-layout">
+    @Body
+</main>
+
+@code {
+    private bool IsOnIndexPage => Nav.Uri.EndsWith("/") || Nav.Uri.EndsWith("/index");
+}

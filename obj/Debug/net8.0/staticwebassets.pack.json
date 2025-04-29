@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\moosharp.dev.styles.css"
     },
     {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\CNAME",
+      "PackagePath": "staticwebassets"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\MooSharpWhiteCircle.png",
+      "PackagePath": "staticwebassets\\MooSharpWhiteCircle.png"
+    },
+    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\app.css",
       "PackagePath": "staticwebassets\\css\\app.css"
     },
@@ -39,6 +47,26 @@
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\sample-data\\weather.json",
       "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\bannerTyping.js",
+      "PackagePath": "staticwebassets\\scripts\\bannerTyping.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\cheatCode.js",
+      "PackagePath": "staticwebassets\\scripts\\cheatCode.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\indexOuterUI.js",
+      "PackagePath": "staticwebassets\\scripts\\indexOuterUI.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\matrixHover.js",
+      "PackagePath": "staticwebassets\\scripts\\matrixHover.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\terminalTyping.js",
+      "PackagePath": "staticwebassets\\scripts\\terminalTyping.js"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.moosharp.dev.props",

@@ -26,16 +26,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/Users/Mason/moosharp.dev/Components/Terminal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xUZXJtaW5hbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+[C:/Users/Mason/moosharp.dev/Pages/About.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWJvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+[C:/Users/Mason/moosharp.dev/Pages/Home.Razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5SYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/_Imports.razor]
@@ -45,7 +49,3 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/Mason/moosharp.dev/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-dp5lvpjfyd
-
-[C:/Users/Mason/moosharp.dev/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-5izbmf625p
