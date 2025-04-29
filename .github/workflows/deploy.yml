@@ -9,9 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - uses: actions/setup-dotnet@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
 
@@ -21,19 +23,19 @@ jobs:
     - name: Publish Blazor App to /docs
       run: dotnet publish ./moosharp.dev.csproj -c Release -o docs
 
+    - name: Check if build succeeded
+      run: test -f docs/index.html
+
     - name: Add CNAME, .nojekyll, 404.html
       run: |
         echo "moosharp.dev" > docs/CNAME
         echo "" > docs/.nojekyll
         cp docs/index.html docs/404.html
 
-    - name: Commit and push to main
+    - name: Commit and Push /docs
       run: |
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add docs
-        git commit -m "Deploy site to /docs" || echo "No changes to commit"
+        git commit -m "Deploy Blazor to /docs" || echo "No changes to commit"
         git push
-
-    - name: Show deployed link
-      run: echo "::notice title=Deployment Complete::Visit https://moosharp.dev"
