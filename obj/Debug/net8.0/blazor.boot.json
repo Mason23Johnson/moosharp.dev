@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "moosharp.dev",
   "resources": {
-    "hash": "sha256-r073THgvsp2fVHfSQEdoGm8aT1FFdS9DYRMyYpm6RoA=",
+    "hash": "sha256-LuemMnfLdw+dSILc2IvFobk/5iXxrwdH3iPJdUG2va0=",
     "jsModuleNative": {
       "dotnet.native.8.0.12.8xzv4u7xui.js": "sha256-B6DNRvFeCUi3jbx9uKpuj+hV9cN0KG4RdZj1FgBZwj8="
     },
@@ -208,10 +208,10 @@
       "mscorlib.wasm": "sha256-QoC5hTKpDNO6efLnEvYwV9OJBXvYRq8/1yGhNZKiNCw=",
       "netstandard.wasm": "sha256-JT2F4bYWJpaSGq+iD0ITLpWxsDhMUjhqje9RpBtTg7w=",
       "System.Private.CoreLib.wasm": "sha256-fvIPBcvgvsRuWrKi2LGQsLYvcKUSnyIuBUsE3LJu/0Y=",
-      "moosharp.dev.wasm": "sha256-Pnt2di03bfa6wy2tKd925dgIJkfYFyVvuopLMrDSBN8="
+      "moosharp.dev.wasm": "sha256-PS7KT8Th+4PLv1OCXBKIrqszmnHmYAs/IiCqfBhL1+Y="
     },
     "pdb": {
-      "moosharp.dev.pdb": "sha256-w8b/klci61XetyUnTqk0NVUswCBkm04o5PVC3EgoUvY="
+      "moosharp.dev.pdb": "sha256-jDFXhle7GrO1wha/trIYI6Adej0PGkYkHfxrLk8H26g="
     }
   },
   "cacheBootResources": true,
