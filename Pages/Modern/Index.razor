@@ -1,0 +1,158 @@
+@page "/"
+@layout MainLayout
+
+<div class="hero-container">
+	<img src="images/mason.png" alt="Mason Profile" class="hero-image" />
+	<div class="hero-text">
+		<h1>Hi, I'm <span class="blue-name">Mason</span></h1>
+		<h2>A <span clas="highlight">Full-Stack Developer</span></h2>
+	</div>
+</div>
+
+<section class="tech-marquee triple" style="margin-top: 30px;">
+	<div class="tech-wrapper">
+		<div class="tech-track track-row1">
+			<div class="tech-scroll">
+				<div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
+				<div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
+				<div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
+				<div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
+				<div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
+				@*Duplicates*@
+				<div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
+				<div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
+				<div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
+				<div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
+				<div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
+			</div>
+		</div>
+
+		<div class="tech-track track-row2">
+			<div class="tech-scroll">
+				<div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
+				<div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
+				<div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
+				<div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
+				<div class="tech-item"><img src="icons/HTML5.png" alt="HTML5" /><span>HTML5</span></div>
+				@* Duplicates*@
+				<div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
+				<div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
+				<div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
+				<div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
+				<div class="tech-item"><img src="icons/HTML5.png" alt="HTML5" /><span>HTML5</span></div>
+			</div>
+		</div>
+
+		<div class="tech-track track-row3">
+			<div class="tech-scroll">
+				<div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
+				<div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
+				<div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
+				<div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
+				<div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
+				@* Duplicates *@
+				<div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
+				<div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
+				<div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
+				<div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
+				<div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Navigation Grid -->
+<section class="nav-grid-section">
+	<div class="nav-grid">
+		<div class="nav-box nav-terminal matrix-true">
+			<div class="matrix-streams">
+				@for (int i = 0; i < 100; i++)
+				{
+					var delay = $"{Random.Shared.NextDouble() * 5:0.00}s";
+					var duration = $"{4 + Random.Shared.NextDouble() * 10:0.00}s";
+					var chars = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+					var column = string.Join("", Enumerable.Range(0, 12).Select(_ =>
+					chars[Random.Shared.Next(chars.Length)]));
+					<div class="matrix-column" style="animation-delay:@delay; animation-duration:@duration">
+						@foreach (var c in column)
+						{
+							<span>@c</span>
+						}
+					</div>
+				}
+			</div>
+			<a class="terminal-reveal" href="/terminal">
+				<span class="typed-terminal">Terminal Mode</span>
+			</a>
+
+		</div>
+
+		<div class="nav-box nav-contact">
+			<a href="/contact">Contact</a>
+		</div>
+		<div class="nav-box nav-calendar">
+			<a href="/calendar">Calendar</a>
+		</div>
+		<div class="nav-box nav-tritactic">
+			<a href="/games/tri-tactic">Tri-Tactic</a>
+		</div>
+		<div class="nav-box nav-github">
+			<a href="https://github.com/mason23johnson" target="_blank">GitHub</a>
+		</div>
+	</div>
+</section>
+
+<!-- Experience Placeholder -->
+<section class="experience">
+	<h2 class="section-header">Experience</h2>
+	<p class="bio" style="max-width: 800px; margin: 0 auto; text-align: center;">
+		3+ years
+	</p>
+</section>
+
+<!-- Matrix Script -->
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const canvas = document.getElementById("matrixCanvas");
+		if (!canvas) return;
+
+		const ctx = canvas.getContext("2d");
+
+		function resizeCanvas() {
+			canvas.width = canvas.offsetWidth;
+			canvas.height = canvas.offsetHeight;
+		}
+
+		resizeCanvas();
+
+		const letters = "01";
+		const fontSize = 14;
+		let columns = Math.floor(canvas.width / fontSize);
+		let drops = Array(columns).fill(1);
+
+		function drawMatrix() {
+			ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			ctx.fillStyle = "#0f0";
+			ctx.font = fontSize + "px monospace";
+
+			for (let i = 0; i < drops.length; i++) {
+				const text = letters[Math.floor(Math.random() * letters.length)];
+				ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+				if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+		}
+
+		setInterval(drawMatrix, 45);
+		window.addEventListener("resize", () => {
+			resizeCanvas();
+			columns = Math.floor(canvas.width / fontSize);
+			drops = Array(columns).fill(1);
+		});
+	});
+</script>

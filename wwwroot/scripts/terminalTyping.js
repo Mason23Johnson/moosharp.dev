@@ -138,21 +138,21 @@ function handleCommand(command)
     switch (cmd) 
     {
         case "/help":
-            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n";
+            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/modern: Modern mode";
             break;
         case "/home":
-            window.location.href = "/home";
+            window.location.href = "/terminl/home";
             break;
         case "/about":
-            window.location.href = "/about";
+            window.location.href = "/terminal/about";
             break;
         case "/projects":
-            window.location.href = "/projects";
+            window.location.href = "/terminal/projects";
             break;
         case "/contact":
-            window.location.href = "/contact";
+            window.location.href = "/terminal/contact";
             break;
-        case "/index":
+        case "/modern":
             window.location.href = "/";
         default:
             if (command.trim() !== "") 
@@ -205,58 +205,6 @@ window.addKeypressListener = (dotNetHelper) => {
 window.navigateTo = (url) => {
     window.location.href = url;
 };
-
-// DEV access interruption
-window.triggerDevAccess = () => {
-    isDevInterrupt = true;
-
-    if (typingInterval) clearInterval(typingInterval);
-    if (nextLineTimeout) clearTimeout(nextLineTimeout);
-
-    disableUserTyping();
-    terminalContent += "\n> moosharp.exe interrupted\n> Access Granted [DEV MODE]\n";
-    updateTerminal();
-
-    localStorage.setItem("access", "granted");
-
-    let countdown = 3;
-    let interval = setInterval(() => {
-        terminalContent += countdown + "...\n";
-        updateTerminal();
-        countdown--;
-        if (countdown < 0) {
-            clearInterval(interval);
-            window.location.href = "/home";
-        }
-    }, 1000);
-};
-
-// Loading fake EXE (optional for booting up PC)
-function startLoadingExe() {
-    if (isDevInterrupt) return;
-
-    terminalContent += "\n> Executing: moosharp_home.exe\n";
-    terminalContent += "> Allocating memory blocks...\n";
-    updateTerminal();
-
-    setTimeout(() => {
-        if (isDevInterrupt) return;
-        terminalContent += "> System boot complete. Launching UI...\n";
-        updateTerminal();
-
-        setTimeout(() => {
-            if (isDevInterrupt) return;
-            terminalContent += "> Coming soon...\n";
-            updateTerminal();
-
-            setTimeout(() => {
-                if (isDevInterrupt) return;
-                document.getElementById('bootScreen').style.display = 'none';
-                document.getElementById('pcScreen').style.display = 'flex';
-            }, 1000);
-        }, 1000);
-    }, 1000);
-}
 
 function resetTerminal() {
     // Stop any ongoing typing

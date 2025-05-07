@@ -1,0 +1,17 @@
+@inject NavigationManager Nav
+
+<button class="theme-toggle" @onclick="ToggleTheme">
+    @((IsTerminal ? "Modern Mode" : "Terminal Mode"))
+</button>
+
+@code {
+    private bool IsTerminal => Nav.Uri.Contains("/terminal");
+
+    private void ToggleTheme()
+    {
+        if (IsTerminal)
+            Nav.NavigateTo("/");
+        else
+            Nav.NavigateTo("/terminal");
+    }
+}

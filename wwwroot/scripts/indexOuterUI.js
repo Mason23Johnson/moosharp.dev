@@ -11,13 +11,6 @@ let rotatingIndex = 0;
 let rotationInterval = null;
 let isDevUnlocked = false;
 
-window.startOuterUI = () => {
-    startRotatingWelcome();
-    if (window.startCheatCodeListener) {
-        DotNet.invokeMethodAsync('MooSharpFrontend', 'StartCheatCodeListener');
-    }
-};
-
 function startRotatingWelcome() {
     const welcomeBase = document.getElementById("welcomeBase");
     glitchChange(welcomeBase, rotatingTitles[rotatingIndex]);
@@ -29,16 +22,6 @@ function startRotatingWelcome() {
         }
     }, 3000);
 }
-
-window.unlockDevMode = () => {
-    const welcomeBase = document.getElementById("welcomeBase");
-    isDevUnlocked = true;
-    clearInterval(rotationInterval);
-    welcomeBase.innerHTML = "WELCOME DEV";
-    setTimeout(() => {
-        window.startLoadingExe();
-    }, 1500); // Short delay after dev unlocked
-};
 
 function glitchChange(element, targetText) {
     let iterations = 0;
@@ -57,3 +40,21 @@ function glitchChange(element, targetText) {
         iterations += 1/2;
     }, 30);
 }
+
+let lastScrollY = window.scrollY;
+const nav = document.getElementById('scrollNav');
+
+window.addEventListener('scroll', () => {
+    if (!nav) return;
+    
+    if (window.scrollY > lastScrollY) {
+        // scrolling down
+        nav.classList.add('hidden-scroll');
+    } else {
+        // scrolling up
+        nav.classList.remove('hidden-scroll');
+        nav.classList.add('show-scroll');
+    }
+
+    lastScrollY = window.scrollY;
+});

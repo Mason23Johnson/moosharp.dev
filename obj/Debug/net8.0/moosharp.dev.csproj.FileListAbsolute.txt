@@ -1032,3 +1032,5 @@ C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\moosharp.dev.dll
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\refint\moosharp.dev.dll
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\moosharp.dev.pdb
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\ref\moosharp.dev.dll
+C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\sample-data\weather.json
+C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\_framework\blazor.boot.json

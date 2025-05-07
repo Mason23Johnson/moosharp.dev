@@ -1,0 +1,95 @@
+@page "/games/tri-tactic"
+@using MooSharp.Pages.Games
+@inject IJSRuntime JS
+
+<h2 class="matrix-font">Tri-Tactic</h2>
+
+<div class="terminal-container">
+    <pre>@outputText</pre>
+
+    @if (engine == null)
+    {
+        <button @onclick="StartGame">▶ Start Game</button>
+    }
+    else if (engine.AwaitingSymbol)
+    {
+        <div>
+            <button @onclick='() => engine.ReceiveSymbol("X")'>Play as X</button>
+            <button @onclick='() => engine.ReceiveSymbol("O")'>Play as O</button>
+        </div>
+    }
+    else if (awaitingMove)
+    {
+        <div class="game-grid-3">
+            @for (int i = 0; i < 9; i++)
+            {
+                <button disabled="@(!string.IsNullOrEmpty(engine.Board[i]))" @onclick="() => Move(i)">
+                    @(!string.IsNullOrEmpty(engine.Board[i]) ? engine.Board[i] : (i + 1).ToString())
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private TriTacticEngine? engine;
+    private string outputText = "";
+    private bool awaitingMove = false;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("addKeydownListener", DotNetObjectReference.Create(this));
+        }
+    }
+
+    [JSInvokable]
+    public void HandleKeyPress(string key)
+    {
+        if (awaitingMove && int.TryParse(key, out int slot) && slot >= 1 && slot <= 9)
+        {
+            Move(slot - 1);
+        }
+    }
+
+    private void StartGame()
+    {
+        engine = new TriTacticEngine(AppendOutput, PromptSymbol, PromptBoard);
+        engine.Start();
+    }
+
+    private void AppendOutput(string text)
+    {
+        outputText += text + "\n";
+        StateHasChanged();
+    }
+
+    private void PromptSymbol()
+    {
+        awaitingMove = false;
+        StateHasChanged();
+    }
+
+    private void PromptBoard()
+    {
+        awaitingMove = true;
+        StateHasChanged();
+    }
+
+    private void Move(int index)
+    {
+        awaitingMove = false;
+        if (engine != null)
+        {
+            engine.ReceiveMove(index);
+        }
+    }
+
+	[JSInvokable]
+	public void RestartGame()
+	{
+		StartGame();
+	}
+}

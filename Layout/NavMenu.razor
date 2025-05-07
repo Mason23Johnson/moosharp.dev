@@ -1,0 +1,42 @@
+<header class="top-nav-bar">
+    <div class="nav-left">
+        <div class="social-links">
+            <div class="social-links">
+                <a href="https://github.com/mason23johnson" target="_blank" class="social-btn">
+                    <img src="icons/github.png" alt="GitHub" class="social-icon" />
+                </a>
+                <a href="https://youtube.com/moosharp" target="_blank" class="social-btn">
+                    <img src="icons/youtube.png" alt="YouTube" class="social-icon" />
+                </a>
+                <a href="https://linkedin.com/in/mason23johnson" target="_blank" class="social-btn">
+                    <img src="icons/linkedin.png" alt="LinkedIn" class="social-icon" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <nav id="scrollNav" class="nav-center scroll-reactive">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/projects">Projects</a>
+        <a href="/games">Games</a>
+        <a href= "/contact">Contact</a>
+        <a href="https://github.com/mason23johnson" target="_blank">GitHub</a>
+    </nav>
+    <button class="terminal-toggle-bar" @onclick="ToggleToTerminal">
+        @(IsTerminal ? "Modern Mode" : "Terminal Mode")
+    </button>
+</header>
+
+@inject NavigationManager Nav
+
+@code {
+    private bool IsTerminal => Nav.Uri.ToLower().Contains("/terminal");
+
+    private void ToggleToTerminal()
+    {
+        if (IsTerminal)
+            Nav.NavigateTo("/");
+        else
+            Nav.NavigateTo("/terminal");
+    }
+}

@@ -26,16 +26,44 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/About.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWJvdXQucmF6b3I=
+[C:/Users/Mason/moosharp.dev/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+[C:/Users/Mason/moosharp.dev/Layout/TerminalLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRlcm1pbmFsTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[C:/Users/Mason/moosharp.dev/Layout/ThemeToggle.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRoZW1lVG9nZ2xlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Games/TriTactic.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcVHJpVGFjdGljLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Modern/About.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEFib3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Modern/Games.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEdhbWVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Modern/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEluZGV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Modern/Projects/Projects.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXFByb2plY3RzXFByb2plY3RzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/About.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcQWJvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/_Imports.razor]

@@ -17,14 +17,6 @@
       "PackagePath": "staticwebassets"
     },
     {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\MooSharpWhiteCircle.png",
-      "PackagePath": "staticwebassets\\MooSharpWhiteCircle.png"
-    },
-    {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\app.css",
-      "PackagePath": "staticwebassets\\css\\app.css"
-    },
-    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },
@@ -33,12 +25,108 @@
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\favicon.png",
-      "PackagePath": "staticwebassets\\favicon.png"
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\modern.css",
+      "PackagePath": "staticwebassets\\css\\modern.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\terminal.css",
+      "PackagePath": "staticwebassets\\css\\terminal.css"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icon-192.png",
       "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\aspnet.png",
+      "PackagePath": "staticwebassets\\icons\\aspnet.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\blazor.png",
+      "PackagePath": "staticwebassets\\icons\\blazor.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\cs.png",
+      "PackagePath": "staticwebassets\\icons\\cs.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\css3.png",
+      "PackagePath": "staticwebassets\\icons\\css3.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\docker.png",
+      "PackagePath": "staticwebassets\\icons\\docker.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\git.png",
+      "PackagePath": "staticwebassets\\icons\\git.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\github.png",
+      "PackagePath": "staticwebassets\\icons\\github.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\godot.png",
+      "PackagePath": "staticwebassets\\icons\\godot.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\html5.png",
+      "PackagePath": "staticwebassets\\icons\\html5.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\java.png",
+      "PackagePath": "staticwebassets\\icons\\java.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\js.png",
+      "PackagePath": "staticwebassets\\icons\\js.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\json.png",
+      "PackagePath": "staticwebassets\\icons\\json.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\linkedin.png",
+      "PackagePath": "staticwebassets\\icons\\linkedin.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\linux.png",
+      "PackagePath": "staticwebassets\\icons\\linux.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\python.png",
+      "PackagePath": "staticwebassets\\icons\\python.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\sqlite.png",
+      "PackagePath": "staticwebassets\\icons\\sqlite.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\vs.png",
+      "PackagePath": "staticwebassets\\icons\\vs.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\vscode.png",
+      "PackagePath": "staticwebassets\\icons\\vscode.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icons\\youtube.png",
+      "PackagePath": "staticwebassets\\icons\\youtube.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\Mason.png",
+      "PackagePath": "staticwebassets\\images\\Mason.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\MooSharpWhiteCircle.png",
+      "PackagePath": "staticwebassets\\images\\MooSharpWhiteCircle.png"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\moosharpbackground.jpg",
+      "PackagePath": "staticwebassets\\images\\moosharpbackground.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\pfp.png",
+      "PackagePath": "staticwebassets\\images\\pfp.png"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\index.html",
@@ -53,12 +141,12 @@
       "PackagePath": "staticwebassets\\scripts\\bannerTyping.js"
     },
     {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\cheatCode.js",
-      "PackagePath": "staticwebassets\\scripts\\cheatCode.js"
-    },
-    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\indexOuterUI.js",
       "PackagePath": "staticwebassets\\scripts\\indexOuterUI.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\keyListener.js",
+      "PackagePath": "staticwebassets\\scripts\\keyListener.js"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\matrixText.js",
@@ -67,6 +155,10 @@
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\terminalTyping.js",
       "PackagePath": "staticwebassets\\scripts\\terminalTyping.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\themeControl.js",
+      "PackagePath": "staticwebassets\\scripts\\themeControl.js"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.moosharp.dev.props",

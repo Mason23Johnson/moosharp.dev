@@ -1,0 +1,779 @@
+/* ========== BASE STRUCTURE ========== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: 
+        url('/images/moosharpbackground.jpg') no-repeat center center fixed,
+        #0f0900;
+    background-size: cover;
+    color: #161616;
+}
+
+.modern-footer {
+    background-color: transparent;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #353535;
+}
+
+/* === TOP NAV BAR STYLE === */
+.top-nav-bar {
+    width: 100%;
+    background-color: #0d71b300;
+    color: white;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 255, 179, 0);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-avatar {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    border: 2px solid rgb(0, 174, 255);
+    object-fit: cover;
+    box-shadow: 0 0 6px rgb(0, 225, 255);
+}
+
+.nav-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: rgb(255, 255, 255);
+}
+
+.nav-center {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-center a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.nav-center a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: #00b7ff;
+    width: 0;
+    transition: width 0.2s ease;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+}
+
+.nav-center a:hover {
+    color: #00aeff;
+}
+
+.nav-center a:hover::after {
+    width: 100%;
+}
+
+/* === Scroll-Reactive Nav === */
+.scroll-reactive {
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px #00aeff;
+    backdrop-filter: blur(6px);
+}
+
+.scroll-reactive.hidden-scroll {
+    opacity: 0;
+    transform: translateY(-40px);
+    pointer-events: none;
+}
+
+.scroll-reactive.show-scroll {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.terminal-toggle-bar {
+    background: #00b7ff;
+    color: black;
+    font-weight: bold;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00b7ff;
+    transition: background 0.2s ease-in-out;
+}
+
+.terminal-toggle-bar:hover {
+    background: #009edd;
+}
+
+/* ========== HERO ANIMATION SECTION ========== */
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 80px;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.hero-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: slideInLeft 1s ease-out;
+    box-shadow: 0 0 12px rgb(0, 140, 255);
+}
+
+.hero-text {
+    animation: slideInRight 1s ease-out;
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.hero-text .blue-name {
+    color: #00b7ff;
+    text-shadow: 0 0 2px #00b7ff, 0 0 10px #00b7ff;
+}
+
+/* ========== SOCIAL LINKS ========== */
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.social-btn:hover {
+    transform: scale(1.1);
+}
+
+.social-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* ========== TECH ICON SCROLLER ========== */
+.tech-marquee.triple {
+    position: relative;
+    padding: 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+.tech-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-track {
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.tech-scroll {
+    display: flex;
+    gap: 0px;
+    animation: scrollLoop 25s linear infinite;
+    width: fit-content;
+}
+
+.track-row2 .tech-scroll {
+    margin-left: 75px;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 120px;
+    margin-right: 8px;
+}
+
+.tech-item img {
+    height: 28px;
+    filter: brightness(0) invert(1) opacity(0.85);
+}
+
+.tech-item span {
+    font-size: 0.9rem;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* ========== SECTION STYLES ========== */
+.projects-section {
+    padding: 40px 20px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    padding: 0 20px;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgb(0, 162, 255);
+}
+
+.project-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.project-buttons a {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: rgb(0, 132, 255);
+    color: black;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+/* ===== NEW MODERN ADDITIONS ===== */
+.section-header {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    color: #0099ff;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 8px #00cccc;
+}
+
+/* Tech section spacing */
+.tech-marquee.triple {
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Projects Section */
+.projects-section {
+    padding: 10px 500px;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+/* === GRID NAV SECTION BELOW TECH === */
+.nav-grid-section {
+    margin-top: 40px;
+    padding: 20px;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(3, 120px);
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Box Base Style */
+.nav-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 10, 10, 0.8);
+    border: 2px solid #008cff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-box a {
+    text-decoration: none;
+    color: #00b7ff;
+}
+
+.nav-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 12px #00a2ff;
+}
+
+/* Custom Sizes via Grid Area */
+.nav-terminal {
+    grid-row: 1 / span 2;
+    grid-column: 1 / 2;
+}
+
+.nav-contact {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+.nav-contact {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+.nav-calendar {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+}
+
+.nav-tritactic {
+    grid-row: 3 / 3;
+    grid-column: 2 / 3;
+}
+
+.project-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid #0077ff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    max-width: 360px;
+    box-shadow: 0 0 12px rgba(0, 140, 255, 0.938);
+}
+
+.project-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 0 20px #0077ff;
+}
+
+.project-card h3 {
+    color: #0077ff;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.project-card p {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.project-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.project-buttons a {
+    text-decoration: none;
+    padding: 10px 16px;
+    background-color: #0077ff;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.project-buttons a:hover {
+    background-color: #0077ff;
+}
+
+/* Terminal Animation */
+.matrix-true {
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+}
+
+.matrix-streams {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    justify-content: space-around;
+}
+
+.matrix-column {
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 225, 255);
+    font-family: monospace;
+    font-size: 13px;
+    opacity: 0.8;
+    animation: matrixScroll linear infinite;
+    filter: drop-shadow(0 0 5px #00ffff);
+}
+
+/* Matrix Typing Reveal */
+.terminal-reveal {
+    position: relative;
+    z-index: 1;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 16ch;
+}
+
+.typed-terminal {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: none;
+    letter-spacing: 2px;
+    animation: none;
+}
+
+.matrix-true:hover .typed-terminal {
+    opacity: 1;
+    transform: translateY(0);
+    animation: terminalType 1.5s steps(14) forwards;
+}
+
+@keyframes terminalType {
+    from {
+        width: 0;
+    }
+    to {
+        width: 14ch;
+    }
+}
+
+@keyframes matrixScroll {
+    0% {
+        transform: translateY(-150%);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 1;
+    }
+}
+
+@keyframes glitchBlink {
+    0%, 100% { opacity: 0.8; }
+    45% { opacity: 0.1; }
+    50% { opacity: 1; text-shadow: 0 0 6px #00eeff; }
+    70% { opacity: 0.4; }
+}
+
+/* Experience Section */
+.experience {
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+.experience .bio {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ========== TEXT BLOCKS & TYPOGRAPHY ========== */
+.modern-banner {
+    text-align: left;
+    max-width: 800px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+@keyframes matrixFall {
+    0% {
+        transform: translateY(-100%) rotate(180deg);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(100%) rotate(180deg);
+        opacity: 0.3;
+    }
+}
+
+.modern-banner h1,
+.modern-banner h2 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    color: white;
+}
+
+.bio {
+    font-size: 1.05rem;
+    color: #ccc;
+    max-width: 8500px;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes scrollLoop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-20%); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ABOUT PAGE */
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 30px;
+    color: #ccc;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+}
+
+.glitch-header {
+    font-size: 2.8rem;
+    text-align: center;
+    color: #0077ff;
+    text-shadow: 0 0 5px #0077ff, 0 0 10px #0077ff;
+    margin-bottom: 40px;
+}
+
+.about-block p {
+    margin-bottom: 30px;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.about-block strong {
+    color: #0077ff;
+}
+
+.about-block em {
+    color: #0077ff;
+    font-style: normal;
+    text-shadow: 0 0 4px #0077ff;
+}
+
+.tag {
+    color: #0077ff;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.terminal-nudge {
+    text-align: center;
+    color: #0077ff;
+    margin-top: 60px;
+    font-size: 1rem;
+}
+
+.terminal-link {
+    font-weight: bold;
+    color: #0077ff;
+    cursor: pointer;
+    text-shadow: 0 0 6px #0077ff;
+}
+
+/* PROJECTS */
+.projects-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 30px;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+    color: #ccc;
+}
+
+.projects-intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #aaa;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.product-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid #0077ff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 360px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #0077ff;
+}
+
+.product-card h3 {
+    color: #0077ff;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.product-card p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card-buttons a {
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: #0077ff;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.card-buttons a:hover {
+    background-color: #0077ff;
+}
+
+/* GAMES */
+.games-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 30px;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+    color: #ccc;
+    text-align: center;
+}
+
+.games-intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #aaa;
+}
+
+.arcade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.arcade-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #0077ff;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 320px;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.arcade-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 16px #0077ff, 0 0 30px #0077ff inset;
+}
+
+.arcade-card h3 {
+    color: #0077ff;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    text-shadow: 0 0 4px #0077ff;
+}
+
+.arcade-card p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.arcade-card a {
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: #0077ff;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 0 8px #0077ff;
+    transition: background 0.2s ease;
+}
+
+.arcade-card a:hover {
+    background-color: #00ddb5;
+    box-shadow: 0 0 12px #0077ff, 0 0 20px #0077ff;
+}

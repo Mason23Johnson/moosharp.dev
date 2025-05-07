@@ -1,25 +1,16 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager Nav
 
-@if (!IsOnIndexPage)
-{
-    <header class="main-header">
-        <nav class="main-nav">
-            <a href="/">
-                <img src="MooSharpWhiteCircle.png" alt="MooSharp Logo" class="nav-logo" /> @*index*@
-            </a>
-            <a href="/home" class="matrix-text">Home</a>
-            <a href="/about" class="matrix-text">About</a>
-            <a href="/projects" class="matrix-text">Projects</a>
-            <a href="/contact" class="matrix-text">Contact</a>
-        </nav>
-    </header>
-}
+<NavMenu /> <!-- Now includes Terminal Toggle inside -->
+<link rel="stylesheet" href="css/modern.css" />
+<script src="scripts/bannerTyping.js"></script>
+<script src="scripts/indexOuterUI.js"></script>
 
-<main class="main-layout">
-    @Body
-</main>
+<div class="modern-layout">
+    <main class="modern-main">
+        @Body
+    </main>
 
-@code {
-    private bool IsOnIndexPage => Nav.Uri.EndsWith("/") || Nav.Uri.EndsWith("/index");
-}
+    <footer class="modern-footer">
+        <p>© MooSharp.dev — All Rights Reserved</p>
+    </footer>
+</div>
