@@ -1,0 +1,55 @@
+/* ABOUT PAGE */
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 30px;
+    color: #ccc;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+}
+
+.glitch-header {
+    font-size: 2.8rem;
+    text-align: center;
+    color: #0077ff;
+    text-shadow: 0 0 5px #0077ff, 0 0 10px #0077ff;
+    margin-bottom: 40px;
+}
+
+.about-block p {
+    margin-bottom: 30px;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.about-block strong {
+    color: #0077ff;
+}
+
+.about-block em {
+    color: #0077ff;
+    font-style: normal;
+    text-shadow: 0 0 4px #0077ff;
+}
+
+.tag {
+    color: #0077ff;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.terminal-nudge {
+    text-align: center;
+    color: #0077ff;
+    margin-top: 60px;
+    font-size: 1rem;
+}
+
+.terminal-link {
+    font-weight: bold;
+    color: #0077ff;
+    cursor: pointer;
+    text-shadow: 0 0 6px #0077ff;
+}

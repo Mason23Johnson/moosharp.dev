@@ -17,20 +17,48 @@
       "PackagePath": "staticwebassets"
     },
     {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\about.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\about.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\arcade.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\arcade.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\main.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\main.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\nav.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\nav.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\projects.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\projects.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\section.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\section.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\socials.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\socials.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\tech.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\tech.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\TerminalCSS\\terminal.css",
+      "PackagePath": "staticwebassets\\css\\TerminalCSS\\terminal.css"
+    },
+    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
-    },
-    {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\modern.css",
-      "PackagePath": "staticwebassets\\css\\modern.css"
-    },
-    {
-      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\terminal.css",
-      "PackagePath": "staticwebassets\\css\\terminal.css"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\icon-192.png",

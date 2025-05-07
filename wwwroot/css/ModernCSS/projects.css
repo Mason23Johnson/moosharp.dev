@@ -1,0 +1,73 @@
+/* PROJECTS */
+.projects-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 30px;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+    color: #ccc;
+}
+
+.projects-intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #aaa;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.product-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid #0077ff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 360px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #0077ff;
+}
+
+.product-card h3 {
+    color: #0077ff;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.product-card p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card-buttons a {
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: #0077ff;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.card-buttons a:hover {
+    background-color: #0077ff;
+}

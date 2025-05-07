@@ -1,0 +1,70 @@
+/* GAMES */
+.games-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 30px;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+    color: #ccc;
+    text-align: center;
+}
+
+.games-intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #aaa;
+}
+
+.arcade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.arcade-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #0077ff;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 320px;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.arcade-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 16px #0077ff, 0 0 30px #0077ff inset;
+}
+
+.arcade-card h3 {
+    color: #0077ff;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    text-shadow: 0 0 4px #0077ff;
+}
+
+.arcade-card p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.arcade-card a {
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: #0077ff;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 0 8px #0077ff;
+    transition: background 0.2s ease;
+}
+
+.arcade-card a:hover {
+    background-color: #00ddb5;
+    box-shadow: 0 0 12px #0077ff, 0 0 20px #0077ff;
+}

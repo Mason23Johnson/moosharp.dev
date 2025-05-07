@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 /* Base Theme */
 body {
@@ -24,6 +25,14 @@ body {
     color: #0f0;
     padding: 20px;
     position: relative;
+}
+
+.matrix-bg canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0.25;
 }
 
 /* Terminal Typing Display */
@@ -147,24 +156,18 @@ body {
     100% { text-shadow: 2px 0 #0f0; }
 }
 
-/* Hamburger Button */
-.hamburger {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 2000;
-    font-size: 28px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    color: #0f0;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
 .matrix-font {
     font-family: 'Share Tech Mono', monospace;
     color: #00ff00;
     letter-spacing: 2px;
+}
+
+.matrix-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-container > * {
+    position: relative;
+    z-index: 1;
 }

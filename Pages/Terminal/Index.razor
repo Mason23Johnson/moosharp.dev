@@ -1,22 +1,20 @@
-@page "/terminal"
-@layout TerminalLayout
+@page "/"
 @inject IJSRuntime JS
+@implements IDisposable
 
 <div class="banner-container">
     <img src="MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
-    <div id="welcomeBase" class="banner-title"></div>
+    <div id="welcomeBase" class="banner-title matrix-font"></div>
 </div>
 
 <div class="terminal-container">
-    <div class="terminal-text" style="white-space: pre-wrap; font-family: 'VT323', monospace; text-align: left;">
-        <div id="terminalText"></div>
-    </div>
+    <div id="terminalText" class="terminal-text-formatted"></div>
+    <span id="blinkingCursor">_</span>
 </div>
 
-@code 
-{
+@code {
     private bool introSkipped = false;
-
+    private DotNetObjectReference<Index>? _reference;
     [JSInvokable]
     public void CompleteTyping()
     {
@@ -31,11 +29,16 @@
     {
         if (firstRender)
         {
-            var reference = DotNetObjectReference.Create(this);
+            _reference = DotNetObjectReference.Create(this);
             await JS.InvokeVoidAsync("startOuterUI");
-            await JS.InvokeVoidAsync("startCheatCodeListener", reference);
+            await JS.InvokeVoidAsync("startCheatCodeListener", _reference);
             await JS.InvokeVoidAsync("startTerminalTyping");
-            await JS.InvokeVoidAsync("addKeypressListener", reference);
+            await JS.InvokeVoidAsync("addKeypressListener", _reference);
         }
+    }
+
+    public void Dispose()
+    {
+        _reference?.Dispose();
     }
 }

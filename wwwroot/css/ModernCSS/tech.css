@@ -1,0 +1,54 @@
+/* ========== TECH ICON SCROLLER ========== */
+.tech-marquee.triple {
+    position: relative;
+    padding: 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: fadeIn 1.2s ease-in both;
+}
+
+.tech-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-track {
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.tech-scroll {
+    display: flex;
+    gap: 0px;
+    animation: scrollLoop 25s linear infinite;
+    width: fit-content;
+}
+
+.track-row2 .tech-scroll {
+    margin-left: 75px;
+}
+
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 120px;
+    margin-right: 8px;
+}
+
+.tech-item img {
+    height: 28px;
+    filter: brightness(0) invert(1) opacity(0.85);
+}
+
+.tech-item span {
+    font-size: 0.9rem;
+    color: #ffffff;
+    white-space: nowrap;
+}
