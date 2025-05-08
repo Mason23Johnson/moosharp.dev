@@ -407,6 +407,8 @@ C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\wwwroot\_framework\System.Web.wasm.
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\wwwroot\_framework\icudt_no_CJK.dat.gz
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\wwwroot\_framework\System.Memory.wasm.gz
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\publish\web.config
+C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\sample-data\weather.json
+C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\_framework\blazor.boot.json
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\publish\wwwroot\sample-data\weather.json
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\publish\wwwroot\_framework\blazor.boot.json
 C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\moosharp.dev.staticwebassets.runtime.json
@@ -1032,5 +1034,4 @@ C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\moosharp.dev.dll
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\refint\moosharp.dev.dll
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\moosharp.dev.pdb
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\ref\moosharp.dev.dll
-C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\sample-data\weather.json
-C:\Users\Mason\moosharp.dev\bin\Debug\net8.0\docs\_framework\blazor.boot.json
+C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\scopedcss\Layout\TerminalLayout.razor.rz.scp.css

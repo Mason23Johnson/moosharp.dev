@@ -1,8 +1,9 @@
-/* ========== SECTION STYLES ========== */
+/* PROJECT SECTION STYLES */
 .projects-section {
-    padding: 40px 20px;
+    padding: 40px 20px; /* general padding */
 }
 
+/* Grid for displaying project cards responsively */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -11,11 +12,13 @@
     padding: 0 20px;
 }
 
+/* Hover effect for project cards */
 .project-card:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgb(0, 162, 255);
 }
 
+/* Buttons under each project */
 .project-buttons {
     margin-top: 15px;
     display: flex;
@@ -23,6 +26,7 @@
     justify-content: center;
 }
 
+/* Button style */
 .project-buttons a {
     text-decoration: none;
     padding: 8px 16px;
@@ -33,7 +37,7 @@
     transition: background-color 0.2s ease;
 }
 
-/* ===== NEW MODERN ADDITIONS ===== */
+/* Experience */
 .section-header {
     text-align: center;
     font-size: 2.2rem;
@@ -44,25 +48,26 @@
     text-shadow: 0 0 8px #00cccc;
 }
 
-/* Tech section spacing */
+/* Triple marquee section spacing */
 .tech-marquee.triple {
     margin-top: 20px;
     padding-bottom: 40px;
 }
 
-/* Projects Section */
+/* Re-defined project section padding + fade animation */
 .projects-section {
     padding: 10px 500px;
     animation: fadeIn 1.2s ease-in both;
 }
 
-/* === GRID NAV SECTION BELOW TECH === */
+/*  NAVIGATION GRID BELOW TECH SECTION  */
 .nav-grid-section {
     margin-top: 40px;
     padding: 20px;
     animation: fadeIn 1.2s ease-in both;
 }
 
+/* Layout for nav boxes */
 .nav-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -72,13 +77,14 @@
     margin: 0 auto;
 }
 
-/* Box Base Style */
+/* General nav box style */
 .nav-box {
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(10, 10, 10, 0.8);
     border: 2px solid #008cff;
+    box-shadow: 0 0 50px #000000;
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 10px;
@@ -87,42 +93,37 @@
     padding: 10px;
 }
 
+/* Link style inside nav box */
 .nav-box a {
     text-decoration: none;
     color: #00b7ff;
 }
 
+/* Hover effect for nav boxes */
 .nav-box:hover {
     transform: scale(1.03);
     box-shadow: 0 0 12px #00a2ff;
 }
 
-/* Custom Sizes via Grid Area */
+/* Grid area customization */
 .nav-terminal {
     grid-row: 1 / span 2;
     grid-column: 1 / 2;
 }
-
-.nav-contact {
-    grid-row: 1 / 2;
-    grid-column: 2 / 3;
-}
-
 .nav-contact {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
 }
-
 .nav-calendar {
     grid-row: 3 / 4;
     grid-column: 1 / 2;
 }
-
 .nav-tritactic {
     grid-row: 3 / 3;
     grid-column: 2 / 3;
 }
 
+/*  PROJECT CARD  */
 .project-card {
     background: rgba(20, 20, 20, 0.9);
     border: 2px solid #0077ff;
@@ -134,51 +135,16 @@
     box-shadow: 0 0 12px rgba(0, 140, 255, 0.938);
 }
 
-.project-card:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 0 20px #0077ff;
-}
+/*  TERMINAL / MATRIX  */
 
-.project-card h3 {
-    color: #0077ff;
-    margin-bottom: 10px;
-    font-size: 1.4rem;
-}
-
-.project-card p {
-    color: #ccc;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.project-buttons {
-    margin-top: 20px;
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
-
-.project-buttons a {
-    text-decoration: none;
-    padding: 10px 16px;
-    background-color: #0077ff;
-    color: black;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
-}
-
-.project-buttons a:hover {
-    background-color: #0077ff;
-}
-
-/* Terminal Animation */
+/* Base matrix animation container */
 .matrix-true {
     position: relative;
     overflow: hidden;
-    background-color: black;
+    background-color: black !important;
 }
 
+/* Streams  columns of characters */
 .matrix-streams {
     position: absolute;
     top: 0;
@@ -193,6 +159,7 @@
     justify-content: space-around;
 }
 
+/* Individual column of characters */
 .matrix-column {
     display: flex;
     flex-direction: column;
@@ -200,11 +167,11 @@
     font-family: monospace;
     font-size: 13px;
     opacity: 0.8;
+    text-shadow: 0 0 5px #ffffff, 0 0 1px #ccc;
     animation: matrixScroll linear infinite;
-    filter: drop-shadow(0 0 5px #00ffff);
 }
 
-/* Matrix Typing Reveal */
+/* Terminal typewriter effect */
 .terminal-reveal {
     position: relative;
     z-index: 1;
@@ -215,6 +182,7 @@
     width: 16ch;
 }
 
+/* Starts hidden, revealed on hover */
 .typed-terminal {
     display: inline-block;
     opacity: 0;
@@ -222,23 +190,24 @@
     transition: none;
     letter-spacing: 2px;
     animation: none;
+    color: white;
+    text-shadow: 0 0 5px white, 0 0 10px #ccc;
 }
 
+/* Hover to type out */
 .matrix-true:hover .typed-terminal {
     opacity: 1;
     transform: translateY(0);
     animation: terminalType 1.5s steps(14) forwards;
 }
 
+/* Type animation */
 @keyframes terminalType {
-    from {
-        width: 0;
-    }
-    to {
-        width: 14ch;
-    }
+    from { width: 0; }
+    to { width: 14ch; }
 }
 
+/* Matrix scroll down effect */
 @keyframes matrixScroll {
     0% {
         transform: translateY(-150%);
@@ -248,26 +217,4 @@
         transform: translateY(100%);
         opacity: 1;
     }
-}
-
-@keyframes glitchBlink {
-    0%, 100% { opacity: 0.8; }
-    45% { opacity: 0.1; }
-    50% { opacity: 1; text-shadow: 0 0 6px #00eeff; }
-    70% { opacity: 0.4; }
-}
-
-/* Experience Section */
-.experience {
-    padding: 60px 20px;
-    text-align: center;
-    animation: fadeIn 1.2s ease-in both;
-}
-
-.experience .bio {
-    max-width: 800px;
-    margin: 0 auto;
-    color: #ddd;
-    font-size: 1rem;
-    line-height: 1.6;
 }

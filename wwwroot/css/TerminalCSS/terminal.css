@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-/* Base Theme */
-body {
+.terminal-root body {
     background-color: black !important;
     color: #00ff00;
 }
@@ -25,17 +24,9 @@ body {
     color: #0f0;
     padding: 20px;
     position: relative;
+    z-index: 1;
 }
 
-.matrix-bg canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    opacity: 0.25;
-}
-
-/* Terminal Typing Display */
 #terminalText {
     white-space: pre-wrap;
 }
@@ -51,26 +42,6 @@ body {
     color: #0f0;
 }
 
-/* PC Boot Screen */
-.pc-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-    width: 100vw;
-    height: 100vh;
-    transition: all 1s ease-in-out;
-}
-
-#pcImage {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
-    border: 2px solid #0f0;
-    box-shadow: 0 0 20px #0f0;
-}
-
-/* Terminal Banner */
 .banner-container {
     display: flex;
     align-items: center;
@@ -97,77 +68,7 @@ body {
     margin-bottom: 20px;
 }
 
-.welcome-header {
-    text-align: center;
-    font-family: 'Share Tech Mono', monospace;
-    color: #00CFFF;
-    margin-top: 40px;
-    animation: fadeIn 1s ease-in;
-}
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-/* Terminal Nav Panel */
-.terminal-nav {
-    background-color: black;
-    box-shadow: 0 0 12px #00ff00;
-}
-
-.terminal-toggle {
-    background: black;
-    border: 1px solid #0f0;
-    color: #0f0;
-    font-weight: bold;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 0 8px #0f0;
-    margin-top: 10px;
-}
-
-.terminal-toggle:hover {
-    background: #0f0;
-    color: black;
-}
-
-.terminal-links a {
-    color: #0f0;
-    font-family: 'Share Tech Mono', monospace;
-    transition: text-shadow 0.2s ease-in-out;
-}
-
-.terminal-links a:hover {
-    text-shadow: 0 0 5px #0f0;
-}
-
-/* Glitch Name */
-.glitch-text {
-    animation: glitchText 0.3s steps(2, start) infinite;
-    color: #0f0;
-    font-family: 'Share Tech Mono', monospace;
-}
-
-@keyframes glitchText {
-    0% { text-shadow: 2px 0 #0f0; }
-    50% { text-shadow: -2px 0 #0f0; }
-    100% { text-shadow: 2px 0 #0f0; }
-}
-
-.matrix-font {
-    font-family: 'Share Tech Mono', monospace;
-    color: #00ff00;
-    letter-spacing: 2px;
-}
-
-.matrix-bg {
-    position: relative;
-    overflow: hidden;
-}
-
-.terminal-container > * {
-    position: relative;
-    z-index: 1;
 }

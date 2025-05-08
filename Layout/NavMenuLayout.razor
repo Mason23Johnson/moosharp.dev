@@ -1,0 +1,46 @@
+@inherits LayoutComponentBase
+@inject NavigationManager NavManager
+
+<header class="top-nav-bar">
+	<div class="nav-left">
+		<a href="https://github.com/mason23johnson" target="_blank">
+			<div class="social-circle">
+				<img src="/icons/github.png" class="social-icon" alt="GitHub" />
+			</div>
+		</a>
+		<a href="https://youtube.com/moosharp" target="_blank">
+			<div class="social-circle">
+				<img src="/icons/youtube.png" class="social-icon" alt="YouTube" />
+			</div>
+		</a>
+		<a href="https://linkedin.com/in/mason23johnson" target="_blank">
+			<div class="social-circle">
+				<img src="/icons/linkedin.png" class="social-icon" alt="LinkedIn" />
+			</div>
+		</a>
+	</div>
+
+	<div class="nav-center">
+		<a class="nav-link-box" href="@(IsTerminal ? "/terminal" : "/")">Home</a>
+		<a class="nav-link-box" href="@GetLink("about")">About</a>
+		<a class="nav-link-box" href="@GetLink("projects")">Projects</a>
+		<a class="nav-link-box" href="@GetLink("contact")">Contact</a>
+		<a class="terminal-toggle-bar" href="@(IsTerminal ? "/" : "/terminal")">
+			@(IsTerminal ? "Modern" : "Terminal")
+		</a>
+	</div>
+
+	<div class="nav-right">
+		<img src="/images/MooSharpWhiteCircle.png" alt="MooSharp Logo" class="nav-avatar" />
+		<span class="nav-name">MooSharp</span>
+	</div>
+</header>
+
+<main>
+	@Body
+</main>
+
+@code {
+	private bool IsTerminal => NavManager.Uri.Contains("/terminal");
+	private string GetLink(string page) => IsTerminal ? $"/terminal/{page}" : $"/{page}";
+}

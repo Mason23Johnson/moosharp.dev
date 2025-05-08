@@ -1,15 +1,10 @@
 @inherits LayoutComponentBase
 
-<ThemeToggle />
-
-@* TerminalStyle Layout for /terminal pages *@
-<link rel="stylesheet" href="css/terminal.css" />
-<script src="scripts/terminalTyping.js"></script>
-<script src="scripts/cheatCode.js"></script>
-<script src="scripts/indexOuterUI.js"></script>
-<script src="scripts/bannerTyping.js"></script>
-<script src="scripts/matrixText.js"></script>
-
-<div class="terminal-container">
+<div class="terminal-root">
+    <NavMenuLayout />
     @Body
 </div>
+
+<script src="scripts/indexOuterUI.js"></script>
+<script src="scripts/terminalTyping.js"></script>
+<script src="scripts/cheatCode.js"></script>

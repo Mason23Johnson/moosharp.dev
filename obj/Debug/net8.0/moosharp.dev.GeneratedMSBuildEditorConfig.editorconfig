@@ -26,12 +26,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mason/moosharp.dev/Layout/TerminalLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRlcm1pbmFsTGF5b3V0LnJhem9y
+[C:/Users/Mason/moosharp.dev/Layout/NavMenuLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnVMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/Layout/ThemeToggle.razor]
@@ -62,8 +58,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcQWJvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Terminal/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcSW5kZXgucmF6b3I=
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/Terminal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcVGVybWluYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/_Imports.razor]
@@ -73,3 +69,7 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/Mason/moosharp.dev/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-dp5lvpjfyd
+
+[C:/Users/Mason/moosharp.dev/Layout/TerminalLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRlcm1pbmFsTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-2s9wgmin59

@@ -12,8 +12,8 @@
         if (firstRender)
         {
             var reference = DotNetObjectReference.Create(this);
-            await JS.InvokeVoidAsync("addKeypressListener", reference); // Needed for Enter
-            await JS.InvokeVoidAsync("startTerminalTyping", "about");   // Start about typing
+            await JS.InvokeVoidAsync("startTerminalTyping", "about");
+            await JS.InvokeVoidAsync("addKeypressListener", reference);
         }
     }
 

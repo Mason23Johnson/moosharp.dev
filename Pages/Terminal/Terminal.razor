@@ -1,0 +1,37 @@
+@page "/terminal"
+@layout TerminalLayout
+@inject IJSRuntime JS
+
+<div class="banner-container">
+    <img src="images/MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
+    <div id="welcomeBase" class="banner-title"></div>
+</div>
+
+@code {
+    private bool introSkipped = false;
+
+    [JSInvokable]
+    public void CompleteTyping()
+    {
+        if (!introSkipped)
+        {
+            introSkipped = true;
+            JS.InvokeVoidAsync("completeTerminalIntro");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var reference = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("startOuterUI");
+            await JS.InvokeVoidAsync("startCheatCodeListener", reference);
+
+            await Task.Delay(100);
+            await JS.InvokeVoidAsync("startTerminalTyping", "index");
+
+            await JS.InvokeVoidAsync("addKeypressListener", reference);
+        }
+    }
+}

@@ -1,12 +1,10 @@
 /* IMPORTS */
-@import url('./about.css');
-@import url('./arcade.css');
-@import url('./banner.css');
-@import url('./nav.css');
-@import url('./projects.css');
-@import url('./section.css');
-@import url('./socials.css');
-@import url('./tech.css');
+@import url('/css/ModernCSS/about.css');
+@import url('/css/ModernCSS/arcade.css');
+@import url('/css/ModernCSS/projects.css');
+@import url('/css/ModernCSS/section.css');
+@import url('/css/ModernCSS/tech.css');
+@import url('/css/nav.css');
 
 /* Base Structure */
 body {

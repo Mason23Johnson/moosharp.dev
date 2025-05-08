@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xl4Pov5TYpUMKpZ5HqDHTbWlKzBQ0XfWUykRtKCG9zg=",
+  "Hash": "WOmIOdbXujux7H0YBgGcK3MMdP+nt7V30OWOqbuUtaM=",
   "Source": "moosharp.dev",
   "BasePath": "/",
   "Mode": "Root",
@@ -7921,25 +7921,6 @@
       "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\main.css"
     },
     {
-      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\nav.css",
-      "SourceId": "moosharp.dev",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/ModernCSS/nav.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\nav.css"
-    },
-    {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\projects.css",
       "SourceId": "moosharp.dev",
       "SourceType": "Discovered",
@@ -7978,25 +7959,6 @@
       "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\section.css"
     },
     {
-      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\socials.css",
-      "SourceId": "moosharp.dev",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/ModernCSS/socials.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\socials.css"
-    },
-    {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\tech.css",
       "SourceId": "moosharp.dev",
       "SourceType": "Discovered",
@@ -8014,6 +7976,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\tech.css"
+    },
+    {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\nav.css",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/nav.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\nav.css"
     },
     {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\TerminalCSS\\terminal.css",
@@ -8603,6 +8584,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\scripts\\matrixText.js"
+    },
+    {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\navScroll.js",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "scripts/navScroll.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\scripts\\navScroll.js"
     },
     {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\terminalTyping.js",

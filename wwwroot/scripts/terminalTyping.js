@@ -11,15 +11,27 @@ let currentPage = "index";
 
 // Starts typing
 window.startTerminalTyping = (page) => {
-    resetTerminal();
-    setupIntroText(page);
-    typeNextIntroLine();
-    blinkCursor();
+    const waitForTerminal = () => {
+        const terminal = document.getElementById("terminalText");
+        if (!terminal) {
+            console.warn("Waiting for #terminalText...");
+            return requestAnimationFrame(waitForTerminal);
+        }
+
+        resetTerminal();
+        setupIntroText(page);
+        typeNextIntroLine();
+        blinkCursor();
+    };
+
+    waitForTerminal();
 };
 
 // Sets intro text based on page
 function setupIntroText(page) {
+    console.log("Setting up intro text for page:", page);
     if (page === "about") {
+        console.log("doing about page");
         introText = [
             "",
             "",
@@ -47,6 +59,7 @@ function setupIntroText(page) {
             ">> Type '/help' for help"
         ];
     } else {
+        console.log("doing index page");
         introText = [
             ">> CONNECTING TO moosharp.dev...",
             ">> AUTHORIZING USER...",
@@ -90,13 +103,16 @@ function typeNextIntroLine() {
 }
 
 // Updates terminal display
-function updateTerminal() 
-{
+function updateTerminal() {
     const terminal = document.getElementById("terminalText");
-    if (!terminal) return;
-
+    if (!terminal) {
+        console.warn("terminalText element not found");
+        return;
+    }
+    console.log("Updating terminal with content:", terminalContent);
     terminal.innerHTML = terminalContent + '<span id="blinkingCursor">_</span>';
 }
+
 
 
 // Enables user typing
@@ -131,17 +147,15 @@ function handleTyping(event) {
 }
 
 // Handles terminal commands
-function handleCommand(command) 
-{
+function handleCommand(command) {
     const cmd = command.toLowerCase();
 
-    switch (cmd) 
-    {
+    switch (cmd) {
         case "/help":
             terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/modern: Modern mode";
             break;
         case "/home":
-            window.location.href = "/terminl/home";
+            window.location.href = "/terminal";
             break;
         case "/about":
             window.location.href = "/terminal/about";
@@ -154,15 +168,16 @@ function handleCommand(command)
             break;
         case "/modern":
             window.location.href = "/";
+            break;
         default:
-            if (command.trim() !== "") 
-            {
+            if (command.trim() !== "") {
                 terminalContent += `\nUnknown command: ${command}\n`;
             }
             break;
     }
     updateTerminal();
 }
+
 
 // Blinks cursor
 function blinkCursor() {
