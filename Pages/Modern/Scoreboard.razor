@@ -1,0 +1,189 @@
+@page "/MooCast"
+@layout MainLayout
+
+<h1 class="scoreboard-title">Scoreboard Updater</h1>
+
+<div class="viewer-scoreboard">
+    <div class="viewer-team" style="--team-bg:@HomeBgColor">
+        <div class="team-name" style="color:@HomeColor;">@HomeName</div>
+        <div class="team-score">@HomeScore</div>
+    </div>
+
+    <div class="viewer-team" style="--team-bg:@AwayBgColor">
+        <div class="team-name" style="color:@AwayColor;">@AwayName</div>
+        <div class="team-score">@AwayScore</div>
+    </div>
+</div>
+
+@if (CurrentSport == "Softball" || CurrentSport == "Baseball")
+{
+    <div class="diamond-wrapper">
+        <svg viewBox="0 0 200 200" class="diamond-svg">
+            <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="white" stroke-width="2" />
+            <circle cx="100" cy="40" r="12" class="@(OccupiedBases.Contains(2) ? "base-circle active" : "base-circle")"
+                @onclick="() => ToggleBase(2)" />
+            <circle cx="140" cy="100" r="12" class="@(OccupiedBases.Contains(1) ? "base-circle active" : "base-circle")"
+                @onclick="() => ToggleBase(1)" />
+            <circle cx="100" cy="160" r="12" class="@(OccupiedBases.Contains(0) ? "base-circle active" : "base-circle")"
+                @onclick="() => ToggleBase(0)" />
+            <circle cx="60" cy="100" r="12" class="@(OccupiedBases.Contains(3) ? "base-circle active" : "base-circle")"
+                @onclick="() => ToggleBase(3)" />
+        </svg>
+
+        <div class="diamond-controls">
+            <div class="period-control vertical">
+                <label>Inning:</label>
+                <input type="number" min="1" @bind="CurrentPeriod" />
+            </div>
+            <div class="period-control vertical">
+                <label>Balls:</label>
+                <input type="number" min="0" max="3" @bind="Balls" class="@GetErrorClass(Balls, 3)" />
+                <span class="error-hover"></span>
+            </div>
+            <div class="period-control vertical">
+                <label>Strikes:</label>
+                <input type="number" min="0" max="2" @bind="Strikes" class="@GetErrorClass(Strikes, 2)" />
+                <span class="error-hover"></span>
+            </div>
+            <div class="period-control vertical">
+                <label>Outs:</label>
+                <input type="number" min="0" max="2" @bind="Outs" class="@GetErrorClass(Outs, 2)" />
+                <span class="error-hover"></span>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="period-control">
+        <label>Quarter:</label>
+        <input type="number" min="1" @bind="CurrentPeriod" />
+    </div>
+}
+
+<div class="sport-selector">
+    @foreach (var sport in SportScores.Keys)
+    {
+        <button class="sport-button @(CurrentSport == sport ? "selected" : "")"
+            @onclick="() => SelectSport(sport)">@sport</button>
+    }
+</div>
+
+@if (!string.IsNullOrEmpty(CurrentSport))
+{
+    <div class="team-name-edit">
+        <input @bind="HomeName" placeholder="Home Team" class="team-input" />
+        <input type="color" @bind="HomeColor" title="Home Text Color" />
+        <input type="color" @bind="HomeBgColor" title="Home Background Color" />
+        <input @bind="AwayName" placeholder="Away Team" class="team-input" />
+        <input type="color" @bind="AwayColor" title="Away Text Color" />
+        <input type="color" @bind="AwayBgColor" title="Away Background Color" />
+    </div>
+
+    <div class="team-container">
+        <div class="team-panel">
+            <h2>@HomeName</h2>
+            <p class="score">@HomeScore</p>
+            <div class="score-buttons">
+                @foreach (var points in SelectedPointValues)
+                {
+                    <button @onclick="() => AddScore(true, points)">+@points</button>
+                    <button @onclick="() => SubtractScore(true, points)">-@points</button>
+                }
+            </div>
+        </div>
+        <div class="team-panel">
+            <h2>@AwayName</h2>
+            <p class="score">@AwayScore</p>
+            <div class="score-buttons">
+                @foreach (var points in SelectedPointValues)
+                {
+                    <button @onclick="() => AddScore(false, points)">+@points</button>
+                    <button @onclick="() => SubtractScore(false, points)">-@points</button>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code
+{
+    private int HomeScore = 0;
+    private int AwayScore = 0;
+    private int CurrentPeriod = 1;
+    private string HomeName = "Home";
+    private string AwayName = "Away";
+    private string CurrentSport = string.Empty;
+    private string HomeColor = "#ffffff";
+    private string AwayColor = "#ffffff";
+    private string HomeBgColor = "#000000";
+    private string AwayBgColor = "#000000";
+    private int Balls = 0;
+    private int Strikes = 0;
+    private int Outs = 0;
+
+    private string GetErrorClass(int value, int max) =>
+    value > max ? "input-error" : "";
+    void ChangeBalls(int delta)
+    {
+        Balls = Math.Clamp(Balls + delta, 0, 3);
+    }
+
+    void ChangeStrikes(int delta)
+    {
+        Strikes = Math.Clamp(Strikes + delta, 0, 2);
+    }
+
+    void ChangeOuts(int delta)
+    {
+        Outs = Math.Clamp(Outs + delta, 0, 2);
+    }
+
+
+    private List<int> SelectedPointValues =>
+    string.IsNullOrEmpty(CurrentSport) ? new() : SportScores[CurrentSport];
+
+    private Dictionary<string, List<int>> SportScores = new()
+    {
+        ["Football"] = new() { 1, 2, 3, 6 },
+        ["Basketball"] = new() { 1, 2, 3 },
+        ["Baseball"] = new() { 1 },
+        ["Softball"] = new() { 1 }
+    };
+
+    private HashSet<int> OccupiedBases = new();
+
+    void AddScore(bool isHome, int points)
+    {
+        if (isHome)
+            HomeScore += points;
+        else
+            AwayScore += points;
+    }
+
+    void SubtractScore(bool isHome, int points)
+    {
+        if (isHome)
+            HomeScore = Math.Max(0, HomeScore - points);
+        else
+            AwayScore = Math.Max(0, AwayScore - points);
+    }
+
+    void SelectSport(string sport)
+    {
+        CurrentSport = sport;
+        HomeScore = 0;
+        AwayScore = 0;
+        CurrentPeriod = 1;
+        OccupiedBases.Clear();
+    }
+
+    void ToggleBase(int baseNum)
+    {
+        if (!OccupiedBases.Add(baseNum))
+            OccupiedBases.Remove(baseNum);
+    }
+
+    string GetBaseClass(int baseNum) =>
+    OccupiedBases.Contains(baseNum) ? "base active" : "base";
+}

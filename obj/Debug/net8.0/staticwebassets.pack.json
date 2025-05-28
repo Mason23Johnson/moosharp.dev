@@ -25,12 +25,20 @@
       "PackagePath": "staticwebassets\\css\\ModernCSS\\arcade.css"
     },
     {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\contact.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\contact.css"
+    },
+    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\main.css",
       "PackagePath": "staticwebassets\\css\\ModernCSS\\main.css"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\projects.css",
       "PackagePath": "staticwebassets\\css\\ModernCSS\\projects.css"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\scoreboard.css",
+      "PackagePath": "staticwebassets\\css\\ModernCSS\\scoreboard.css"
     },
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\section.css",

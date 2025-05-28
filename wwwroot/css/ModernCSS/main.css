@@ -4,6 +4,8 @@
 @import url('/css/ModernCSS/projects.css');
 @import url('/css/ModernCSS/section.css');
 @import url('/css/ModernCSS/tech.css');
+@import url('/css/ModernCSS/scoreboard.css');
+@import url('/css/ModernCSS/contact.css');
 @import url('/css/nav.css');
 
 /* Base Structure */
@@ -102,7 +104,6 @@ body {
     border-radius: 50%;
     object-fit: cover;
     animation: slideInLeft 1s ease-out;
-    box-shadow: 0 0 12px rgb(0, 140, 255);
 }
 
 .hero-text {

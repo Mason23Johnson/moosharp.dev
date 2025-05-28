@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WOmIOdbXujux7H0YBgGcK3MMdP+nt7V30OWOqbuUtaM=",
+  "Hash": "Rcm0CYVtuO8UgA1+nFH6b1V5bd3B0GoelJHMMtBv/IE=",
   "Source": "moosharp.dev",
   "BasePath": "/",
   "Mode": "Root",
@@ -7902,6 +7902,25 @@
       "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\arcade.css"
     },
     {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\contact.css",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/ModernCSS/contact.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\contact.css"
+    },
+    {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\main.css",
       "SourceId": "moosharp.dev",
       "SourceType": "Discovered",
@@ -7938,6 +7957,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\projects.css"
+    },
+    {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\scoreboard.css",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/ModernCSS/scoreboard.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\ModernCSS\\scoreboard.css"
     },
     {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\section.css",
