@@ -8,7 +8,6 @@
         <div class="team-name" style="color:@HomeColor;">@HomeName</div>
         <div class="team-score">@HomeScore</div>
     </div>
-
     <div class="viewer-team" style="--team-bg:@AwayBgColor">
         <div class="team-name" style="color:@AwayColor;">@AwayName</div>
         <div class="team-score">@AwayScore</div>
@@ -81,9 +80,8 @@ else
     </div>
 
     <div class="team-container">
-        <div class="team-panel">
+        <div class="team-panel condensed-team" style="color:@HomeColor; background:@HomeBgColor;">
             <h2>@HomeName</h2>
-            <p class="score">@HomeScore</p>
             <div class="score-buttons">
                 @foreach (var points in SelectedPointValues)
                 {
@@ -92,9 +90,8 @@ else
                 }
             </div>
         </div>
-        <div class="team-panel">
+        <div class="team-panel condensed-team" style="color:@AwayColor; background:@AwayBgColor;">
             <h2>@AwayName</h2>
-            <p class="score">@AwayScore</p>
             <div class="score-buttons">
                 @foreach (var points in SelectedPointValues)
                 {
@@ -106,8 +103,7 @@ else
     </div>
 }
 
-@code
-{
+@code {
     private int HomeScore = 0;
     private int AwayScore = 0;
     private int CurrentPeriod = 1;
@@ -122,23 +118,7 @@ else
     private int Strikes = 0;
     private int Outs = 0;
 
-    private string GetErrorClass(int value, int max) =>
-    value > max ? "input-error" : "";
-    void ChangeBalls(int delta)
-    {
-        Balls = Math.Clamp(Balls + delta, 0, 3);
-    }
-
-    void ChangeStrikes(int delta)
-    {
-        Strikes = Math.Clamp(Strikes + delta, 0, 2);
-    }
-
-    void ChangeOuts(int delta)
-    {
-        Outs = Math.Clamp(Outs + delta, 0, 2);
-    }
-
+    private string GetErrorClass(int value, int max) => value > max ? "input-error" : "";
 
     private List<int> SelectedPointValues =>
     string.IsNullOrEmpty(CurrentSport) ? new() : SportScores[CurrentSport];
@@ -183,7 +163,4 @@ else
         if (!OccupiedBases.Add(baseNum))
             OccupiedBases.Remove(baseNum);
     }
-
-    string GetBaseClass(int baseNum) =>
-    OccupiedBases.Contains(baseNum) ? "base active" : "base";
 }

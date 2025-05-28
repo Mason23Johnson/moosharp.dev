@@ -166,9 +166,10 @@
     color: rgb(0, 225, 255);
     font-family: monospace;
     font-size: 13px;
-    opacity: 0.8;
     text-shadow: 0 0 5px #ffffff, 0 0 1px #ccc;
     animation: matrixScroll linear infinite;
+    animation-fill-mode: backwards;
+    opacity: 1;
 }
 
 /* Terminal typewriter effect */
@@ -210,8 +211,8 @@
 /* Matrix scroll down effect */
 @keyframes matrixScroll {
     0% {
-        transform: translateY(-150%);
-        opacity: 0.1;
+        transform: translateY(-200%);
+        opacity: 0;
     }
     100% {
         transform: translateY(100%);
