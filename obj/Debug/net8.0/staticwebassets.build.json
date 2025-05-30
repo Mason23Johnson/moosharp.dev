@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Rcm0CYVtuO8UgA1+nFH6b1V5bd3B0GoelJHMMtBv/IE=",
+  "Hash": "Xt5nPfiDiV29L3TyMq3i/w7NRr0QO8gbHTDfScFsGJQ=",
   "Source": "moosharp.dev",
   "BasePath": "/",
   "Mode": "Root",
@@ -7826,6 +7826,25 @@
       "OriginalItemSpec": "wwwroot\\CNAME"
     },
     {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ArcadeCSS\\QuickClick.css",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/ArcadeCSS/QuickClick.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\ArcadeCSS\\QuickClick.css"
+    },
+    {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "moosharp.dev",
       "SourceType": "Discovered",
@@ -8679,6 +8698,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\scripts\\themeControl.js"
+    },
+    {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\sounds\\qcpop.mp3",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "sounds/qcpop.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\sounds\\qcpop.mp3"
     }
   ]
 }

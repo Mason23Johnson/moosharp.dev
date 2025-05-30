@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets"
     },
     {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ArcadeCSS\\QuickClick.css",
+      "PackagePath": "staticwebassets\\css\\ArcadeCSS\\QuickClick.css"
+    },
+    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\css\\ModernCSS\\about.css",
       "PackagePath": "staticwebassets\\css\\ModernCSS\\about.css"
     },
@@ -195,6 +199,10 @@
     {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\scripts\\themeControl.js",
       "PackagePath": "staticwebassets\\scripts\\themeControl.js"
+    },
+    {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\sounds\\qcpop.mp3",
+      "PackagePath": "staticwebassets\\sounds\\qcpop.mp3"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.moosharp.dev.props",

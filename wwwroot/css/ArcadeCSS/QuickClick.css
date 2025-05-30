@@ -1,0 +1,99 @@
+.qc-header {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.qc-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.qc-info {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.qc-play-area {
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    background-color: #000000;
+    border: 2px solid #ff0000;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.qc-target {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.15s ease;
+    box-shadow: 0 0 10px red;
+    cursor: pointer;
+}
+
+.qc-result, .qc-score {
+    text-align: center;
+}
+
+.qc-target:active {
+    transform: scale(0.8);
+    box-shadow: 0 0 20px white;
+}
+
+.qc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.qc-modal {
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 15px #008cff;
+    max-width: 300px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.copy-btn {
+    background-color: #2ecc71;
+}
+
+.qc-copy-confirm {
+    color: lightgreen;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

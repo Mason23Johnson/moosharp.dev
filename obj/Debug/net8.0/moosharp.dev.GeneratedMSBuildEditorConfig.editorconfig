@@ -34,6 +34,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRoZW1lVG9nZ2xlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Mason/moosharp.dev/Pages/Games/QuickClick.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcUXVpY2tDbGljay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Mason/moosharp.dev/Pages/Games/TriTactic.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcVHJpVGFjdGljLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,12 +46,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEFib3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Modern/Contact.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXENvbnRhY3QucmF6b3I=
+[C:/Users/Mason/moosharp.dev/Pages/Modern/Arcade.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEFyY2FkZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Modern/Games.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXEdhbWVzLnJhem9y
+[C:/Users/Mason/moosharp.dev/Pages/Modern/Contact.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXENvbnRhY3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/Pages/Modern/Index.razor]
