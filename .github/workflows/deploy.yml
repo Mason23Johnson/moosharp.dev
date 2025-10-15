@@ -36,12 +36,13 @@ jobs:
         run: |
           mkdir -p _site
           cp -r publish/wwwroot/* _site/
-          # SPA routing + GitHub Pages
+          # Prevent PWA cache from breaking SRI
+          rm -f _site/service-worker*.js _site/manifest.webmanifest _site/service-worker-assets.js
+          # SPA routing + Pages
           cp _site/index.html _site/404.html
-          # Avoid Jekyll processing
           : > _site/.nojekyll
-          # Custom domain (also set in Settings → Pages)
           echo "moosharp.dev" > _site/CNAME
+
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
