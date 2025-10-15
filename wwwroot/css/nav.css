@@ -1,6 +1,6 @@
 .top-nav-bar {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.4);
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
@@ -21,6 +21,7 @@
 .social-icon {
     width: 18px;
     height: 18px;
+    color: #ffffff !important;
     object-fit: contain;
     transition: transform 0.3s ease;
 }
@@ -45,17 +46,16 @@
     text-decoration: none;
     font-family: 'Share Tech Mono', monospace;
     padding: 8px 14px;
-    border: 2px solid #00b7ff;
+    border: none;
     border-radius: 6px;
-    transition: background 0.2s ease, transform 0.2s ease;
-    /*backdrop-filter: blur(8px); */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .nav-link-box:hover {
-    background: #00b7ff;
+    color: #00b7ff;
     transform: translateY(-1px);
 }
+
 
 /* Terminal Toggle */
 .terminal-toggle-bar {
@@ -73,13 +73,6 @@
 .terminal-toggle-bar:hover {
     background: #009edd;
     transform: translateY(-2px);
-}
-
-/* RIGHT: Logo and text */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .nav-avatar {
@@ -107,26 +100,10 @@
         padding: 10px 20px;
     }
 
-    .nav-left, .nav-center, .nav-right {
+    .nav-left,
+    .nav-center,
+    .nav-right {
         justify-content: center;
         flex: 1 1 100%;
-    }
-
-    .social-circle {
-        padding: 5px;
-    }
-
-    .social-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .nav-avatar {
-        height: 30px;
-        width: 30px;
-    }
-
-    .nav-name {
-        font-size: 1rem;
     }
 }

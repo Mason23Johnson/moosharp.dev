@@ -1,3 +1,4 @@
+/* scoreboard.css */
 /* GENERAL */
 body {
     background: rgb(0, 0, 0);
@@ -25,7 +26,7 @@ body {
 }
 
 .viewer-team {
-    background-color: var(--team-bg, #00000000) !important;
+    background-color: var(--team-bg, #00000000);
     border-radius: 10px;
     padding: 20px 30px;
     min-width: 200px;
@@ -35,7 +36,7 @@ body {
 .team-score {
     font-size: 4rem;
     font-weight: bold;
-    color: white !important;
+    color: white;
     text-shadow: 0 0 8px #ffffff;
 }
 

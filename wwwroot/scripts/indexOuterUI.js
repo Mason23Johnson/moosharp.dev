@@ -58,3 +58,18 @@ window.addEventListener('scroll', () => {
 
     lastScrollY = window.scrollY;
 });
+
+window.lockScrollSections = () => {
+    document.body.style.overflow = "hidden"; // disable native scroll
+    const container = document.querySelector('.about-scroll-container');
+    if (!container) return;
+
+    container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        container.scrollBy({
+            top: e.deltaY < 0 ? -window.innerHeight : window.innerHeight,
+            behavior: 'smooth'
+        });
+    }, { passive: false });
+};
+

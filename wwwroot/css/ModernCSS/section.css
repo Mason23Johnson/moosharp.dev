@@ -141,7 +141,7 @@
 .matrix-true {
     position: relative;
     overflow: hidden;
-    background-color: black !important;
+    background-color: black 0.5;
 }
 
 /* Streams  columns of characters */

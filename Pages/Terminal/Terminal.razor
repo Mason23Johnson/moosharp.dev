@@ -2,9 +2,13 @@
 @layout TerminalLayout
 @inject IJSRuntime JS
 
-<div class="banner-container">
-    <img src="images/MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
-    <div id="welcomeBase" class="banner-title"></div>
+<div class="terminal-container">
+    <div class="banner-container">
+        <img src="images/MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
+        <div id="welcomeBase" class="banner-title">WELCOME USER</div>
+    </div>
+
+    <div id="terminalText"></div>
 </div>
 
 @code {
@@ -25,13 +29,9 @@
         if (firstRender)
         {
             var reference = DotNetObjectReference.Create(this);
-            await JS.InvokeVoidAsync("startOuterUI");
-            await JS.InvokeVoidAsync("startCheatCodeListener", reference);
-
-            await Task.Delay(100);
             await JS.InvokeVoidAsync("startTerminalTyping", "index");
-
             await JS.InvokeVoidAsync("addKeypressListener", reference);
+            await JS.InvokeVoidAsync("startRotatingWelcome");
         }
     }
 }

@@ -7,6 +7,18 @@
 </div>
 
 @code {
+    private bool introSkipped = false;
+
+    [JSInvokable]
+    public void CompleteTyping()
+    {
+        if (!introSkipped)
+        {
+            introSkipped = true;
+            JS.InvokeVoidAsync("completeTerminalIntro");
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -15,11 +27,5 @@
             await JS.InvokeVoidAsync("startTerminalTyping", "about");
             await JS.InvokeVoidAsync("addKeypressListener", reference);
         }
-    }
-
-    [JSInvokable]
-    public void CompleteTyping()
-    {
-        JS.InvokeVoidAsync("completeTerminalIntro");
     }
 }

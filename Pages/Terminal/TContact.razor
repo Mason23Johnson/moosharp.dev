@@ -1,0 +1,39 @@
+@page "/terminal/contact"
+@layout TerminalLayout
+
+<h1 class="contact-title">Contact Me</h1>
+
+@if (FormSubmitted)
+{
+    <p class="contact-success">Message sent successfully!</p>
+}
+else if (FormError)
+{
+    <p class="contact-error">Something went wrong. Please try again later.</p>
+}
+
+<div class="contact-form">
+    <form method="POST" action="https://formspree.io/f/mkgrdbyg" data-formspree>
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Your name" required />
+
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Your email" required />
+
+        <label>Message</label>
+        <textarea name="message" placeholder="Type your message here..." rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
+@code {
+    private bool FormSubmitted = false;
+    private bool FormError = false;
+
+    private async Task HandleSubmit()
+    {
+        await Task.Delay(500); // just UI simulation
+        FormSubmitted = true;
+    }
+}

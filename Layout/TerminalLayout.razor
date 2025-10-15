@@ -1,9 +1,26 @@
 @inherits LayoutComponentBase
 
-<div class="terminal-root">
-    @Body
-</div>
+@inject IJSRuntime JS
 
-<script src="scripts/indexOuterUI.js"></script>
+<link href="css/TerminalCSS/terminal.css" rel="stylesheet" />
+<script src="scripts/matrixText.js"></script>
+<script src="scripts/keyListener.js"></script>
 <script src="scripts/terminalTyping.js"></script>
-<script src="scripts/cheatCode.js"></script>
+<script src="scripts/indexOuterUI.js"></script>
+
+<body class="terminal-root">
+    <NavMenuLayout />
+    @Body
+</body>
+
+@inject IJSRuntime JS
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("document.body.classList.add", "terminal-root");
+        }
+    }
+}

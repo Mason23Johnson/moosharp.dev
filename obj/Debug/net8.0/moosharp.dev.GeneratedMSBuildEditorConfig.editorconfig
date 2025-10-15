@@ -30,12 +30,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnVMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Layout/ThemeToggle.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFRoZW1lVG9nZ2xlLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Mason/moosharp.dev/Pages/Games/QuickClick.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcUXVpY2tDbGljay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Games/RageBait.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcUmFnZUJhaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Games/Snake.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZXNcU25ha2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/Pages/Games/TriTactic.razor]
@@ -66,12 +70,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kZXJuXFNjb3JlYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mason/moosharp.dev/Pages/Terminal/About.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcQWJvdXQucmF6b3I=
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/TAbout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcVEFib3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/TContact.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcVENvbnRhY3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/Pages/Terminal/Terminal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcVGVybWluYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mason/moosharp.dev/Pages/Terminal/TProjects.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVybWluYWxcVFByb2plY3RzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mason/moosharp.dev/_Imports.razor]

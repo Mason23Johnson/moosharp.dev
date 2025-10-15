@@ -5,37 +5,38 @@
 
 <link href="css/ArcadeCSS/QuickClick.css" rel="stylesheet" />
 
-<h2 class="qc-header">🎯 Quick Click Challenge</h2>
+<h2 class="qc-header">Quick Click Challenge</h2>
 
-@if (!gameStarted)
+@if (gameOver)
 {
-	<button class="qc-btn" @onclick="StartGame">Start Game</button>
+    <div class="qc-overlay">
+        <div class="qc-modal">
+            <h2>🎉 Game Over!</h2>
+            <p>You scored <strong>@score</strong> clicks!</p>
+            <button class="qc-btn" @onclick="StartGame">Play Again</button>
+            <button class="qc-btn" @onclick="CopyScore">Copy Score</button>
+                @if (copyMessage is not null)
+                {
+                    <p class="qc-info">@copyMessage</p>
+                }
+        </div>
+    </div>
 }
-else if (gameOver)
+
+else if (!gameStarted)
 {
-	<div class="qc-overlay">
-		<div class="qc-modal">
-			<h2>🎉 Game Over!</h2>
-			<p>You scored <strong>@score</strong> clicks!</p>
-			<button class="qc-btn" @onclick="StartGame">Play Again</button>
-			<button class="qc-btn copy-btn" @onclick="CopyScore">Copy Result</button>
-			@if (copyMessage != null)
-			{
-				<p class="qc-copy-confirm">@copyMessage</p>
-			}
-		</div>
-	</div>
+    <button class="qc-btn" @onclick="StartGame">Start Game</button>
 }
 else
 {
-	<div class="qc-info">
-		<p>Time Left: @Math.Ceiling(timeLeft) s</p>
-		<p>Score: @score</p>
-	</div>
+    <div class="qc-info">
+        <p>Time Left: @Math.Ceiling(timeLeft) s</p>
+        <p>Score: @score</p>
+    </div>
 
-	<div class="qc-play-area" @onclick="OnMissClick">
-		<div class="qc-target" style="@targetStyle" @onclick:stopPropagation="true" @onclick="TargetClicked"></div>
-	</div>
+    <div class="qc-play-area" @onclick="OnMissClick">
+        <div class="qc-target" style="@targetStyle" @onclick:stopPropagation="true" @onclick="TargetClicked"></div>
+    </div>
 }
 
 @code {private bool gameStarted = false;
@@ -74,15 +75,17 @@ private void UpdateGame(object? state)
         StateHasChanged();
     });
 }
-
-private void EndGame()
+private async void EndGame()
 {
     gameTimer?.Dispose();
     gameOver = true;
     gameStarted = false;
 
-    InvokeAsync(StateHasChanged);
-	Console.WriteLine($"Game Over! Final Score: {score}");
+    Console.WriteLine("EndGame triggered");
+
+    // Delay a tick before updating the UI
+    await Task.Delay(50);
+    await InvokeAsync(StateHasChanged);
 }
 
 private void MoveTarget()

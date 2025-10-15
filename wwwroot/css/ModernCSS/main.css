@@ -1,3 +1,5 @@
+/* main.css */
+
 /* IMPORTS */
 @import url('/css/ModernCSS/about.css');
 @import url('/css/ModernCSS/arcade.css');
@@ -6,20 +8,22 @@
 @import url('/css/ModernCSS/tech.css');
 @import url('/css/ModernCSS/scoreboard.css');
 @import url('/css/ModernCSS/contact.css');
+@import url('/css/ArcadeCSS/ragebait.css');
 @import url('/css/nav.css');
+/* go through each css file to find the highlight of Hi Im Mason on index.razor - on load/refresh | use cookies or session keys for terminal mode*/
 
 /* Base Structure */
-body {
+body 
+{
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: 
-        url('/images/moosharpbackground.jpg') no-repeat center center fixed,
-        #0f0900;
-    background-size: cover;
-    color: #161616;
+        url('/images/moosharpbackgroundblack.jpg') no-repeat center center fixed;
+    background-size: 1920px 1080px;
 }
 
-.modern-footer {
+.modern-footer 
+{
     background-color: transparent;
     text-align: center;
     padding: 15px 0;
@@ -28,37 +32,35 @@ body {
 }
 
 /* ========== TEXT BLOCKS & TYPOGRAPHY ========== */
-.modern-banner {
+.modern-banner 
+{
     text-align: left;
     max-width: 800px;
     margin: 80px auto 40px;
     padding: 0 20px;
 }
 
-@keyframes matrixFall {
-    0% {
+@keyframes matrixFall 
+{
+    0% 
+    {
         transform: translateY(-100%) rotate(180deg);
         opacity: 0.1;
     }
-    100% {
+    100% 
+    {
         transform: translateY(100%) rotate(180deg);
         opacity: 0.3;
     }
 }
 
-.modern-banner h1,
-.modern-banner h2 {
-    font-size: 4rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.highlight {
+.highlight 
+{
     color: white;
 }
 
-.bio {
+.bio 
+{
     font-size: 1.05rem;
     color: #ccc;
     max-width: 8500px;
@@ -67,28 +69,33 @@ body {
 }
 
 /* ========== ANIMATIONS ========== */
-@keyframes scrollLoop {
+@keyframes scrollLoop 
+{
     0% { transform: translateX(0); }
     100% { transform: translateX(-20%); }
 }
 
-@keyframes slideInLeft {
+@keyframes slideInLeft 
+{
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
 
-@keyframes slideInRight {
+@keyframes slideInRight 
+{
     from { transform: translateX(-100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
 
-@keyframes fadeIn {
+@keyframes fadeIn 
+{
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
 /* ========== HERO ANIMATION SECTION ========== */
-.hero-container {
+.hero-container 
+{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,7 +105,8 @@ body {
     animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-.hero-image {
+.hero-image 
+{
     width: 180px;
     height: 180px;
     border-radius: 50%;
@@ -106,7 +114,8 @@ body {
     animation: slideInLeft 1s ease-out;
 }
 
-.hero-text {
+.hero-text 
+{
     animation: slideInRight 1s ease-out;
     font-size: 4rem;
     font-weight: bold;
@@ -114,7 +123,8 @@ body {
     color: white;
 }
 
-.hero-text .blue-name {
+.hero-text .blue-name 
+{
     color: #00b7ff;
     text-shadow: 0 0 2px #00b7ff, 0 0 10px #00b7ff;
 }

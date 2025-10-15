@@ -1,70 +1,201 @@
-/* GAMES */
-.games-container {
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 0 30px;
-    font-family: 'Share Tech Mono', monospace;
-    animation: fadeIn 1s ease-in;
-    color: #ccc;
-    text-align: center;
+/* arcade.css */
+/* Matrix bg stays */
+#gamesMatrixBackground {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
 }
 
-.games-intro {
-    font-size: 1rem;
-    margin-bottom: 40px;
-    color: #aaa;
-}
+/* Layout */
+.steam-arcade {
+    --panel: rgba(15, 18, 22, 0.85);
+    --panel-strong: rgba(20, 24, 29, 0.95);
+    --line: #0b3b66;
+    --ink: #cfd7e2;
+    --ink-dim: #9fb1c7;
+    --accent: #00aaff;
 
-.arcade-grid {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 18px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-    justify-items: center;
+    grid-template-columns: 600px 1fr;
+    gap: 18px;
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--ink);
 }
 
-.arcade-card {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #0077ff;
-    box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-    padding: 25px;
-    border-radius: 12px;
-    max-width: 320px;
-    transition: all 0.3s ease;
-    text-align: center;
+/* Sidebar */
+.steam-sidebar {
+    background: var(--panel);
+    border: 1px solid #0c2c49;
+    border-radius: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.sidebar-header {
+    padding: 14px 16px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: white;
+    background: linear-gradient(180deg, rgba(0,122,255,.25), rgba(0,0,0,0));
+    border-bottom: 1px solid #0c2c49;
+}
+
+.game-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+.game-item {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+
+.game-item:hover {
+    border-color: #135a92;
+    background: linear-gradient(180deg, rgba(19,90,146,.18), rgba(255,255,255,0.02));
+    transform: translateY(-1px);
+}
+
+.game-item.active {
+    border-color: #1aa3ff;
+    background: linear-gradient(180deg, rgba(26,163,255,.25), rgba(255,255,255,0.04));
+    box-shadow: inset 0 0 0 1px rgba(26,163,255,.25), 0 6px 18px rgba(0,0,0,.25);
+}
+
+.game-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #0e1722;
+    box-shadow: 0 0 0 1px #0c2c49;
+}
+
+.game-meta { display: flex; flex-direction: column; min-width: 0; }
+.game-name { color: white; font-weight: 700; font-size: 0.98rem; white-space: nowrap; overflow: visible; text-overflow: ellipsis; line-height: 1.2;}
+.game-tag  { color: var(--ink-dim); font-size: 0.8rem; margin-top: 2px; white-space: nowrap; text-overflow: ellipsis; }
+
+
+/* Detail */
+.steam-detail {
+    background: var(--panel-strong);
+    border: 1px solid #0c2c49;
+    border-radius: 14px;
+    overflow: clip;
+    min-height: 420px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
     position: relative;
 }
 
-.arcade-card:hover {
-    transform: scale(1.04);
-    box-shadow: 0 0 16px #0077ff, 0 0 30px #0077ff inset;
+.hero {
+    position: relative;
+    min-height: 360px;
+    background-size: cover;
+    background-position: center;
 }
 
-.arcade-card h3 {
-    color: #0077ff;
-    font-size: 1.4rem;
-    margin-bottom: 12px;
-    text-shadow: 0 0 4px #0077ff;
+.hero-overlay {
+    position: absolute; inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.65)),
+        radial-gradient(60% 60% at 20% 30%, rgba(0,170,255,.35), rgba(0,0,0,0));
 }
 
-.arcade-card p {
-    color: #bbb;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 16px;
+.hero-info {
+    position: relative;
+    z-index: 1;
+    padding: 28px;
+    max-width: 100%;
 }
 
-.arcade-card a {
+.hero-title {
+    color: white;
+    font-size: 2.2rem;
+    margin: 0 0 10px 0;
+    text-shadow: 0 2px 14px rgba(0,0,0,.6);
+}
+
+.hero-desc {
+    color: #d6e6f7;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    max-width: 150ch;
+}
+
+/* Buttons */
+.detail-actions { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
+
+.play-btn,
+.visit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-weight: 800;
     text-decoration: none;
-    padding: 8px 14px;
-    background-color: #0077ff;
-    color: black;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 0 8px #0077ff;
-    transition: background 0.2s ease;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    box-shadow: 0 6px 20px rgba(0,170,255,.15), inset 0 0 0 1px rgba(255,255,255,.05);
 }
 
-.arcade-card a:hover {
-    background-color: #00ddb5;
-    box-shadow: 0 0 12px #0077ff, 0 0 20px #0077ff;
+.play-btn {
+    background: linear-gradient(180deg, #25b8ff, #0a86db);
+    color: #001523;
+    border: 1px solid #22a9f0;
+}
+
+.play-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(0,170,255,.22); }
+
+.play-btn.disabled {
+    pointer-events: none;
+    opacity: .45;
+    filter: grayscale(30%);
+}
+
+.visit-btn {
+    background: rgba(255,255,255,.06);
+    color: #cfe7ff;
+    border: 1px solid rgba(255,255,255,.1);
+}
+.visit-btn:hover { background: rgba(255,255,255,.1); transform: translateY(-1px); }
+
+/* Tags */
+.tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag {
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    color: #93d7ff;
+    border: 1px solid rgba(147,215,255,.35);
+    background: rgba(15, 55, 88, .35);
+    border-radius: 999px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .steam-arcade { grid-template-columns: 1fr; }
+    .game-list { max-height: 40vh; }
+    .hero { min-height: 300px; }
 }
