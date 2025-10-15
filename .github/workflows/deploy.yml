@@ -1,55 +1,59 @@
-# DOCS_WORKFLOW
-name: Deploy Blazor to GitHub Pages (main/docs)
+# PAGES_ACTIONS_BLAZOR
+name: Deploy Blazor WASM to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-    # Prevent infinite loop when this workflow commits to /docs
-    paths-ignore:
-      - 'docs/**'
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      # CTRL+F: PUBLISH
-      - name: Publish to /publish
+      # CTRL+F: PUBLISH_STEP
+      - name: Publish
         run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
 
-      # CTRL+F: PREP_DOCS
-      - name: Prepare /docs
+      # CTRL+F: PREPARE_SITE
+      - name: Prepare Pages artifact
         run: |
-          rm -rf docs
-          mkdir -p docs
-          cp -r publish/wwwroot/* docs/
-          test -f docs/index.html
-          cp docs/index.html docs/404.html
-          : > docs/.nojekyll
-          echo "moosharp.dev" > docs/CNAME
+          mkdir -p _site
+          cp -r publish/wwwroot/* _site/
+          # SPA routing + GitHub Pages
+          cp _site/index.html _site/404.html
+          # Avoid Jekyll processing
+          : > _site/.nojekyll
+          # Custom domain (also set in Settings → Pages)
+          echo "moosharp.dev" > _site/CNAME
 
-      # CTRL+F: COMMIT_PUSH
-      - name: Commit and push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Deploy Blazor site to /docs"
-            git push
-          fi
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
