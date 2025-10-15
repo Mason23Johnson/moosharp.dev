@@ -1,47 +1,55 @@
+# DOCS_WORKFLOW
 name: Deploy Blazor to GitHub Pages (main/docs)
 
 on:
   push:
     branches: [ main ]
+    # Prevent infinite loop when this workflow commits to /docs
+    paths-ignore:
+      - 'docs/**'
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: Publish Blazor App to /publish
-      run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
+      # CTRL+F: PUBLISH
+      - name: Publish to /publish
+        run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
 
-    - name: Clear old /docs folder
-      run: |
-        rm -rf docs
-        mkdir docs
+      # CTRL+F: PREP_DOCS
+      - name: Prepare /docs
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r publish/wwwroot/* docs/
+          test -f docs/index.html
+          cp docs/index.html docs/404.html
+          : > docs/.nojekyll
+          echo "moosharp.dev" > docs/CNAME
 
-    - name: Move build output to /docs
-      run: |
-        cp -r publish/wwwroot/* docs/
-
-    - name: Check if build succeeded
-      run: test -f docs/index.html
-
-    - name: Add CNAME, .nojekyll, and 404.html
-      run: |
-        echo "moosharp.dev" > docs/CNAME
-        echo "" > docs/.nojekyll
-        cp docs/index.html docs/404.html
-
-    - name: Commit and Push /docs
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add docs
-        git commit -m "Deploy Blazor site to /docs" || echo "No changes to commit"
-        git push
+      # CTRL+F: COMMIT_PUSH
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Deploy Blazor site to /docs"
+            git push
+          fi
