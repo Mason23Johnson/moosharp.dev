@@ -1,0 +1,122 @@
+@page "/arcade"
+@layout MainLayout
+@inject IJSRuntime JS
+
+<canvas id="gamesMatrixBackground"></canvas>
+
+<div class="steam-arcade">
+    <aside class="steam-sidebar">
+        <div class="sidebar-header">Library</div>
+        <ul class="game-list">
+            @foreach (var g in Games)
+            {
+                <li class="game-item @(g == Selected ? "active" : "")" @onclick="() => Select(g)">
+                    <img class="game-icon" src="@g.Icon" alt="" onerror="this.style.display='none'">
+                    <div class="game-meta">
+                        <span class="game-name">@g.Name</span>
+                        <span class="game-tag">@g.Tagline</span>
+                    </div>
+                </li>
+            }
+        </ul>
+    </aside>
+
+    <section class="steam-detail">
+        <div class="hero" style="background-image: url('@Selected.Hero');">
+            <div class="hero-overlay"></div>
+            <div class="hero-info">
+                <h1 class="hero-title">@Selected.Name</h1>
+                <p class="hero-desc">@Selected.Description</p>
+
+                <div class="detail-actions">
+                    <a class="play-btn @(Selected.CanPlay ? "" : "disabled")" target="_blank"
+                        href="@(Selected.CanPlay? Selected.PlayUrl: "#")">
+                        Play
+                    </a>
+                    <a class="visit-btn" href="/projects">Details</a>
+                </div>
+
+                <div class="tags">
+                    @foreach (var t in Selected.Tags)
+                    {
+                        <span class="tag">@t</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    private List<GameItem> Games = new()
+{
+new GameItem("Quick Click", "/arcade/quickclick", canPlay: true)
+{
+Tagline = "Reflex and aim trainer",
+Description = "Click targets before the timer drains. Speed ramps up.",
+Tags = new() { "Web", "Blazor", "Casual" },
+Icon = "/images/games/quickclick.png",
+Hero = "/images/games/quickclick_hero.jpg"
+},
+new GameItem("Snake", "/arcade/snake", canPlay: true)
+{
+Tagline = "Classic Snake game in neon grid",
+Description = "Arrow/WASD, P to pause, R to restart. Local high score.",
+Tags = new() { "Web", "Canvas", "Arcade" },
+Icon = "/images/games/snake.png",
+Hero = "/images/games/snake_hero.jpg"
+},
+
+new GameItem("Tri-Tactic", null, canPlay: false)
+{
+Badge = "Soon",
+Tagline = "Infinite Tic-Tac-Toe",
+Description = "3-piece infinite grid with memory-based removal. Online mode coming.",
+Tags = new() { "Prototype", "Board", "Strategy" },
+Icon = "/images/games/tritactic.png",
+Hero = "/images/games/tritactic_hero.jpg"
+},
+new GameItem("21 Down", null, canPlay: false)
+{
+Badge = "2026",
+Tagline = "Blackjack Platformer",
+Description = "C# & Godot action‑platformer about cards, luck, and style.",
+Tags = new() { "Godot", "Action", "WIP" },
+Icon = "/images/games/21down.png",
+Hero = "/images/games/21down_hero.jpg"
+},
+};
+
+    private GameItem Selected = default!;
+
+    protected override void OnInitialized()
+    {
+        Selected = Games.First();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("startGamesMatrix");
+        }
+    }
+
+    private void Select(GameItem g) => Selected = g;
+
+    private class GameItem
+    {
+        public GameItem(string name, string? playUrl, bool canPlay)
+        { Name = name; PlayUrl = playUrl; CanPlay = canPlay; }
+
+        public string Name { get; set; }
+        public string? PlayUrl { get; set; }
+        public bool CanPlay { get; set; }
+        public string Tagline { get; set; } = "";
+        public string Description { get; set; } = "";
+        public List<string> Tags { get; set; } = new();
+        public string Icon { get; set; } = "/images/games/placeholder.png";
+        public string Hero { get; set; } = "/images/games/placeholder_hero.jpg";
+        public string? Badge { get; set; }
+    }
+}

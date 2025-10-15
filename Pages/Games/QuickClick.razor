@@ -1,0 +1,127 @@
+@page "/arcade/quickclick"
+@layout MainLayout
+
+@inject IJSRuntime JS
+
+<link href="css/ArcadeCSS/QuickClick.css" rel="stylesheet" />
+
+<h2 class="qc-header">Quick Click Challenge</h2>
+
+@if (gameOver)
+{
+    <div class="qc-overlay">
+        <div class="qc-modal">
+            <h2>🎉 Game Over!</h2>
+            <p>You scored <strong>@score</strong> clicks!</p>
+            <button class="qc-btn" @onclick="StartGame">Play Again</button>
+            <button class="qc-btn" @onclick="CopyScore">Copy Score</button>
+                @if (copyMessage is not null)
+                {
+                    <p class="qc-info">@copyMessage</p>
+                }
+        </div>
+    </div>
+}
+
+else if (!gameStarted)
+{
+    <button class="qc-btn" @onclick="StartGame">Start Game</button>
+}
+else
+{
+    <div class="qc-info">
+        <p>Time Left: @Math.Ceiling(timeLeft) s</p>
+        <p>Score: @score</p>
+    </div>
+
+    <div class="qc-play-area" @onclick="OnMissClick">
+        <div class="qc-target" style="@targetStyle" @onclick:stopPropagation="true" @onclick="TargetClicked"></div>
+    </div>
+}
+
+@code {private bool gameStarted = false;
+private bool gameOver = false;
+private int score = 0;
+private double timeLeft = 30;
+private Timer? gameTimer;
+private string targetStyle = "";
+private string? copyMessage;
+private Random rand = new();
+
+private void StartGame()
+{
+    score = 0;
+    timeLeft = 30;
+    gameStarted = true;
+    gameOver = false;
+    copyMessage = null;
+    MoveTarget();
+
+    gameTimer?.Dispose();
+    gameTimer = new Timer(UpdateGame, null, 0, 100);
+}
+
+private void UpdateGame(object? state)
+{
+    InvokeAsync(() =>
+    {
+        timeLeft -= 0.1;
+
+        if (timeLeft <= 0)
+        {
+            EndGame();
+        }
+
+        StateHasChanged();
+    });
+}
+private async void EndGame()
+{
+    gameTimer?.Dispose();
+    gameOver = true;
+    gameStarted = false;
+
+    Console.WriteLine("EndGame triggered");
+
+    // Delay a tick before updating the UI
+    await Task.Delay(50);
+    await InvokeAsync(StateHasChanged);
+}
+
+private void MoveTarget()
+{
+    int areaSize = 500;
+    int targetSize = 50;
+    int max = areaSize - targetSize;
+
+    int left = rand.Next(0, max);
+    int top = rand.Next(0, max);
+    targetStyle = $"left: {left}px; top: {top}px;";
+}
+
+private async Task TargetClicked()
+{
+    score++;
+    MoveTarget();
+    await PlaySound();
+    await JS.InvokeVoidAsync("animateHit");
+}
+
+private async Task PlaySound()
+{
+    await JS.InvokeVoidAsync("playClickSound");
+}
+
+private async Task CopyScore()
+{
+    string text = $"I scored {score} in Quick Click Challenge on MooSharp.dev!";
+    await JS.InvokeVoidAsync("navigator.clipboard.writeText", text);
+    copyMessage = "Copied to clipboard!";
+    await InvokeAsync(StateHasChanged);
+}
+
+private void OnMissClick()
+{
+}
+
+}

@@ -15,6 +15,7 @@ window.startTerminalTyping = (page) => {
     setupIntroText(page);
     typeNextIntroLine();
     blinkCursor();
+    showTerminalToast();
 };
 
 // Sets intro text based on page
@@ -28,19 +29,18 @@ function setupIntroText(page) {
             ">> USER CONNECTING.",
             ">> STATUS: Connected to Backend. Preparing Full Stack...",
             "",
-            "Welcome to MooSharp — the digital headquarters of Mason Johnson, a 20 year old full stack developer with a backend core.",
-            "",
-            "My nickname “Moo” traces back to the early 1990s when my father programmed using LambdaMOO.",
-            "Programming is in my blood with DNA tracing back 30 years.",
+            "Welcome to MooSharp, the coded embodiment of Mason Johnson, a 21 year old Salesforce and full-stack developer.",
             "",
             "Today, MooSharp represents everything I build:",
-            "• Modern backend systems with C#, .NET, and EF Core",
-            "• Fully responsive Blazor web apps",
-            "• Indie games using Godot (with C# scripting)",
-            "• Freelance contracts and custom backend tools",
-            "• YouTube content under the alias MooSharp",
+            "• Modern full-stack systems with C#, JS, CSS, HTML, Python, Java and EF Core.",
+            "• Salesforce Apex Classes, Triggers, and Lightning Web Components.",
+            "• Fully responsive Blazor web apps.",
+            "• Linux and NAS server management and hosting.",
+            "• Networking and security expertise inluding firewalls, VPNs, VLANS, and more.",
+            "• Indie games using Godot (with C# scripting).",
+            "• Freelance contracts and custom backend tools.",
+            "• YouTube content under the alias MooSharp.",
             "",
-            "This page may look like a retro 90s executable, but under the hood, it's powered by modern functionalities.",
             "This is only the beginning of my frontend specialties. I can make your website look however you'd like.",
             "",
             ">> SYSTEM: Ready...",
@@ -138,19 +138,34 @@ function handleCommand(command)
     switch (cmd) 
     {
         case "/help":
-            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n";
+            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/arcade: Moochine Arcade\n/modern: Redirect to ModernCSS/main.css\n/index: Redirect to Home\n";
             break;
         case "/home":
-            window.location.href = "/home";
+            window.location.href = "/";
             break;
         case "/about":
-            window.location.href = "/about";
+            window.location.href = "/terminal/about";
             break;
         case "/projects":
             window.location.href = "/projects";
             break;
         case "/contact":
             window.location.href = "/contact";
+            break;
+        case "/arcade":
+            terminalContent += "\n>> SYSTEM: Redirecting back to Modern for Moochine Arcade\n";
+            terminalContent += ">> SYSTEM: Redirecting to Moochine Arcade...\n";
+            updateTerminal();
+            setTimeout(() => {
+                window.location.href = "/arcade";
+            }, 4000);
+            break;
+        case "/modern":
+            terminalContent += "\n>> SYSTEM: Redirecting back to home using Modern\n";
+            updateTerminal();
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 3000);
             break;
         case "/index":
             window.location.href = "/";
@@ -277,3 +292,31 @@ function resetTerminal() {
     if (terminal) terminal.innerText = "";
 }
 
+let _toastTimeout;
+
+function showTerminalToast(message = "Press Enter to skip typing") {
+  clearTimeout(_toastTimeout);
+
+  let container = document.querySelector(".terminal-toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.className = "terminal-toast-container";
+    document.body.appendChild(container);
+  }
+
+  // Remove any existing toast(s)
+  container.innerHTML = "";
+
+  const toast = document.createElement("div");
+  toast.className = "terminal-toast";
+  toast.textContent = message;
+  container.appendChild(toast);
+
+  // Remove toast after 5 seconds
+  _toastTimeout = setTimeout(() => {
+    container.removeChild(toast);
+  }, 5000);
+}
+
+// Call once when terminal typing starts
+showTerminalToast();

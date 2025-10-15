@@ -1,0 +1,152 @@
+@page "/projects"
+@layout MainLayout
+
+<section id="projects">
+
+@code {
+    private const string YT_CHANNEL_URL = "https://www.youtube.com/@moosharp";
+    private const string CHANNEL_HANDLE = "@moosharp";
+
+    // Sort state
+    private string sortMode = "hours_desc";
+
+    // YouTube data
+    private List<ProjectItem> Items = new()
+{
+new ProjectItem(
+Title: "MooDo Calendar (Web Version Coming Soon!)",
+Summary: "Task scheduler with notifications, auth, and EF Core.",
+Hours: 90,
+Thumbnail: "/images/projects/moodo.png",
+ProjectUrl: "/projects/moodo"
+),
+new ProjectItem(
+Title: "MooCast Scoreboard",
+Summary: "Livestream scoreboard editor for sports streamers.",
+Hours: 6,
+Thumbnail: "/images/projects/moocast.png",
+ProjectUrl: "/moocast"
+),
+new ProjectItem(
+Title: "Moochine Arcade",
+Summary: "A collection of indie prototypes and small web games.",
+Hours: 16,
+Thumbnail: "/images/projects/moochinearcade.png",
+ProjectUrl: "/arcade"
+),
+// placeholder cards
+new ProjectItem("Tritactic (Web Version Coming Soon!)", "Tactical card prototype", 3, "/images/projects/TriTactic.png", "/projects/tritactic"),
+@* new ProjectItem("Blog Engine (WIP)", "Minimal CMS + markdown", 18, "/images/projects/placeholder.png", "/projects/blog"), *@
+};
+
+    private IEnumerable<ProjectItem> SortedItems =>
+    sortMode switch
+    {
+        "hours_desc" => Items.OrderByDescending(i => i.Hours),
+        "hours_asc" => Items.OrderBy(i => i.Hours),
+        "az" => Items.OrderBy(i => i.Title),
+        "za" => Items.OrderByDescending(i => i.Title),
+        _ => Items
+    };
+
+    public record ProjectItem(string Title, string Summary, int Hours, string Thumbnail, string ProjectUrl);
+}
+
+<div class="ytc-page-scroll"><!-- enables scroll even if global CSS locks body -->
+
+    @* YT_HEADER *@
+    <header class="ytc-header">
+        <div class="ytc-cover"></div>
+
+        <div class="ytc-channel">
+            <img class="ytc-avatar" src="/images/MooSharpWhiteCircle.png" alt="MooSharp" />
+            <div class="ytc-meta">
+                <h1 class="ytc-name">MooSharp</h1>
+                <div class="ytc-handle"><span class="mono">@CHANNEL_HANDLE</span></div>
+                <div class="ytc-stats">
+                    <span class="dot">Salesforce</span>
+                    <span class="dot">Indie Dev</span>
+                    <span class="dot">C#</span>
+                    <span class="dot">Blazor</span>
+                </div>
+            </div>
+            <div class="ytc-actions">
+                <a class="ytc-sub" href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Subscribe</a>
+            </div>
+        </div>
+
+        <nav class="ytc-tabs">
+            <a class="active">Projects</a>
+            <a href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Videos</a>
+            <a href="@($"{YT_CHANNEL_URL}/playlists")" target="_blank" rel="noopener">Playlists</a>
+            <a href="/about">About</a>
+        </nav>
+    </header>
+
+    @* YT_FEATURED *@
+    <section class="ytc-featured">
+        <div class="ytc-featured-thumb">
+            <a href="/arcade">
+                <img src="/images/projects/MooDo.png" alt="Featured: MooDo Calendar" />
+            </a>
+        </div>
+        <div class="ytc-featured-info">
+            <h2>MooDoo Calendar (Coming Soon!)
+            </h2>
+            <p>A growing to-do list utilizing full-stack and database features.</p>
+            <div class="ytc-meta-row">
+                <span class="chip">90 hours</span>
+                <span class="chip">Easy To Use</span>
+                <span class="chip">Web</span>
+            </div>
+            <div class="ytc-featured-actions">
+                <a class="btn primary" href="/MooDo">View Project</a>
+                <a class="btn ghost" href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Subscribe on YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    @* YT_TOOLBAR *@
+    <section class="ytc-toolbar">
+        <div class="ytc-toolbar-left">
+            <h3>Uploads</h3>
+        </div>
+        <div class="ytc-toolbar-right">
+            <label class="sr">Sort by</label>
+            <select class="ytc-sort" @bind="sortMode">
+                <option value="hours_desc">Most hours</option>
+                <option value="hours_asc">Least hours</option>
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+            </select>
+        </div>
+    </section>
+
+    @* YT_GRID *@
+    <section class="ytc-grid">
+        @foreach (var v in SortedItems)
+        {
+            <article class="ytc-card">
+                <a class="ytc-thumb" href="@v.ProjectUrl">
+                    <img src="@v.Thumbnail" alt="@v.Title" />
+                    <span class="ytc-length">@($"{v.Hours}h")</span>
+                </a>
+                <div class="ytc-card-body">
+                    <h4 class="ytc-title">
+                        <a href="@v.ProjectUrl">@v.Title</a>
+                    </h4>
+                    <p class="ytc-desc">@v.Summary</p>
+                    <div class="ytc-card-meta">
+                        <span>@($"{v.Hours}h dev")</span>
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+
+<h2>Disclaimer: All project logos are generated by AI and may not represent the actual project branding.
+            </h2>
+
+</div> <!-- /.ytc-page-scroll -->
+
+</section>

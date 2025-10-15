@@ -1,0 +1,275 @@
+/* scoreboard.css */
+/* GENERAL */
+body {
+    background: rgb(0, 0, 0);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    margin: 0;
+    padding: 0;
+}
+
+.scoreboard-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 20px;
+    color: white;
+}
+
+/* VIEWER DISPLAY */
+.viewer-scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.viewer-team {
+    background-color: var(--team-bg, #00000000);
+    border-radius: 10px;
+    padding: 20px 30px;
+    min-width: 200px;
+    box-shadow: 0 0 10px white;
+}
+
+.team-score {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 8px #ffffff;
+}
+
+.team-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.team-quarter {
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+/* SPORT SELECTOR */
+.sport-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.sport-button {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.sport-button.selected,
+.sport-button:hover {
+    background: white;
+    color: rgb(117, 117, 117);
+}
+
+/* TEAM CONTROLS */
+.team-name-edit {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.team-input {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 12px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* TEAM PANEL */
+.team-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.team-panel {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    min-width: 220px;
+}
+
+.score-buttons button {
+    margin: 5px;
+    padding: 10px 18px;
+    font-size: 1.1rem;
+    border: 2px solid white;
+    background: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.score-buttons button:hover {
+    background: white;
+    color: rgb(255, 255, 255);
+    transform: scale(1.05);
+}
+
+/* PERIOD CONTROL */
+.period-control {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.period-control label {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.period-control input {
+    width: 60px;
+    padding: 6px;
+    font-size: 1rem;
+    text-align: center;
+    border: 2px solid white;
+    background: rgb(255, 255, 255);
+    color: white;
+    border-radius: 4px;
+}
+
+/* SOFTBALL DIAMOND */
+.diamond-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.diamond-svg {
+    width: 220px;
+    height: 220px;
+}
+
+.base-circle {
+    fill: black;
+    stroke: white;
+    stroke-width: 2;
+    cursor: pointer;
+    transition: fill 0.2s;
+}
+
+.base-circle.active {
+    fill: white;
+}
+
+.diamond-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.stat-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-group button {
+    padding: 4px 10px;
+    font-size: 1rem;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.stat-group button:hover {
+    background: white;
+    color: black;
+}
+
+.diamond-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.period-control.vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.period-control.vertical label {
+    margin-bottom: 6px;
+    font-size: 1rem;
+    color: white;
+}
+
+.period-control.vertical input {
+    width: 60px;
+    padding: 6px;
+    font-size: 1rem;
+    text-align: center;
+    border: 2px solid white;
+    background: black;
+    color: white;
+    border-radius: 4px;
+}
+
+.period-control.vertical:hover .error-hover {
+    visibility: visible;
+    opacity: 1;
+}
+
+.condensed-team {
+    width: 300px;
+    font-size: 0.9rem;
+    padding: 15px;
+    margin: 0 10px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+.score {
+    font-size: 2.5rem;
+    margin: 10px 0;
+}
+
+.score-buttons button {
+    padding: 6px 12px;
+    font-size: 0.95rem;
+}

@@ -1,0 +1,297 @@
+@page "/arcade/ragebait"
+@layout MainLayout
+
+<link href="/css/ArcadeCSS/rage-quiz.css" rel="stylesheet" />
+
+<div class="rq-wrap">
+
+    <header class="rq-head">
+        <h1 class="rq-title">Annoying Date Quiz</h1>
+        <div class="rq-sub">Assemble the date. Nothing here is normal.</div>
+        <label class="rq-invert">
+            <input type="checkbox" @bind="invertScroll" />
+            Invert scrolling (why not)
+        </label>
+    </header>
+
+    <!-- ==================== CTRL+F: DATE_QUIZ ==================== -->
+    <section class="rq-card">
+        <h2 class="rq-h2">Part 1 — Month From Fragments</h2>
+        <div class="rq-row">
+            <div class="rq-col">
+                <label class="rq-label">first</label>
+                <select class="rq-select" @bind="first">
+                    @foreach (var f in FirstPieces) { <option>@f</option> }
+                </select>
+            </div>
+
+            <div class="rq-col">
+                <label class="rq-label">second</label>
+                <select class="rq-select" @bind="second">
+                    @foreach (var s in SecondPieces) { <option>@s</option> }
+                </select>
+            </div>
+
+            <div class="rq-col">
+                <label class="rq-label">third</label>
+                <select class="rq-select" @bind="third">
+                    @foreach (var t in ThirdPieces) { <option>@t</option> }
+                </select>
+            </div>
+        </div>
+
+        <div class="rq-out">
+            <div class="rq-lcd">
+                <div class="rq-lcd-label">Assembled</div>
+                <div class="rq-lcd-val">@AssembledMonth</div>
+            </div>
+            <div class="rq-lcd">
+                <div class="rq-lcd-label">Target month</div>
+                <div class="rq-lcd-val">@targetMonth</div>
+            </div>
+            <button class="rq-btn" @onclick="ShuffleTargets">New target</button>
+        </div>
+
+        <h3 class="rq-h3">Part 2 — Day (shuffled)</h3>
+        <div class="rq-row">
+            <div class="rq-col">
+                <label class="rq-label">day</label>
+                <select class="rq-select" @bind="day">
+                    @foreach (var d in ShuffledDays) { <option>@d</option> }
+                </select>
+            </div>
+            <button class="rq-btn ghost" @onclick="ReshuffleDays">Reshuffle days</button>
+        </div>
+
+        <h3 class="rq-h3">Part 3 — Year (arrows only)</h3>
+        <div class="rq-spinner">
+            <button class="rq-spin" @onclick="DecYear" aria-label="down">▾</button>
+            <div class="rq-year" title="no typing">@year</div>
+            <button class="rq-spin" @onclick="IncYear" aria-label="up">▴</button>
+        </div>
+        <div class="rq-note">Typing disabled by design. Click arrows.</div>
+
+        <div class="rq-actions">
+            <button class="rq-btn solid" @onclick="Submit">Submit</button>
+            <button class="rq-btn ghost" @onclick="GiveUp">I give up → @targetMonth 13, @year</button>
+        </div>
+
+        <div class="rq-result @(statusClass)">
+            @status
+        </div>
+    </section>
+
+    <!-- ==================== CTRL+F: RUNAWAY_BUTTON ==================== -->
+    <section class="rq-card">
+        <h2 class="rq-h2">Mini‑Game — Runaway Button</h2>
+        <p class="rq-note">Catch the button. It moves on hover.</p>
+
+        <div class="runaway-area">
+            <button class="runaway-btn"
+                    style="@($"left:{runLeft}%; top:{runTop}%")"
+                    @onmouseover="Evade"
+                    @onclick="CaughtRunaway">Click me</button>
+        </div>
+        <div class="rq-result">@runMsg</div>
+        <div class="rq-actions">
+            <button class="rq-btn" @onclick="ResetRunaway">Reset</button>
+        </div>
+    </section>
+
+    <!-- ==================== CTRL+F: CHECKBOX_DOMINO ==================== -->
+    <section class="rq-card">
+        <h2 class="rq-h2">Mini‑Game — Checkbox Domino</h2>
+        <p class="rq-note">Check all at once. Any change may flip another.</p>
+
+        <div class="rq-boxes">
+            @for (int i = 0; i < Boxes.Count; i++)
+            {
+                <label class="rq-box">
+                    <input type="checkbox" checked="@Boxes[i]" @onchange="(e)=>ToggleBox(i)" />
+                    <span>Box @i</span>
+                </label>
+            }
+        </div>
+        <div class="rq-result">@boxMsg</div>
+        <div class="rq-actions">
+            <button class="rq-btn" @onclick="ResetBoxes">Reset</button>
+        </div>
+    </section>
+
+    <footer class="rq-foot">
+        <div>Tip: CTRL+F tags → DATE_QUIZ / RUNAWAY_BUTTON / CHECKBOX_DOMINO</div>
+    </footer>
+</div>
+
+@code {
+    // ==================== CTRL+F: STATE ====================
+    private bool invertScroll = false;
+
+    // Month pieces (exact per your spec)
+    private readonly string[] FirstPieces  = { "j", "nov", "dec", "febr", "m", "sept" };
+    private readonly string[] SecondPieces = { "octo", "em", "uly", "a", "une", "an" };
+    private readonly string[] ThirdPieces  = { "ber", "y", "uary", "pril", "ugust" };
+
+    private string first = "j";
+    private string second = "an";
+    private string third = "uary";
+
+    private string AssembledMonth => (first + second + third);
+    private readonly string[] RealMonths = new[]
+    { "January","February","March","April","May","June","July","August","September","October","November","December" };
+
+    private string targetMonth = "January";
+
+    // Day (1..31) shuffled
+    private List<int> ShuffledDays = Enumerable.Range(1, 31).OrderBy(_ => Guid.NewGuid()).ToList();
+    private int day = 1;
+
+    // Year: arrows only
+    private int year = 1999;
+
+    // Output / status
+    private string status = "";
+    private string statusClass = "";
+
+    // Runaway
+    private double runLeft = 35;
+    private double runTop = 35;
+    private string runMsg = "0 catches.";
+    private int runCount = 0;
+    private readonly Random rng = new();
+
+    // Domino boxes
+    private List<bool> Boxes = new(new[] { false, false, false, false, false });
+    private string boxMsg = "Goal: all ON.";
+
+    // ==================== CTRL+F: ACTIONS ====================
+    protected override void OnInitialized()
+    {
+        // start with random day order and random target
+        ReshuffleDays();
+        ShuffleTargets();
+    }
+
+    void ToggleInvert(ChangeEventArgs _)
+    {
+        // handled by JS at bottom (adds/removes listener)
+    }
+
+    void ShuffleTargets()
+    {
+        targetMonth = RealMonths[rng.Next(RealMonths.Length)];
+        StateHasChanged();
+    }
+
+    void ReshuffleDays()
+    {
+        ShuffledDays = Enumerable.Range(1, 31).OrderBy(_ => Guid.NewGuid()).ToList();
+        if (!ShuffledDays.Contains(day)) day = ShuffledDays.First();
+    }
+
+    void IncYear() { year = Math.Min(2099, year + 1); }
+    void DecYear() { year = Math.Max(1900, year - 1); }
+
+    void Submit()
+    {
+        var normalized = Capitalize(AssembledMonth);
+        var okMonth = normalized == targetMonth;
+        var okDay   = ShuffledDays.Contains(day); // always true but… feels unhelpful
+        var okYear  = year % 1 == 0; // obviously
+
+        if (okMonth && okDay && okYear)
+        {
+            status = $"Success: {normalized} {day}, {year}";
+            statusClass = "ok";
+        }
+        else
+        {
+            status = $"Nope. You made “{normalized} {day}, {year}”. Target is {targetMonth}.";
+            statusClass = "bad";
+        }
+    }
+
+    void GiveUp()
+    {
+        first = "j"; second = "an"; third = "uary"; // January
+        day = 13;
+        status = "Mercy granted. Try a new target if you must.";
+        statusClass = "ok";
+        StateHasChanged();
+    }
+
+    static string Capitalize(string s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return s;
+        return char.ToUpper(s[0]) + (s.Length > 1 ? s.Substring(1).ToLower() : "");
+    }
+
+    // Runaway button logic
+    void Evade(MouseEventArgs _)
+    {
+        runLeft = rng.Next(5, 85);
+        runTop  = rng.Next(5, 65);
+        StateHasChanged();
+    }
+    void CaughtRunaway()
+    {
+        runCount++;
+        runMsg = $"{runCount} catches.";
+    }
+    void ResetRunaway()
+    {
+        runLeft = 35; runTop = 35; runCount = 0; runMsg = "0 catches.";
+    }
+
+    // Domino checkboxes logic
+    void ToggleBox(int i)
+    {
+        Boxes[i] = !Boxes[i];
+
+        // random sabotage
+        var others = Enumerable.Range(0, Boxes.Count).Where(ix => ix != i).ToList();
+        var j = others[rng.Next(others.Count)];
+        Boxes[j] = !Boxes[j];
+
+        if (Boxes.All(b => b))
+            boxMsg = "You somehow did it.";
+        else
+            boxMsg = "Chaos continues.";
+    }
+    void ResetBoxes()
+    {
+        Boxes = new List<bool>(new[] { false, false, false, false, false });
+        boxMsg = "Goal: all ON.";
+    }
+}
+<script>
+(function(){
+  let invertOn = false;
+  const handler = (e) => {
+    if (!invertOn) return;
+    if (e.deltaY) {
+      window.scrollBy(0, -e.deltaY);
+      e.preventDefault();
+    }
+  };
+  const keyHandler = (e) => {
+    if (!invertOn) return;
+    if (['ArrowDown','PageDown','ArrowUp','PageUp'].includes(e.key)) {
+      const dy = (e.key==='ArrowDown'||e.key==='PageDown') ? -60 : 60;
+      window.scrollBy(0, dy);
+      e.preventDefault();
+    }
+  };
+  window.addEventListener('wheel', handler, { passive:false });
+  window.addEventListener('keydown', keyHandler);
+
+  // watch the checkbox via Mutation (no JS interop needed)
+  const wrap = document.currentScript.closest('.rq-wrap') || document.body;
+  wrap.addEventListener('change', (ev)=>{
+    const t = ev.target;
+    if (t && t.matches('.rq-invert input[type="checkbox"]')) {
+      invertOn = t.checked;
+    }
+  }, true);
+})();
+</script>

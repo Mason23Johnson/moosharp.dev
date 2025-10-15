@@ -1,0 +1,130 @@
+/* main.css */
+
+/* IMPORTS */
+@import url('/css/ModernCSS/about.css');
+@import url('/css/ModernCSS/arcade.css');
+@import url('/css/ModernCSS/projects.css');
+@import url('/css/ModernCSS/section.css');
+@import url('/css/ModernCSS/tech.css');
+@import url('/css/ModernCSS/scoreboard.css');
+@import url('/css/ModernCSS/contact.css');
+@import url('/css/ArcadeCSS/ragebait.css');
+@import url('/css/nav.css');
+/* go through each css file to find the highlight of Hi Im Mason on index.razor - on load/refresh | use cookies or session keys for terminal mode*/
+
+/* Base Structure */
+body 
+{
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: 
+        url('/images/moosharpbackgroundblack.jpg') no-repeat center center fixed;
+    background-size: 1920px 1080px;
+}
+
+.modern-footer 
+{
+    background-color: transparent;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #353535;
+}
+
+/* ========== TEXT BLOCKS & TYPOGRAPHY ========== */
+.modern-banner 
+{
+    text-align: left;
+    max-width: 800px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+@keyframes matrixFall 
+{
+    0% 
+    {
+        transform: translateY(-100%) rotate(180deg);
+        opacity: 0.1;
+    }
+    100% 
+    {
+        transform: translateY(100%) rotate(180deg);
+        opacity: 0.3;
+    }
+}
+
+.highlight 
+{
+    color: white;
+}
+
+.bio 
+{
+    font-size: 1.05rem;
+    color: #ccc;
+    max-width: 8500px;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes scrollLoop 
+{
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-20%); }
+}
+
+@keyframes slideInLeft 
+{
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight 
+{
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn 
+{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========== HERO ANIMATION SECTION ========== */
+.hero-container 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 80px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.hero-image 
+{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: slideInLeft 1s ease-out;
+}
+
+.hero-text 
+{
+    animation: slideInRight 1s ease-out;
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.hero-text .blue-name 
+{
+    color: #00b7ff;
+    text-shadow: 0 0 2px #00b7ff, 0 0 10px #00b7ff;
+}

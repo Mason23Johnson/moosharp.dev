@@ -1,47 +1,59 @@
-name: Deploy Blazor to GitHub Pages (main/docs)
+# PAGES_ACTIONS_BLAZOR
+name: Deploy Blazor WASM to GitHub Pages
 
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: Publish Blazor App to /publish
-      run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
+      # CTRL+F: PUBLISH_STEP
+      - name: Publish
+        run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
 
-    - name: Clear old /docs folder
-      run: |
-        rm -rf docs
-        mkdir docs
+      # CTRL+F: PREPARE_SITE
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          cp -r publish/wwwroot/* _site/
+          # SPA routing + GitHub Pages
+          cp _site/index.html _site/404.html
+          # Avoid Jekyll processing
+          : > _site/.nojekyll
+          # Custom domain (also set in Settings → Pages)
+          echo "moosharp.dev" > _site/CNAME
 
-    - name: Move build output to /docs
-      run: |
-        cp -r publish/wwwroot/* docs/
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
 
-    - name: Check if build succeeded
-      run: test -f docs/index.html
-
-    - name: Add CNAME, .nojekyll, and 404.html
-      run: |
-        echo "moosharp.dev" > docs/CNAME
-        echo "" > docs/.nojekyll
-        cp docs/index.html docs/404.html
-
-    - name: Commit and Push /docs
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add docs
-        git commit -m "Deploy Blazor site to /docs" || echo "No changes to commit"
-        git push
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

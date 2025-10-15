@@ -1,0 +1,59 @@
+@page "/arcade/snake"
+@layout MainLayout
+@inject IJSRuntime JS
+
+<div class="snake-wrap">
+    <h1 class="snake-title">Snake</h1>
+
+    <div class="snake-stage">
+        <canvas id="snakeCanvas" width="576" height="576"></canvas>
+
+        <div class="snake-hud">
+            <div class="hud-left">
+                <div class="hud-line">
+                    <span class="hud-label">Score</span>
+                    <span id="snakeScore" class="hud-value">0</span>
+                </div>
+                <div class="hud-line">
+                    <span class="hud-label">Best</span>
+                    <span id="snakeBest" class="hud-value">0</span>
+                </div>
+            </div>
+
+            <div class="hud-right">
+                <button class="hud-btn" id="btnPause">Pause</button>
+                <button class="hud-btn outline" id="btnRestart">Restart</button>
+                <select id="snakeSpeed" class="hud-select" title="Speed">
+                    <option value="6">Speed: 6</option>
+                    <option value="8" selected>Speed: 8</option>
+                    <option value="10">Speed: 10</option>
+                    <option value="12">Speed: 12</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="snake-help">
+        Arrow/WASD to move • P: Pause • R: Restart
+    </div>
+
+    <!-- Mobile controls -->
+    @* <div class="snake-pad" aria-hidden="true">
+        <button class="pad up" data-dir="up">▲</button>
+        <div class="row">
+            <button class="pad left" data-dir="left">◀</button>
+            <button class="pad right" data-dir="right">▶</button>
+        </div>
+        <button class="pad down" data-dir="down">▼</button>
+    </div> *@
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("snakeGame.init");
+        }
+    }
+}

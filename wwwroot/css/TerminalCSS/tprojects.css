@@ -1,0 +1,82 @@
+body.terminal-root {
+    background-color: #000;
+    color: rgb(179, 255, 0);
+}
+
+.projects-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 30px;
+    font-family: 'Share Tech Mono', monospace;
+    animation: fadeIn 1s ease-in;
+    color: #0f0;
+    text-align: center;
+}
+
+.projects-intro {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #0cc700;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.product-card {
+    background: #000;
+    border: 2px solid #0f0;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 360px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #0f0;
+}
+
+.product-card h3 {
+    color: #0f0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.product-card p {
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card-buttons a {
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: #0f0;
+    color: #000;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-family: 'Share Tech Mono', monospace;
+    box-shadow: 0 0 6px #0f0;
+}
+
+.card-buttons a:hover {
+    background-color: #111;
+    color: #0f0;
+    box-shadow: 0 0 10px #0f0;
+}

@@ -1,0 +1,266 @@
+@page "/about"
+@layout MainLayout
+@inject IJSRuntime JS
+
+<div class="scroll-deck">
+
+    <!-- STACK + BRAND + PC INTERACTIVE -->
+    <section class="deck-slide slide-stack">
+        <div class="stack-hover-wrapper">
+            <div class="hover-zone hover-left-zone"></div>
+            <div class="hover-zone hover-center-zone"></div>
+            <div class="hover-zone hover-right-zone"></div>
+            <div class="stack-interactive">
+                <div class="side stack-side">
+                    <h1 class="side-title">Stack</h1>
+                    <p class="side-content">
+                        C#, Java, JavaScript, CSS, HTML, Docker, NAS, Linux, Blazor, Entity Framework Core, ASP.NET &
+                        More.
+                    </p>
+                </div>
+
+                <div class="pc-center">
+                    <img src="images/retroPC.png" class="pc-photo" />
+                </div>
+
+                <div class="side brand-side">
+                    <h1 class="side-title">Brand</h1>
+                    <p class="side-content">
+                        MooSharp is my personal brand, portfolio, and company.<br />
+                        Moo is my nickname from childhood, and Sharp represents my focus on C#.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-down-indicator">
+            <span>▼</span>
+        </div>
+    </section>
+
+    <!-- FILE EXPLORER SECTION -->
+    <section class="deck-slide slide-personal explorer-layout">
+        <div class="explorer">
+            <div class="explorer-sidebar">
+                <h3>Quick Access</h3>
+                <ul>
+                    <li @onclick="@(() => ToggleFolder("hdrive"))" class="@(openFolder == "hdrive" ? "active" : "")">H:
+                        MooVault</li>
+                    <li @onclick="@(() => ToggleFolder("personal"))"
+                        class="@(openFolder == "personal" ? "active" : "")">Personal</li>
+                </ul>
+            </div>
+
+            <div class="explorer" style="position: relative;">
+                @if (openFolder == "hdrive")
+                {
+                    <div class="folder-grid">
+                        <div class="folder" @onclick="@(() => OpenWindow("fullResume"))">
+                            <img src="icons/txt-icon.png" />
+                            <span>Resume_Full.txt</span>
+                        </div>
+                        <div class="folder" @onclick="@(() => ToggleSubFolder("resumeParts"))">
+                            <img src="icons/folder-icon.png" />
+                            <span>Resume_Parts</span>
+                        </div>
+                    </div>
+
+                    @if (subFolder == "resumeParts")
+                    {
+                        <div class="folder-grid">
+                            <div class="folder" @onclick="@(() => OpenWindow("projExp"))">
+                                <img src="icons/txt-icon.png" />
+                                <span>ProjectExp.txt</span>
+                            </div>
+                            <div class="folder" @onclick="@(() => OpenWindow("skills"))">
+                                <img src="icons/txt-icon.png" />
+                                <span>Skills.txt</span>
+                            </div>
+                        </div>
+                    }
+
+                }
+
+                @if (openFolder == "personal")
+                {
+                    <div class="folder-grid">
+                        <div class="folder" @onclick="@(() => ToggleSubFolder("marriage"))">
+                            <img src="icons/folder-icon.png" />
+                            <span>Marriage</span>
+                        </div>
+                        <div class="folder" @onclick="@(() => ToggleSubFolder("hobbies"))">
+                            <img src="icons/folder-icon.png" />
+                            <span>Hobbies</span>
+                        </div>
+                    </div>
+
+                    @if (subFolder == "marriage")
+                    {
+                        <div class="folder-grid">
+                            <div class="folder" @onclick="@(() => OpenWindow("marriageTxt"))">
+                                <img src="icons/txt-icon.png" />
+                                <span>marriage.txt</span>
+                            </div>
+                            <div class="folder" @onclick="@(() => OpenWindow("marriagePng"))">
+                                <img src="icons/image-icon.png" />
+                                <span>wedding.png</span>
+                            </div>
+                        </div>
+                    }
+
+                    @if (subFolder == "hobbies")
+                    {
+                        <div class="folder-grid">
+                            <div class="folder" @onclick="@(() => OpenWindow("hobbiesTxt"))">
+                                <img src="icons/txt-icon.png" />
+                                <span>hobbies.txt</span>
+                            </div>
+                            <div class="folder" @onclick="@(() => OpenWindow("fish"))">
+                                <img src="icons/image-icon.png" />
+                                <span>fishing.png</span>
+                            </div>
+                            <div class="folder" @onclick="@(() => OpenWindow("pickle"))">
+                                <img src="icons/image-icon.png" />
+                                <span>pickleball.png</span>
+                            </div>
+                            <div class="folder" @onclick="@(() => OpenWindow("golf"))">
+                                <img src="icons/image-icon.png" />
+                                <span>golfing.png</span>
+                            </div>
+                        </div>
+                    }
+
+                }
+
+                @foreach (var win in windows.ToList())
+                {
+                    <div class="explorer-window" style="top: 160px; left: 100px; position: fixed; z-index: 1000;"
+                        @ref="windowRefs[win]" onmousedown="@(() => StartDrag(win))">
+
+
+                        <div class="window-header">
+                            @win
+                            <button @onclick="@(() => CloseWindow(win))">X</button>
+                        </div>
+                        <div class="window-body">
+                            @switch (win)
+                            {
+                                case "fullResume":
+                                    <p>> Full resume overview available on request. Please use the contact page.</p>
+                                    ; break;
+                                case "projExp":
+                                    <p>> Built apps in C#, Blazor<br /> > Created arcade games and tools</p>
+                                    ; break;
+                                case "skills":
+                                    <p>>
+                                        Salesforce Dev & Config:<br />
+                                        Apex Code<br />
+                                        Visualforce<br />
+                                        REST & SOAP APIs<br />
+                                        Lightning Components<br />
+                                        SOQL / SOSL<br />
+                                        Workflows & Flows<br />
+                                        Process Builder<br />
+                                        Languages:<br />
+                                        Python, Java, SQL<br />
+                                        Full-Stack Development:<br />
+                                        C#, JS, HTML5 & CSS3<br />
+                                        ASP.NET & Blazor<br />
+                                        SQLite & EFCore<br />
+                                        Cloud & DevOps:<br />
+                                        Azure Cloud & Devops<br />
+                                        Git & Github<br />
+                                        Tools & Platforms:<br />
+                                        Linux & Windows<br />
+                                        NAS, Docker & VSCode<br />
+                                        Agile Scrum Method<br />
+                                    </p>
+                                    ; break;
+                                case "marriageTxt":
+                                    <p>> Married in 2024<br /> > Honeymooned in Virgin Islands</p>
+                                    ; break;
+                                case "marriagePng":
+                                    <img src="images/wedding.png" class="window-image" />
+                                    ; break;
+                                case "hobbiesTxt":
+                                    <p>> Enjoys fishing, indie games<br /> > Likes building systems & websites</p>
+                                    ; break;
+                                case "fish":
+                                    <img src="images/fishing.png" class="window-image" />
+                                    ; break;
+                                case "pickle":
+                                    <img src="images/pickleball.png" class="window-image" />
+                                    ; break;
+                                case "golf":
+                                    <img src="images/golfing.png" class="window-image" />
+                                    ; break;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+@implements IAsyncDisposable
+@code {
+    string? openFolder = null;
+    string? subFolder = null;
+    HashSet<string> windows = new();
+
+    void ToggleFolder(string id)
+    {
+        openFolder = (openFolder == id) ? null : id;
+        subFolder = null;
+    }
+
+    void ToggleSubFolder(string id)
+    {
+        subFolder = (subFolder == id) ? null : id;
+    }
+
+    void OpenWindow(string id) => windows.Add(id);
+    void CloseWindow(string id) => windows.Remove(id);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("eval", @"
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+entry.target.classList.add('visible');
+observer.unobserve(entry.target);
+}
+});
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.deck-slide').forEach(sec => observer.observe(sec));
+");
+        }
+    }
+
+    Dictionary<string, ElementReference> windowRefs = new();
+    DotNetObjectReference<About>? selfRef;
+    string? draggingWindow = null;
+
+    [Inject] IJSRuntime JSRuntime { get; set; } = default!;
+
+    void StartDrag(string id)
+    {
+        draggingWindow = id;
+        if (!windowRefs.ContainsKey(id)) return;
+
+        _ = JS.InvokeVoidAsync("enableDrag", windowRefs[id]);
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        if (selfRef is not null)
+            selfRef.Dispose();
+        return ValueTask.CompletedTask;
+    }
+
+}

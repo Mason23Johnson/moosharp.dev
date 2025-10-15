@@ -1,0 +1,338 @@
+/* about.css */
+.scroll-deck {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.deck-slide {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.deck-slide.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 120px;
+    font-size: 2rem;
+    color: #00ffee;
+    animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(20px); }
+}
+
+/* Wrapper + Grid */
+.stack-hover-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+.stack-interactive {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    padding: 0 30px;
+}
+
+/* Hover Zones: Left / Center / Right */
+.hover-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 33.33%;
+    z-index: 2;
+}
+.hover-left-zone { left: 0; }
+.hover-center-zone { left: 33.33%; }
+.hover-right-zone { right: 0; }
+
+/* PC */
+.pc-center {
+    z-index: 10;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+}
+.pc-photo {
+    width: 400px;
+    border: none;
+    animation: photoFlicker 2.2s infinite steps(2, jump-none), photoJitter 4s infinite ease-in-out;
+}
+
+/* Sides */
+.side {
+    transition: all 0.3s ease;
+    opacity: 0.4;
+    transform: scale(0.95);
+    padding: 20px 30px;
+    width: 420px;
+    box-sizing: border-box;
+}
+
+.side-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #00ffee;
+    margin-bottom: 10px;
+}
+.side-content {
+    font-size: 1.1rem;
+    opacity: 0;
+    max-height: 0;
+    min-height: 140px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    max-width: 100%;
+    margin: auto;
+    line-height: 1.6;
+}
+
+
+/* Hover Left = STACK */
+.stack-hover-wrapper:hover .hover-left-zone:hover ~ .stack-interactive .stack-side {
+    opacity: 1;
+    transform: scale(1.05) translateY(-20px);
+}
+.stack-hover-wrapper:hover .hover-left-zone:hover ~ .stack-interactive .stack-side .side-content {
+    opacity: 1;
+    max-height: 500px;
+    animation: slideInContentStack 0.4s ease forwards;
+}
+.stack-hover-wrapper:hover .hover-left-zone:hover ~ .stack-interactive .pc-center {
+    transform: translateX(200px);
+}
+.stack-hover-wrapper:hover .hover-left-zone:hover ~ .stack-interactive .brand-side {
+    display: none;
+}
+
+/* Hover Right = BRAND */
+.stack-hover-wrapper:hover .hover-right-zone:hover ~ .stack-interactive .brand-side {
+    opacity: 1;
+    transform: scale(1.05) translateY(-20px);
+}
+.stack-hover-wrapper:hover .hover-right-zone:hover ~ .stack-interactive .brand-side .side-content {
+    opacity: 1;
+    max-height: 500px;
+    animation: slideInContentBrand 0.4s ease forwards;
+}
+.stack-hover-wrapper:hover .hover-right-zone:hover ~ .stack-interactive .pc-center {
+    transform: translateX(-50px);
+}
+.stack-hover-wrapper:hover .hover-right-zone:hover ~ .stack-interactive .stack-side {
+    display: none;
+}
+
+/* Hover Center = RESET */
+.stack-hover-wrapper:hover .hover-center-zone:hover ~ .stack-interactive .side {
+    display: block;
+    opacity: 0.4;
+    transform: scale(0.95);
+}
+.stack-hover-wrapper:hover .hover-center-zone:hover ~ .stack-interactive .side .side-content {
+    opacity: 0;
+    max-height: 0;
+}
+.stack-hover-wrapper:hover .hover-center-zone:hover ~ .stack-interactive .pc-center {
+    transform: translateX(0);
+}
+
+/* Animations */
+@keyframes photoJitter {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, -1px); }
+    40% { transform: translate(2px, 3px); }
+    60% { transform: translate(1px, 1px); }
+    80% { transform: translate(-3px, 1px); }
+    100% { transform: translate(0); }
+}
+@keyframes slideInContentStack {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInContentBrand {
+    from { opacity: 0; transform: translateX(-40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+body, html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* === WINDOWS 8 EXPLORER LOOK === */
+
+.explorer {
+    display: flex;
+    max-width: 1100px;
+    width: 90%;
+    height: 600px;
+    background: #1f1f2e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+    border: 2px solid #007acc;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* === SIDEBAR === */
+.explorer-sidebar {
+    width: 180px;
+    background: #25253a;
+    border-right: 2px solid #007acc;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.explorer-sidebar h3 {
+    color: #89d6ff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.explorer-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.explorer-sidebar li {
+    background: #2f2f45;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 6px;
+    color: #d9eaff;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.explorer-sidebar li:hover,
+.explorer-sidebar li.active {
+    background: #007acc;
+    color: #fff;
+    transform: scale(1.03);
+}
+
+/* === MAIN AREA === */
+.explorer-main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* FOLDER GRID */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 25px;
+}
+
+.folder {
+    background: #29293f;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #d9eaff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.folder:hover {
+    background: #007acc;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.folder img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+}
+
+/* === EXPLORER WINDOW === */
+.explorer-window {
+    position: absolute;
+    background: #ffffff;
+    border: 2px solid #007acc;
+    border-radius: 8px;
+    width: 360px;
+    z-index: 999;
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.window-header {
+    background: #007acc;
+    color: #fff;
+    padding: 10px 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    font-size: 1rem;
+}
+
+.window-header button {
+    background: #ffffff;
+    color: #007acc;
+    border: none;
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.window-header button:hover {
+    background: #e0e0e0;
+}
+
+.window-body {
+    padding: 15px;
+    color: #111;
+    font-size: 0.95rem;
+}
+
+.window-image {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #007acc;
+    background: #fff;
+    padding: 4px;
+}

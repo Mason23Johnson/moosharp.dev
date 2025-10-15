@@ -1,0 +1,87 @@
+/* TERMINAL: Contact Page */
+body {
+    background: rgb(0, 0, 0);
+}
+
+.contact-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: #00ff00;
+    margin-top: 40px;
+    font-weight: 700;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 8px #00ff00;
+}
+
+.contact-form {
+    max-width: 640px;
+    margin: 50px auto;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 32px 40px;
+    border-radius: 12px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ff00;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-form label {
+    font-weight: bold;
+    color: #00ff00;
+    font-size: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #00ff00;
+    background-color: black;
+    color: #00ff00;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #00dd00;
+    background-color: #111;
+}
+
+.contact-form button {
+    padding: 14px;
+    background-color: #00ff00;
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    transition: background-color 0.25s ease;
+}
+
+.contact-form button:hover {
+    background-color: #00cc00;
+}
+
+.contact-success {
+    text-align: center;
+    color: #00ff00;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.contact-error {
+    text-align: center;
+    color: #ff3333;
+    font-weight: bold;
+    margin-top: 20px;
+}
