@@ -40,7 +40,7 @@ jobs:
           rm -f _site/service-worker*.js _site/manifest.webmanifest _site/service-worker-assets.js
           # SPA routing + Pages
           cp _site/index.html _site/404.html
-          : > _site/.nojekyll
+          touch _site/.nojekyll
           echo "moosharp.dev" > _site/CNAME
 
 
