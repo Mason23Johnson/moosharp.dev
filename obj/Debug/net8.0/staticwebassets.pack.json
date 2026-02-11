@@ -205,6 +205,10 @@
       "PackagePath": "staticwebassets\\images\\pfp.png"
     },
     {
+      "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\pickleball.png",
+      "PackagePath": "staticwebassets\\images\\pickleball.png"
+    },
+    {
       "Id": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\projects\\MooCast.png",
       "PackagePath": "staticwebassets\\images\\projects\\MooCast.png"
     },

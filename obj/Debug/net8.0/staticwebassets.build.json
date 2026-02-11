@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EueogQx2/PCedRZaNdiae6Ygut52+tlc2R5CuGOZ/v8=",
+  "Hash": "P/ClaNHR53onfubmkfyR40wft6PLIi8qluTJySchz2c=",
   "Source": "moosharp.dev",
   "BasePath": "/",
   "Mode": "Root",
@@ -8717,6 +8717,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\pfp.png"
+    },
+    {
+      "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\pickleball.png",
+      "SourceId": "moosharp.dev",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "images/pickleball.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\pickleball.png"
     },
     {
       "Identity": "C:\\Users\\Mason\\moosharp.dev\\wwwroot\\images\\projects\\MooCast.png",
