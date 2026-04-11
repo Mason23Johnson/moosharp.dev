@@ -1,6 +1,7 @@
 @page "/arcade/quickclick"
 @layout MainLayout
 @inject IJSRuntime JS
+@using System.Globalization
 
 <link href="css/ArcadeCSS/QuickClick.css" rel="stylesheet" />
 
@@ -106,13 +107,9 @@
 
     private void MoveTarget()
     {
-        const int areaSize = 500;
-        const int targetSize = 50;
-        int max = areaSize - targetSize;
-
-        int left = rand.Next(0, max);
-        int top = rand.Next(0, max);
-        targetStyle = $"left: {left}px; top: {top}px;";
+        var left = rand.NextDouble().ToString("0.0000", CultureInfo.InvariantCulture);
+        var top = rand.NextDouble().ToString("0.0000", CultureInfo.InvariantCulture);
+        targetStyle = $"left: calc((100% - 50px) * {left}); top: calc((100% - 50px) * {top});";
     }
 
     private async Task TargetClicked()

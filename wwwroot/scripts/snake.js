@@ -17,6 +17,8 @@ window.snakeGame = (() => {
     let accTime = 0;
     let stepMs;
     const q = [];
+    let touchStartX = 0;
+    let touchStartY = 0;
 
     function init() {
         canvas = document.getElementById("snakeCanvas");
@@ -26,6 +28,8 @@ window.snakeGame = (() => {
         document.getElementById("snakeBest").textContent = best;
 
         document.addEventListener("keydown", onKey);
+        canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+        canvas.addEventListener("touchend", onTouchEnd, { passive: false });
         document.getElementById("btnStart").addEventListener("click", start);
         document.getElementById("btnPause").addEventListener("click", togglePause);
         document.getElementById("btnRestart").addEventListener("click", reset);
@@ -110,6 +114,40 @@ window.snakeGame = (() => {
             e.preventDefault();
             queueDir(1, 0);
         }
+    }
+
+    function onTouchStart(e) {
+        if (!e.changedTouches.length) return;
+        const touch = e.changedTouches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        e.preventDefault();
+    }
+
+    function onTouchEnd(e) {
+        if (!e.changedTouches.length) return;
+
+        const touch = e.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        const threshold = 24;
+
+        if (Math.abs(deltaX) < threshold && Math.abs(deltaY) < threshold) {
+            e.preventDefault();
+            return;
+        }
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            queueDir(deltaX > 0 ? 1 : -1, 0);
+        } else {
+            queueDir(0, deltaY > 0 ? 1 : -1);
+        }
+
+        if (!started) {
+            start();
+        }
+
+        e.preventDefault();
     }
 
     function queueDir(x, y) {

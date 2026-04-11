@@ -1,5 +1,6 @@
 let typingInterval = null;
 let nextLineTimeout = null;
+let blinkInterval = null;
 let isDevInterrupt = false;
 let terminalContent = "";
 let isUserTyping = false;
@@ -7,18 +8,16 @@ let typedInput = "";
 let introText = [];
 let currentLineIndex = 0;
 let currentCharIndex = 0;
-let currentPage = "index";
+let skipHelper = null;
 
-// Starts typing
 window.startTerminalTyping = (page) => {
     resetTerminal();
     setupIntroText(page);
     typeNextIntroLine();
     blinkCursor();
-    showTerminalToast();
+    showTerminalToast(page);
 };
 
-// Sets intro text based on page
 function setupIntroText(page) {
     if (page === "about") {
         introText = [
@@ -32,111 +31,120 @@ function setupIntroText(page) {
             "Welcome to MooSharp, the coded embodiment of Mason Johnson, a 21 year old Salesforce and full-stack developer.",
             "",
             "Today, MooSharp represents everything I build:",
-            "• Modern full-stack systems with C#, JS, CSS, HTML, Python, Java and EF Core.",
-            "• Salesforce Apex Classes, Triggers, and Lightning Web Components.",
-            "• Fully responsive Blazor web apps.",
-            "• Linux and NAS server management and hosting.",
-            "• Networking and security expertise inluding firewalls, VPNs, VLANS, and more.",
-            "• Indie games using Godot (with C# scripting).",
-            "• Freelance contracts and custom backend tools.",
-            "• YouTube content under the alias MooSharp.",
+            "- Modern full-stack systems with C#, JS, CSS, HTML, Python, Java and EF Core.",
+            "- Salesforce Apex Classes, Triggers, and Lightning Web Components.",
+            "- Fully responsive Blazor web apps.",
+            "- Linux and NAS server management and hosting.",
+            "- Networking and security expertise including firewalls, VPNs, VLANS, and more.",
+            "- Indie games using Godot (with C# scripting).",
+            "- Freelance contracts and custom backend tools.",
+            "- YouTube content under the alias MooSharp.",
             "",
             "This is only the beginning of my frontend specialties. I can make your website look however you'd like.",
             "",
             ">> SYSTEM: Ready...",
             ">> Type '/help' for help"
         ];
-    } else {
-        introText = [
-            ">> CONNECTING TO moosharp.dev...",
-            ">> AUTHORIZING USER...",
-            ">> ACCESS GRANTED.",
-            ">> INITIALIZING TERMINAL...",
-            ">> SUCCESSFULLY EXECUTED.",
-            "",
-            ">> TYPE '/help' FOR COMMANDS"
-        ];
+        return;
     }
+
+    introText = [
+        ">> CONNECTING TO moosharp.dev...",
+        ">> AUTHORIZING USER...",
+        ">> ACCESS GRANTED.",
+        ">> INITIALIZING TERMINAL...",
+        ">> SUCCESSFULLY EXECUTED.",
+        "",
+        ">> TYPE '/help' FOR COMMANDS"
+    ];
 }
 
-// Types next line
 function typeNextIntroLine() {
     if (isDevInterrupt || currentLineIndex >= introText.length) {
         enableUserTyping();
         return;
     }
 
-    let line = introText[currentLineIndex];
+    const line = introText[currentLineIndex];
     typingInterval = setInterval(() => {
         if (isDevInterrupt) {
             clearInterval(typingInterval);
             return;
         }
+
         if (currentCharIndex < line.length) {
             terminalContent += line[currentCharIndex];
-            updateTerminal();
             currentCharIndex++;
-        } else {
-            clearInterval(typingInterval);
-            terminalContent += "\n";
             updateTerminal();
-            currentLineIndex++;
-            currentCharIndex = 0;
-            if (!isDevInterrupt) {
-                nextLineTimeout = setTimeout(typeNextIntroLine, 500);
-            }
+            return;
         }
+
+        clearInterval(typingInterval);
+        terminalContent += "\n";
+        currentLineIndex++;
+        currentCharIndex = 0;
+        updateTerminal();
+        nextLineTimeout = setTimeout(typeNextIntroLine, 500);
     }, 55);
 }
 
-// Updates terminal display
-function updateTerminal() 
-{
+function updateTerminal() {
     const terminal = document.getElementById("terminalText");
     if (!terminal) return;
 
-    terminal.innerHTML = terminalContent + '<span id="blinkingCursor">_</span>';
+    const liveInput = isUserTyping ? typedInput : "";
+    terminal.innerHTML = terminalContent + liveInput + '<span id="blinkingCursor">_</span>';
 }
 
-
-// Enables user typing
 function enableUserTyping() {
     isUserTyping = true;
-    document.addEventListener("keydown", handleTyping);
-}
-
-// Disables user typing
-function disableUserTyping() {
-    isUserTyping = false;
-    document.removeEventListener("keydown", handleTyping);
-}
-
-// Handles key typing
-function handleTyping(event) {
-    if (!isUserTyping) return;
-
-    if (event.key === "Enter") {
-        terminalContent += "\n";
-        handleCommand(typedInput.trim());
-        typedInput = "";
-    } else if (event.key === "Backspace") {
-        typedInput = typedInput.slice(0, -1);
-        terminalContent = terminalContent.slice(0, -1);
-    } else if (event.key.length === 1) {
-        typedInput += event.key;
-        terminalContent += event.key;
-    }
-
+    setTerminalInputEnabled(true);
+    focusTerminalInput();
     updateTerminal();
 }
 
-// Handles terminal commands
-function handleCommand(command) 
-{
+function disableUserTyping() {
+    isUserTyping = false;
+    setTerminalInputEnabled(false);
+    updateTerminal();
+}
+
+window.initTerminalInput = () => {
+    const input = document.getElementById("terminalCommandInput");
+    if (!input || input.dataset.bound === "true") return;
+
+    input.dataset.bound = "true";
+    input.disabled = true;
+
+    input.addEventListener("input", (event) => {
+        if (!isUserTyping) return;
+        typedInput = event.target.value;
+        updateTerminal();
+    });
+
+    input.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        submitTypedInput();
+    });
+};
+
+function submitTypedInput() {
+    if (!isUserTyping) return;
+
+    const command = typedInput.trim();
+    terminalContent += typedInput + "\n";
+    typedInput = "";
+    syncTerminalInput();
+    handleCommand(command);
+    updateTerminal();
+    focusTerminalInput();
+}
+
+function handleCommand(command) {
     const cmd = command.toLowerCase();
 
-    switch (cmd) 
-    {
+    switch (cmd) {
         case "/help":
             terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/arcade: Moochine Arcade\n";
             break;
@@ -161,34 +169,25 @@ function handleCommand(command)
             }, 4000);
             break;
         default:
-            if (command.trim() !== "") 
-            {
+            if (command !== "") {
                 terminalContent += `\nUnknown command: ${command}\n`;
             }
             break;
     }
-    updateTerminal();
 }
 
-// Blinks cursor
 function blinkCursor() {
-    setInterval(() => 
-    {
-        const cursor = document.getElementById("blinkingCursor");
-        if (!cursor) return; // Make sure cursor exists
+    if (blinkInterval) {
+        clearInterval(blinkInterval);
+    }
 
-        if (cursor.style.visibility === "visible") 
-        {
-            cursor.style.visibility = "hidden";
-        } 
-        else 
-        {
-            cursor.style.visibility = "visible";
-        }
+    blinkInterval = setInterval(() => {
+        const cursor = document.getElementById("blinkingCursor");
+        if (!cursor) return;
+        cursor.style.visibility = cursor.style.visibility === "hidden" ? "visible" : "hidden";
     }, 500);
 }
 
-// Skips intro typing
 window.completeTerminalIntro = () => {
     if (typingInterval) clearInterval(typingInterval);
     if (nextLineTimeout) clearTimeout(nextLineTimeout);
@@ -198,21 +197,30 @@ window.completeTerminalIntro = () => {
     enableUserTyping();
 };
 
-// Listens for Enter to skip
 window.addKeypressListener = (dotNetHelper) => {
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
+    skipHelper = dotNetHelper;
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !isUserTyping) {
             dotNetHelper.invokeMethodAsync("CompleteTyping");
+        }
+    });
+
+    const terminal = document.querySelector(".terminal-container");
+    if (!terminal || terminal.dataset.skipBound === "true") return;
+
+    terminal.dataset.skipBound = "true";
+    terminal.addEventListener("click", () => {
+        if (!isUserTyping && skipHelper) {
+            skipHelper.invokeMethodAsync("CompleteTyping");
         }
     });
 };
 
-// Navigates pages
 window.navigateTo = (url) => {
     window.location.href = url;
 };
 
-// DEV access interruption
 window.triggerDevAccess = () => {
     isDevInterrupt = true;
 
@@ -226,7 +234,7 @@ window.triggerDevAccess = () => {
     localStorage.setItem("access", "granted");
 
     let countdown = 3;
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
         terminalContent += countdown + "...\n";
         updateTerminal();
         countdown--;
@@ -237,39 +245,49 @@ window.triggerDevAccess = () => {
     }, 1000);
 };
 
-// Loading fake EXE (optional for booting up PC)
-function startLoadingExe() {
-    if (isDevInterrupt) return;
+function showTerminalToast(page) {
+    if (page !== "index") return;
 
-    terminalContent += "\n> Executing: moosharp_home.exe\n";
-    terminalContent += "> Allocating memory blocks...\n";
-    updateTerminal();
+    const existing = document.querySelector(".terminal-toast-container");
+    if (existing) existing.remove();
+
+    const container = document.createElement("div");
+    container.className = "terminal-toast-container";
+
+    const toast = document.createElement("div");
+    toast.className = "terminal-toast";
+    toast.textContent = "Press Enter or tap anywhere to skip typing";
+
+    container.appendChild(toast);
+    document.body.appendChild(container);
 
     setTimeout(() => {
-        if (isDevInterrupt) return;
-        terminalContent += "> System boot complete. Launching UI...\n";
-        updateTerminal();
+        container.remove();
+    }, 5000);
+}
 
-        setTimeout(() => {
-            if (isDevInterrupt) return;
-            terminalContent += "> Coming soon...\n";
-            updateTerminal();
+function setTerminalInputEnabled(enabled) {
+    const input = document.getElementById("terminalCommandInput");
+    if (!input) return;
+    input.disabled = !enabled;
+}
 
-            setTimeout(() => {
-                if (isDevInterrupt) return;
-                document.getElementById('bootScreen').style.display = 'none';
-                document.getElementById('pcScreen').style.display = 'flex';
-            }, 1000);
-        }, 1000);
-    }, 1000);
+function syncTerminalInput() {
+    const input = document.getElementById("terminalCommandInput");
+    if (!input) return;
+    input.value = typedInput;
+}
+
+function focusTerminalInput() {
+    const input = document.getElementById("terminalCommandInput");
+    if (!input || input.disabled) return;
+    input.focus({ preventScroll: true });
 }
 
 function resetTerminal() {
-    // Stop any ongoing typing
     if (typingInterval) clearInterval(typingInterval);
     if (nextLineTimeout) clearTimeout(nextLineTimeout);
 
-    // Reset all state
     isDevInterrupt = false;
     isUserTyping = false;
     typedInput = "";
@@ -278,8 +296,9 @@ function resetTerminal() {
     currentLineIndex = 0;
     currentCharIndex = 0;
 
-    // Clear display
     const terminal = document.getElementById("terminalText");
     if (terminal) terminal.innerText = "";
-}
 
+    syncTerminalInput();
+    setTerminalInputEnabled(false);
+}

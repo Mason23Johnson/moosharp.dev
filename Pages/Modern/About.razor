@@ -5,11 +5,16 @@
 <div class="scroll-deck">
     <section class="deck-slide slide-stack">
         <div class="stack-hover-wrapper">
+            <div class="stack-mobile-tabs">
+                <button type="button" class="stack-tab @(activeStackPanel == "stack" ? "active" : "")" @onclick='() => SetStackPanel("stack")'>Stack</button>
+                <button type="button" class="stack-tab @(activeStackPanel == "brand" ? "active" : "")" @onclick='() => SetStackPanel("brand")'>Brand</button>
+            </div>
+
             <div class="hover-zone hover-left-zone"></div>
             <div class="hover-zone hover-center-zone"></div>
             <div class="hover-zone hover-right-zone"></div>
 
-            <div class="stack-interactive">
+            <div class="stack-interactive stack-mode-@activeStackPanel">
                 <div class="side stack-side">
                     <h1 class="side-title">Stack</h1>
                     <p class="side-content">
@@ -151,6 +156,7 @@
 @code {
     private string? openFolder = "hdrive";
     private string? subFolder;
+    private string activeStackPanel = "center";
     private readonly List<string> openWindows = new();
 
     private readonly List<ExplorerEntry> hDriveRoot = new()
@@ -210,6 +216,11 @@
     {
         openFolder = id;
         subFolder = null;
+    }
+
+    private void SetStackPanel(string panel)
+    {
+        activeStackPanel = activeStackPanel == panel ? "center" : panel;
     }
 
     private void NavigateToExplorerRoot()

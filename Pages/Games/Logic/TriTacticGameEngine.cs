@@ -21,6 +21,7 @@ public class TriTacticEngine
 
     public bool AwaitingSymbol => player == "";
     public bool IsPlayerTurn => gameActive && currentPlayer == player;
+    public bool GameOver => !gameActive && player != "";
     public string[] Board => (string[])boardState.Clone();
     public IReadOnlyList<string> LogLines => logLines.AsReadOnly();
 
@@ -50,7 +51,7 @@ public class TriTacticEngine
         currentPlayer = "X";
         gameActive = true;
         WriteLine($"You are {player}. Computer is {computer}.");
-        PrintBoard();
+        WriteLine("Use the board below or press 1-9 on your keyboard to make a move.");
         NextTurn();
         return true;
     }
@@ -61,7 +62,6 @@ public class TriTacticEngine
             return false;
 
         PlacePiece(index, player);
-        PrintBoard();
 
         var winner = CheckWinner();
         if (winner != null)
@@ -105,7 +105,6 @@ public class TriTacticEngine
 
         int move = GetComputerMove();
         PlacePiece(move, computer);
-        PrintBoard();
 
         var winner = CheckWinner();
         if (winner != null)
@@ -197,13 +196,6 @@ public class TriTacticEngine
         do move = rand.Next(9); while (boardState[move] != "");
         return move;
     }
-
-    private void PrintBoard()
-    {
-        WriteLine($"\n {Cell(0)} | {Cell(1)} | {Cell(2)}\n---+---+---\n {Cell(3)} | {Cell(4)} | {Cell(5)}\n---+---+---\n {Cell(6)} | {Cell(7)} | {Cell(8)}\n");
-    }
-
-    private string Cell(int i) => boardState[i] == "" ? (i + 1).ToString() : boardState[i];
 
     private void Reset()
     {

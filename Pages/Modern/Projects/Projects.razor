@@ -44,22 +44,38 @@
         @foreach (var item in Items)
         {
             <article class="upload-card">
-                <div class="upload-thumb">
-                    <img src="@item.Thumbnail" alt="@item.Title" />
-                    <span class="upload-status">@item.Status</span>
+                <div class="upload-card-shell">
+                    <div class="upload-card-face upload-card-front">
+                        <div class="upload-thumb">
+                            <img src="@item.Thumbnail" alt="@item.Title" />
+                            <span class="upload-status">@item.Status</span>
+                        </div>
+                        <div class="upload-body">
+                            <div class="upload-heading">
+                                <h4>@item.Title</h4>
+                                <span class="upload-platform">@item.Platform</span>
+                            </div>
+                            <p>@item.Summary</p>
+                            <div class="upload-tags">
+                                @foreach (var tag in item.Tags)
+                                {
+                                    <span>@tag</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="upload-card-face upload-card-back">
+                        <div class="upload-hover-panel">
+                            <p class="hover-kicker">Deeper Look</p>
+                            <h5>@item.Title</h5>
+                            <p>@item.DeepDescription</p>
+                            <p class="hover-build">@item.BuildNotes</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="upload-body">
-                    <div class="upload-heading">
-                        <h4>@item.Title</h4>
-                        <span class="upload-platform">@item.Platform</span>
-                    </div>
-                    <p>@item.Summary</p>
-                    <div class="upload-tags">
-                        @foreach (var tag in item.Tags)
-                        {
-                            <span>@tag</span>
-                        }
-                    </div>
+
+                <div class="upload-footer">
                     @if (!string.IsNullOrWhiteSpace(item.ProjectUrl))
                     {
                         <a class="upload-link" href="@item.ProjectUrl">Open</a>
@@ -68,12 +84,6 @@
                     {
                         <span class="upload-link disabled">Coming Soon</span>
                     }
-                </div>
-                <div class="upload-hover-panel">
-                    <p class="hover-kicker">Deeper Look</p>
-                    <h5>@item.Title</h5>
-                    <p>@item.DeepDescription</p>
-                    <p class="hover-build">@item.BuildNotes</p>
                 </div>
             </article>
         }

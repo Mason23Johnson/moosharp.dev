@@ -9,6 +9,11 @@
     </div>
 
     <div id="terminalText"></div>
+
+    <div class="terminal-input-shell">
+        <span class="terminal-prompt">&gt;</span>
+        <input id="terminalCommandInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Type /help and press enter" />
+    </div>
 </div>
 
 @code {
@@ -30,6 +35,7 @@
         {
             var reference = DotNetObjectReference.Create(this);
             await JS.InvokeVoidAsync("startTerminalTyping", "index");
+            await JS.InvokeVoidAsync("initTerminalInput");
             await JS.InvokeVoidAsync("addKeypressListener", reference);
             await JS.InvokeVoidAsync("startRotatingWelcome");
         }

@@ -147,13 +147,43 @@
 
 .upload-card {
     border-radius: 24px;
-    overflow: hidden;
+    overflow: visible;
     transition: transform 0.2s ease, border-color 0.2s ease;
+    perspective: 1400px;
+    display: grid;
+    gap: 14px;
 }
 
 .upload-card:hover {
     transform: translateY(-4px);
     border-color: rgba(90, 209, 255, 0.28);
+}
+
+.upload-card-shell {
+    position: relative;
+    min-height: 430px;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.upload-card:hover .upload-card-shell {
+    transform: rotateY(180deg);
+}
+
+.upload-card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--projects-line);
+    background: linear-gradient(180deg, rgba(9, 16, 27, 0.96), rgba(9, 16, 27, 0.84));
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.26);
+    backface-visibility: hidden;
+}
+
+.upload-card-back {
+    transform: rotateY(180deg);
+    display: grid;
 }
 
 .upload-thumb {
@@ -183,6 +213,10 @@
     padding: 18px;
     display: grid;
     gap: 14px;
+}
+
+.upload-footer {
+    padding: 0 18px 18px;
 }
 
 .upload-heading {
@@ -224,19 +258,13 @@
 }
 
 .upload-hover-panel {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 22px;
-    background: rgba(6, 12, 20, 0.94);
-    opacity: 0;
-    transition: max-height 0.26s ease, opacity 0.22s ease, padding 0.22s ease;
-}
-
-.upload-card:hover .upload-hover-panel {
-    max-height: 320px;
-    opacity: 1;
-    padding-top: 18px;
-    padding-bottom: 20px;
+    height: 100%;
+    padding: 22px;
+    background:
+        radial-gradient(circle at top right, rgba(90, 209, 255, 0.14), transparent 32%),
+        rgba(6, 12, 20, 0.97);
+    display: grid;
+    align-content: start;
 }
 
 .hover-kicker {
@@ -275,12 +303,19 @@ body {
         padding: 18px;
     }
 
-    .upload-hover-panel {
-        max-height: none;
-        opacity: 1;
-        border-top: 1px solid rgba(90, 209, 255, 0.12);
-        padding: 18px 22px 20px;
-        background: rgba(6, 12, 20, 0.92);
+    .upload-card-shell {
+        min-height: unset;
+        transform: none !important;
+    }
+
+    .upload-card-face {
+        position: relative;
+        inset: auto;
+    }
+
+    .upload-card-back {
+        transform: none;
+        margin-top: 12px;
     }
 
 }

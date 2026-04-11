@@ -1,0 +1,916 @@
+.hologram-page {
+    min-height: 100vh;
+    padding-top: 78px;
+    background: #020203;
+}
+
+.holo-stage {
+    --holo-orange: #ff9b4a;
+    --holo-bright: #ffd8ab;
+    --holo-line: rgba(255, 155, 74, 0.18);
+
+    position: relative;
+    min-height: calc(100vh - 78px);
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 38%, rgba(255, 149, 61, 0.1), transparent 28%),
+        linear-gradient(180deg, #050405 0%, #020203 100%);
+    perspective: 2400px;
+    touch-action: none;
+    user-select: none;
+    cursor: grab;
+}
+
+.holo-stage:active {
+    cursor: grabbing;
+}
+
+.holo-stage-clean::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 70%, rgba(255, 120, 25, 0.1), transparent 24%),
+        radial-gradient(circle at 18% 20%, rgba(255, 155, 74, 0.04), transparent 18%),
+        radial-gradient(circle at 82% 18%, rgba(255, 155, 74, 0.04), transparent 18%);
+}
+
+.holo-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255, 155, 74, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 155, 74, 0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: radial-gradient(circle at center, black 46%, transparent 86%);
+    opacity: 0.42;
+}
+
+.holo-ring {
+    position: absolute;
+    left: 50%;
+    top: 72%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 155, 74, 0.16);
+    transform: translate(-50%, -50%) rotateX(78deg);
+    box-shadow: 0 0 26px rgba(255, 145, 54, 0.1);
+    animation: holoPulse 7s linear infinite;
+}
+
+.ring-one {
+    width: 420px;
+    height: 150px;
+}
+
+.ring-two {
+    width: 620px;
+    height: 210px;
+    animation-delay: -2.4s;
+    opacity: 0.78;
+}
+
+.ring-three {
+    width: 860px;
+    height: 290px;
+    animation-delay: -4.7s;
+    opacity: 0.46;
+}
+
+.holo-floor {
+    position: absolute;
+    left: 50%;
+    bottom: 58px;
+    width: min(1120px, 90vw);
+    height: 240px;
+    transform: translateX(-50%) rotateX(80deg);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(255, 205, 154, 0.55) 0 1px, transparent 1.8px) center / 16px 16px,
+        radial-gradient(circle at center, rgba(255, 126, 26, 0.16), transparent 68%);
+    border: 1px solid rgba(255, 155, 74, 0.14);
+    box-shadow: 0 0 42px rgba(255, 118, 12, 0.1);
+}
+
+.holo-glow-core {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    width: 520px;
+    height: 520px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 165, 94, 0.18), transparent 72%);
+    filter: blur(24px);
+}
+
+.holo-rig {
+    --holo-rx: -8deg;
+    --holo-ry: -42deg;
+    --holo-scale: 1;
+
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    width: 1040px;
+    height: 760px;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%) scale(var(--holo-scale)) rotateX(var(--holo-rx)) rotateY(var(--holo-ry));
+    will-change: transform;
+}
+
+.holo-computer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: holoFloat 7s ease-in-out infinite;
+}
+
+.holo-box {
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    transform-style: preserve-3d;
+}
+
+.holo-face {
+    position: absolute;
+    border: 1px solid rgba(255, 155, 74, 0.28);
+    background:
+        radial-gradient(circle, rgba(255, 210, 162, 0.94) 0 1px, transparent 1.8px) center / 11px 11px,
+        linear-gradient(180deg, rgba(255, 170, 98, 0.18), rgba(255, 104, 26, 0.04));
+    box-shadow:
+        inset 0 0 22px rgba(255, 184, 119, 0.06),
+        0 0 18px rgba(255, 143, 54, 0.08);
+}
+
+.holo-front,
+.holo-back {
+    width: 100%;
+    height: 100%;
+}
+
+.holo-front {
+    transform: translateZ(calc(var(--d) / 2));
+}
+
+.holo-back {
+    transform: rotateY(180deg) translateZ(calc(var(--d) / 2));
+    opacity: 0.42;
+}
+
+.holo-left,
+.holo-right {
+    width: var(--d);
+    height: 100%;
+    left: calc(50% - (var(--d) / 2));
+    opacity: 0.56;
+}
+
+.holo-left {
+    transform: rotateY(-90deg) translateZ(calc(var(--w) / 2));
+}
+
+.holo-right {
+    transform: rotateY(90deg) translateZ(calc(var(--w) / 2));
+}
+
+.holo-top,
+.holo-bottom {
+    width: 100%;
+    height: var(--d);
+    top: calc(50% - (var(--d) / 2));
+    opacity: 0.58;
+}
+
+.holo-top {
+    transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+}
+
+.holo-bottom {
+    transform: rotateX(-90deg) translateZ(calc(var(--h) / 2));
+}
+
+.holo-desktop-box {
+    --w: 560px;
+    --h: 142px;
+    --d: 320px;
+
+    top: 428px;
+    left: 240px;
+    transform: translateZ(16px);
+}
+
+.holo-desktop-box .holo-face {
+    background:
+        radial-gradient(circle, rgba(255, 219, 176, 0.94) 0 1px, transparent 1.8px) center / 11px 11px,
+        linear-gradient(180deg, rgba(255, 182, 113, 0.18), rgba(255, 111, 28, 0.06));
+}
+
+.holo-desktop-front {
+    position: absolute;
+    inset: 14px 16px 12px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 16px;
+    padding: 18px 20px 14px;
+    border: 1px solid rgba(255, 177, 105, 0.22);
+    background:
+        radial-gradient(circle at 18% 18%, rgba(255, 222, 183, 0.22), transparent 24%),
+        linear-gradient(180deg, rgba(255, 200, 151, 0.08), rgba(28, 10, 3, 0.78));
+    box-shadow: inset 0 0 24px rgba(255, 163, 77, 0.08);
+}
+
+.holo-desktop-panel {
+    position: relative;
+    border: 1px solid rgba(255, 176, 103, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 194, 141, 0.08), rgba(27, 9, 3, 0.72)),
+        radial-gradient(circle at 20% 20%, rgba(255, 229, 196, 0.08), transparent 26%);
+}
+
+.holo-desktop-panel-left {
+    border-radius: 6px;
+}
+
+.holo-panel-slot {
+    position: absolute;
+    left: 24px;
+    top: 26px;
+    height: 10px;
+    border: 1px solid rgba(255, 189, 122, 0.26);
+    background: linear-gradient(180deg, rgba(6, 2, 1, 0.88), rgba(38, 13, 4, 0.42));
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.holo-panel-slot-wide {
+    right: 36px;
+}
+
+.holo-panel-latch {
+    position: absolute;
+    right: 20px;
+    top: 21px;
+    width: 20px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 185, 116, 0.24);
+    background: radial-gradient(circle at 35% 35%, rgba(255, 233, 204, 0.58), rgba(255, 118, 36, 0.14));
+}
+
+.holo-panel-pin {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 232, 204, 0.84), rgba(255, 128, 38, 0.18));
+}
+
+.holo-desktop-panel-right {
+    display: grid;
+    grid-template-columns: 1fr 52px;
+    gap: 12px;
+    padding: 10px 12px 10px 14px;
+}
+
+.holo-drive-stack {
+    display: grid;
+    gap: 8px;
+}
+
+.holo-drive-bay {
+    position: relative;
+    border: 1px solid rgba(255, 179, 109, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 191, 132, 0.1), rgba(23, 8, 3, 0.74)),
+        radial-gradient(circle at 14% 18%, rgba(255, 233, 201, 0.08), transparent 24%);
+}
+
+.holo-drive-bay::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, rgba(255, 173, 101, 0.08), rgba(255, 213, 175, 0.76), rgba(255, 173, 101, 0.08));
+}
+
+.holo-drive-bay-large {
+    min-height: 34px;
+}
+
+.holo-power-cluster {
+    position: relative;
+    border-left: 1px solid rgba(255, 175, 105, 0.18);
+}
+
+.holo-power-button {
+    position: absolute;
+    right: 8px;
+    bottom: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 191, 125, 0.26);
+    background:
+        radial-gradient(circle at 35% 35%, rgba(255, 234, 207, 0.72), rgba(255, 131, 43, 0.18)),
+        linear-gradient(180deg, rgba(255, 197, 142, 0.12), rgba(17, 5, 2, 0.74));
+}
+
+.holo-desktop-top-vent {
+    position: absolute;
+    inset: 26px 52px 44px 180px;
+    border-radius: 10px;
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 214, 177, 0.7) 0 2px, transparent 2px 8px),
+        linear-gradient(180deg, rgba(255, 195, 138, 0.14), rgba(21, 7, 3, 0.72));
+    opacity: 0.72;
+}
+
+.holo-monitor-pedestal {
+    position: absolute;
+    left: 430px;
+    top: 346px;
+    width: 180px;
+    height: 116px;
+    transform-style: preserve-3d;
+    transform: translateZ(70px);
+}
+
+.holo-pedestal-disc,
+.holo-pedestal-column {
+    position: absolute;
+    left: 50%;
+    transform-style: preserve-3d;
+}
+
+.holo-pedestal-disc {
+    border: 1px solid rgba(255, 182, 114, 0.22);
+    background:
+        radial-gradient(circle, rgba(255, 219, 176, 0.92) 0 1px, transparent 1.8px) center / 10px 10px,
+        linear-gradient(180deg, rgba(255, 191, 129, 0.14), rgba(27, 10, 3, 0.78));
+    box-shadow: inset 0 0 16px rgba(255, 175, 102, 0.08);
+}
+
+.holo-pedestal-disc-bottom {
+    width: 170px;
+    height: 54px;
+    bottom: 0;
+    margin-left: -85px;
+    border-radius: 50%;
+    transform: rotateX(78deg);
+}
+
+.holo-pedestal-column {
+    width: 96px;
+    height: 44px;
+    bottom: 20px;
+    margin-left: -48px;
+    border: 1px solid rgba(255, 179, 112, 0.22);
+    border-radius: 12px;
+    background:
+        radial-gradient(circle, rgba(255, 218, 173, 0.9) 0 1px, transparent 1.8px) center / 10px 10px,
+        linear-gradient(180deg, rgba(255, 195, 136, 0.14), rgba(26, 9, 3, 0.76));
+}
+
+.holo-pedestal-disc-top {
+    width: 120px;
+    height: 38px;
+    bottom: 34px;
+    margin-left: -60px;
+    border-radius: 50%;
+    transform: rotateX(78deg);
+}
+
+.holo-monitor-box {
+    --w: 320px;
+    --h: 304px;
+    --d: 348px;
+
+    top: 104px;
+    left: 352px;
+    transform: translateZ(84px);
+}
+
+.holo-monitor-box .holo-face {
+    background:
+        radial-gradient(circle, rgba(255, 223, 183, 0.94) 0 1px, transparent 1.8px) center / 11px 11px,
+        linear-gradient(180deg, rgba(255, 189, 121, 0.18), rgba(255, 110, 25, 0.06));
+}
+
+.holo-monitor-front {
+    position: absolute;
+    inset: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 18px 14px;
+    border: 1px solid rgba(255, 179, 109, 0.22);
+    background:
+        radial-gradient(circle at 24% 18%, rgba(255, 226, 190, 0.18), transparent 24%),
+        linear-gradient(180deg, rgba(255, 197, 142, 0.08), rgba(24, 8, 3, 0.8));
+    box-shadow: inset 0 0 26px rgba(255, 171, 90, 0.08);
+}
+
+.holo-monitor-bezel {
+    position: relative;
+    flex: 1;
+    padding: 16px 18px 20px;
+    border: 1px solid rgba(255, 180, 111, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 205, 157, 0.1), rgba(26, 9, 3, 0.82)),
+        radial-gradient(circle at 22% 18%, rgba(255, 236, 211, 0.08), transparent 30%);
+    clip-path: polygon(1.5% 0, 98.5% 0, 100% 100%, 0 100%);
+}
+
+.holo-screen-shell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 16px 18px 20px;
+    border: 1px solid rgba(255, 176, 104, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 205, 154, 0.11), rgba(38, 14, 4, 0.8)),
+        radial-gradient(circle at 30% 22%, rgba(255, 211, 168, 0.14), transparent 34%);
+    clip-path: polygon(2.5% 0, 97.5% 0, 100% 100%, 0 100%);
+    box-shadow:
+        inset 0 0 22px rgba(255, 178, 108, 0.08),
+        0 0 20px rgba(255, 128, 32, 0.06);
+}
+
+.holo-screen-bevel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 12px 14px 18px;
+    border: 1px solid rgba(255, 180, 110, 0.18);
+    background:
+        linear-gradient(180deg, rgba(255, 193, 132, 0.09), rgba(18, 6, 2, 0.88));
+    clip-path: polygon(3.5% 0, 96.5% 0, 100% 100%, 0 100%);
+    box-shadow: inset 0 0 20px rgba(255, 175, 102, 0.08);
+}
+
+.holo-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px 8px 34px 34px / 8px 8px 44px 44px;
+    border: 1px solid rgba(255, 170, 98, 0.24);
+    background:
+        radial-gradient(circle at 50% 28%, rgba(255, 177, 111, 0.14), transparent 44%),
+        linear-gradient(180deg, rgba(255, 123, 43, 0.11), rgba(6, 2, 1, 0.94));
+    box-shadow:
+        inset 0 0 36px rgba(255, 188, 124, 0.08),
+        inset 0 -30px 54px rgba(0, 0, 0, 0.44);
+}
+
+.holo-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 213, 165, 0.1), transparent 26%),
+        radial-gradient(circle at 24% 18%, rgba(255, 225, 196, 0.14), transparent 20%);
+    pointer-events: none;
+}
+
+.holo-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 110%, rgba(0, 0, 0, 0.5), transparent 44%),
+        radial-gradient(circle at 50% -6%, rgba(255, 228, 191, 0.1), transparent 22%);
+    pointer-events: none;
+}
+
+.holo-screen-terminal {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    width: 46%;
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    grid-template-rows: repeat(3, 6px);
+    gap: 6px 10px;
+    z-index: 2;
+    filter: drop-shadow(0 0 8px rgba(255, 187, 124, 0.18));
+}
+
+.holo-term-icon {
+    grid-row: 1 / span 3;
+    width: 12px;
+    height: 12px;
+    margin-top: 1px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 204, 153, 0.5);
+    background: radial-gradient(circle at 35% 35%, rgba(255, 236, 215, 0.86), rgba(255, 136, 48, 0.16));
+}
+
+.holo-term-line {
+    align-self: center;
+    width: 84%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 168, 94, 0.06), rgba(255, 214, 173, 0.94), rgba(255, 168, 94, 0.06));
+}
+
+.holo-term-line-main {
+    width: 100%;
+}
+
+.holo-term-line-short {
+    width: 60%;
+}
+
+.holo-screen-sun {
+    position: absolute;
+    left: 52%;
+    top: 26%;
+    width: 104px;
+    height: 104px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(255, 229, 192, 0.48), rgba(255, 182, 102, 0.22) 52%, rgba(255, 130, 46, 0.06) 71%, transparent 72%);
+    box-shadow: 0 0 28px rgba(255, 179, 104, 0.12);
+    opacity: 0.84;
+}
+
+.holo-screen-cloud {
+    position: absolute;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 178, 107, 0.08), rgba(255, 226, 194, 0.82), rgba(255, 178, 107, 0.08));
+    opacity: 0.66;
+}
+
+.holo-screen-cloud::before,
+.holo-screen-cloud::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    width: 22px;
+    height: 14px;
+    border-radius: 999px;
+    background: inherit;
+}
+
+.holo-screen-cloud::before {
+    left: 14px;
+}
+
+.holo-screen-cloud::after {
+    right: 12px;
+}
+
+.holo-screen-cloud-top {
+    top: 15%;
+    right: 12%;
+    width: 86px;
+}
+
+.holo-screen-cloud-mid {
+    top: 37%;
+    right: 8%;
+    width: 62px;
+    transform: scale(0.86);
+}
+
+.holo-screen-horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 216, 174, 0.94), transparent);
+    opacity: 0.82;
+}
+
+.holo-screen-mountain {
+    position: absolute;
+    left: 18%;
+    width: 64%;
+    bottom: 15%;
+    height: 58%;
+    filter: drop-shadow(0 0 18px rgba(255, 148, 60, 0.08));
+}
+
+.holo-mountain-ridge {
+    position: absolute;
+    display: block;
+}
+
+.holo-mountain-ridge-main {
+    inset: 0;
+    clip-path: polygon(50% 0, 83% 100%, 17% 100%);
+    background: linear-gradient(180deg, rgba(255, 234, 208, 0.88), rgba(255, 188, 118, 0.3) 58%, rgba(255, 112, 33, 0.08));
+}
+
+.holo-mountain-ridge-shadow {
+    right: 13%;
+    bottom: 0;
+    width: 42%;
+    height: 94%;
+    clip-path: polygon(0 12%, 100% 100%, 18% 100%);
+    background: linear-gradient(180deg, rgba(255, 192, 124, 0.34), rgba(255, 97, 27, 0.06));
+}
+
+.holo-mountain-ridge-base {
+    left: 6%;
+    right: 6%;
+    bottom: 0;
+    height: 35%;
+    clip-path: polygon(0 78%, 14% 58%, 29% 72%, 43% 46%, 58% 70%, 76% 52%, 100% 80%, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, rgba(255, 221, 183, 0.52), rgba(255, 141, 52, 0.12));
+}
+
+.holo-screen-ground {
+    position: absolute;
+    bottom: 16%;
+    width: 28%;
+    height: 26%;
+    background: linear-gradient(180deg, rgba(255, 182, 108, 0.2), rgba(255, 112, 34, 0.02));
+}
+
+.holo-screen-ground-left {
+    left: -1%;
+    clip-path: polygon(0 76%, 25% 52%, 44% 34%, 59% 52%, 69% 26%, 100% 100%, 0 100%);
+}
+
+.holo-screen-ground-right {
+    right: -2%;
+    clip-path: polygon(0 100%, 27% 32%, 45% 50%, 63% 26%, 80% 48%, 100% 72%, 100% 100%);
+}
+
+.holo-screen-water {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6%;
+    height: 17%;
+    background:
+        linear-gradient(180deg, transparent 0, rgba(255, 216, 181, 0.1) 25%, rgba(255, 157, 74, 0.18) 100%),
+        repeating-linear-gradient(180deg, rgba(255, 214, 177, 0.72) 0 2px, transparent 2px 8px);
+    opacity: 0.84;
+}
+
+.holo-screen-grid {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255, 178, 111, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 178, 111, 0.06) 1px, transparent 1px);
+    background-size: 100% 12px, 14px 100%;
+    mix-blend-mode: screen;
+    opacity: 0.42;
+    pointer-events: none;
+}
+
+.holo-art-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -28%;
+    height: 42%;
+    background: linear-gradient(180deg, rgba(255, 196, 130, 0), rgba(255, 190, 122, 0.2), rgba(255, 196, 130, 0));
+    animation: holoScan 4.2s linear infinite;
+}
+
+.holo-art-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 190, 122, 0.12), transparent 74%);
+}
+
+.holo-monitor-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    min-height: 22px;
+    padding-right: 10px;
+}
+
+.holo-monitor-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 232, 198, 0.86), rgba(255, 124, 38, 0.2));
+}
+
+.holo-monitor-power {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 190, 123, 0.24);
+    background:
+        radial-gradient(circle at 35% 35%, rgba(255, 234, 206, 0.76), rgba(255, 126, 38, 0.18)),
+        linear-gradient(180deg, rgba(255, 197, 140, 0.1), rgba(21, 7, 3, 0.76));
+}
+
+.holo-monitor-side-vent,
+.holo-monitor-top-vent {
+    position: absolute;
+    border-radius: 8px;
+    background:
+        repeating-linear-gradient(180deg, rgba(255, 213, 176, 0.76) 0 2px, transparent 2px 7px),
+        linear-gradient(180deg, rgba(255, 194, 138, 0.12), rgba(20, 7, 3, 0.74));
+    opacity: 0.74;
+}
+
+.holo-monitor-side-vent {
+    inset: 74px 28px 80px 28px;
+}
+
+.holo-monitor-top-vent {
+    inset: 24px 42px 36px 52px;
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 213, 176, 0.76) 0 2px, transparent 2px 7px),
+        linear-gradient(180deg, rgba(255, 194, 138, 0.12), rgba(20, 7, 3, 0.74));
+}
+
+.holo-keyboard-dock {
+    --w: 188px;
+    --h: 28px;
+    --d: 98px;
+
+    top: 548px;
+    left: 266px;
+    transform: translateZ(54px) rotateX(78deg) rotateZ(-8deg);
+}
+
+.holo-keyboard-dock .holo-face {
+    background:
+        radial-gradient(circle, rgba(255, 223, 182, 0.94) 0 1px, transparent 1.8px) center / 11px 11px,
+        linear-gradient(180deg, rgba(255, 191, 128, 0.16), rgba(255, 106, 26, 0.05));
+    box-shadow:
+        inset 0 0 18px rgba(255, 180, 108, 0.08),
+        0 0 12px rgba(255, 126, 30, 0.05);
+}
+
+.holo-keyboard-box {
+    --w: 390px;
+    --h: 18px;
+    --d: 152px;
+
+    top: 592px;
+    left: 142px;
+    transform-origin: 50% 0;
+    transform: translateZ(48px) rotateX(77deg) rotateZ(-10deg);
+}
+
+.holo-keyboard-box .holo-face {
+    background:
+        radial-gradient(circle, rgba(255, 225, 185, 0.94) 0 1px, transparent 1.8px) center / 11px 11px,
+        linear-gradient(180deg, rgba(255, 188, 122, 0.16), rgba(255, 104, 26, 0.05));
+}
+
+.holo-keyboard-box .holo-top {
+    overflow: hidden;
+}
+
+.holo-keyboard-top {
+    position: absolute;
+    inset: 6px 10px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 98px;
+    gap: 10px;
+    padding: 10px 13px 12px 12px;
+    border: 1px solid rgba(255, 177, 105, 0.2);
+    background:
+        linear-gradient(180deg, rgba(255, 200, 150, 0.1), rgba(33, 11, 4, 0.84)),
+        radial-gradient(circle at 22% 20%, rgba(255, 222, 186, 0.12), transparent 28%);
+    box-shadow:
+        inset 0 0 20px rgba(255, 176, 105, 0.08),
+        0 0 14px rgba(255, 130, 32, 0.05);
+}
+
+.holo-keyboard-main,
+.holo-keyboard-numpad {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.holo-key-row {
+    display: grid;
+    grid-template-columns: repeat(var(--keys), minmax(0, 1fr));
+    gap: 3px;
+}
+
+.holo-key-row-space {
+    display: flex;
+    gap: 3px;
+}
+
+.holo-key {
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 191, 127, 0.24);
+    background:
+        radial-gradient(circle at 50% 34%, rgba(255, 224, 188, 0.32), transparent 46%),
+        linear-gradient(180deg, rgba(255, 180, 112, 0.18), rgba(47, 16, 4, 0.78));
+    box-shadow:
+        inset 0 0 8px rgba(255, 183, 113, 0.08),
+        0 0 6px rgba(255, 135, 34, 0.03);
+}
+
+.holo-key-mod {
+    width: 18px;
+}
+
+.holo-key-space {
+    flex: 1;
+}
+
+.holo-keyboard-signature {
+    position: absolute;
+    bottom: 8px;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 202, 149, 0.7), transparent);
+    opacity: 0.84;
+}
+
+.holo-keyboard-signature-left {
+    left: 14px;
+    width: 42px;
+}
+
+.holo-keyboard-signature-right {
+    right: 18px;
+    width: 30px;
+}
+
+@keyframes holoFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes holoPulse {
+    0% {
+        opacity: 0.28;
+        transform: translate(-50%, -50%) rotateX(78deg) scale(0.97);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) rotateX(78deg) scale(1.02);
+    }
+    100% {
+        opacity: 0.28;
+        transform: translate(-50%, -50%) rotateX(78deg) scale(0.97);
+    }
+}
+
+@keyframes holoScan {
+    from {
+        top: -28%;
+    }
+    to {
+        top: 100%;
+    }
+}
+
+@media (max-width: 1180px) {
+    .holo-rig {
+        --holo-scale: 0.82;
+    }
+}
+
+@media (max-width: 860px) {
+    .holo-rig {
+        --holo-scale: 0.62;
+        top: 57%;
+    }
+}
+
+@media (max-width: 640px) {
+    .hologram-page {
+        padding-top: 72px;
+    }
+
+    .holo-stage {
+        min-height: calc(100vh - 72px);
+    }
+
+    .holo-floor {
+        width: 96vw;
+        height: 168px;
+        bottom: 34px;
+    }
+
+    .holo-rig {
+        --holo-scale: 0.46;
+        top: 59%;
+    }
+}

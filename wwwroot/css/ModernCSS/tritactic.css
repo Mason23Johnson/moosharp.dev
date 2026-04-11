@@ -23,30 +23,11 @@
     filter: drop-shadow(0 0 22px rgba(97, 205, 255, 0.28));
 }
 
-.tri-console {
+.tri-panel {
     border: 1px solid rgba(95, 186, 255, 0.22);
     border-radius: 26px;
-    overflow: hidden;
     background: linear-gradient(180deg, rgba(6, 11, 18, 0.98), rgba(3, 7, 12, 0.96));
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
-}
-
-.tri-console-topbar {
-    display: flex;
-    gap: 8px;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(95, 186, 255, 0.12);
-    background: linear-gradient(180deg, rgba(15, 32, 52, 0.94), rgba(8, 16, 27, 0.96));
-}
-
-.tri-console-topbar span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: linear-gradient(180deg, #58d7ff, #177bda);
-}
-
-.tri-console-body {
     padding: 24px;
     display: grid;
     gap: 20px;
@@ -145,7 +126,7 @@
         padding: 92px 14px 32px;
     }
 
-    .tri-console-body {
+    .tri-panel {
         padding: 18px;
     }
 

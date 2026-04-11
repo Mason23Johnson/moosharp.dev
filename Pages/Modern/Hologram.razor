@@ -1,0 +1,176 @@
+@page "/hologram"
+@layout MainLayout
+@inject IJSRuntime JS
+
+<link href="css/ModernCSS/hologram.css" rel="stylesheet" />
+
+<section class="hologram-page">
+    <div class="holo-stage holo-stage-clean" id="hologramStage" aria-label="Interactive hologram retro PC">
+        <div class="holo-grid-overlay"></div>
+        <div class="holo-ring ring-one"></div>
+        <div class="holo-ring ring-two"></div>
+        <div class="holo-ring ring-three"></div>
+        <div class="holo-floor"></div>
+        <div class="holo-glow-core"></div>
+
+        <div class="holo-rig holo-rig-clean" id="hologramRig">
+            <div class="holo-computer">
+                <div class="holo-desktop-box holo-box">
+                    <div class="holo-face holo-front">
+                        <div class="holo-desktop-front">
+                            <div class="holo-desktop-panel holo-desktop-panel-left">
+                                <div class="holo-panel-slot holo-panel-slot-wide"></div>
+                                <div class="holo-panel-latch"></div>
+                                <div class="holo-panel-pin"></div>
+                            </div>
+
+                            <div class="holo-desktop-panel holo-desktop-panel-right">
+                                <div class="holo-drive-stack">
+                                    <div class="holo-drive-bay holo-drive-bay-large"></div>
+                                    <div class="holo-drive-bay"></div>
+                                    <div class="holo-drive-bay"></div>
+                                </div>
+
+                                <div class="holo-power-cluster">
+                                    <div class="holo-power-button"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="holo-face holo-back"></div>
+                    <div class="holo-face holo-left"></div>
+                    <div class="holo-face holo-right"></div>
+                    <div class="holo-face holo-top">
+                        <div class="holo-desktop-top-vent"></div>
+                    </div>
+                    <div class="holo-face holo-bottom"></div>
+                </div>
+
+                <div class="holo-monitor-pedestal">
+                    <div class="holo-pedestal-disc holo-pedestal-disc-bottom"></div>
+                    <div class="holo-pedestal-column"></div>
+                    <div class="holo-pedestal-disc holo-pedestal-disc-top"></div>
+                </div>
+
+                <div class="holo-monitor-box holo-box">
+                    <div class="holo-face holo-front">
+                        <div class="holo-monitor-front">
+                            <div class="holo-monitor-bezel">
+                                <div class="holo-screen-shell">
+                                    <div class="holo-screen-bevel">
+                                        <div class="holo-screen">
+                                            <div class="holo-screen-terminal">
+                                                <span class="holo-term-icon"></span>
+                                                <span class="holo-term-line holo-term-line-main"></span>
+                                                <span class="holo-term-line"></span>
+                                                <span class="holo-term-line holo-term-line-short"></span>
+                                            </div>
+                                            <div class="holo-screen-sun"></div>
+                                            <div class="holo-screen-cloud holo-screen-cloud-top"></div>
+                                            <div class="holo-screen-cloud holo-screen-cloud-mid"></div>
+                                            <div class="holo-screen-horizon"></div>
+                                            <div class="holo-screen-mountain">
+                                                <span class="holo-mountain-ridge holo-mountain-ridge-main"></span>
+                                                <span class="holo-mountain-ridge holo-mountain-ridge-shadow"></span>
+                                                <span class="holo-mountain-ridge holo-mountain-ridge-base"></span>
+                                            </div>
+                                            <div class="holo-screen-ground holo-screen-ground-left"></div>
+                                            <div class="holo-screen-ground holo-screen-ground-right"></div>
+                                            <div class="holo-screen-water"></div>
+                                            <div class="holo-screen-grid"></div>
+                                            <div class="holo-art-scan"></div>
+                                            <div class="holo-art-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="holo-monitor-controls">
+                                <span class="holo-monitor-led"></span>
+                                <span class="holo-monitor-power"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="holo-face holo-back"></div>
+                    <div class="holo-face holo-left"></div>
+                    <div class="holo-face holo-right">
+                        <div class="holo-monitor-side-vent"></div>
+                    </div>
+                    <div class="holo-face holo-top">
+                        <div class="holo-monitor-top-vent"></div>
+                    </div>
+                    <div class="holo-face holo-bottom"></div>
+                </div>
+
+                <div class="holo-keyboard-dock holo-box">
+                    <div class="holo-face holo-front"></div>
+                    <div class="holo-face holo-back"></div>
+                    <div class="holo-face holo-left"></div>
+                    <div class="holo-face holo-right"></div>
+                    <div class="holo-face holo-top"></div>
+                    <div class="holo-face holo-bottom"></div>
+                </div>
+
+                <div class="holo-keyboard-box holo-box">
+                    <div class="holo-face holo-front"></div>
+                    <div class="holo-face holo-back"></div>
+                    <div class="holo-face holo-left"></div>
+                    <div class="holo-face holo-right"></div>
+                    <div class="holo-face holo-top">
+                        <div class="holo-keyboard-top">
+                            <div class="holo-keyboard-main">
+                                @foreach (var rowLength in MainKeyRows)
+                                {
+                                    <div class="holo-key-row" style="@($"--keys:{rowLength};")">
+                                        @for (var keyIndex = 0; keyIndex < rowLength; keyIndex++)
+                                        {
+                                            <span class="holo-key"></span>
+                                        }
+                                    </div>
+                                }
+
+                                <div class="holo-key-row holo-key-row-space">
+                                    <span class="holo-key holo-key-mod"></span>
+                                    <span class="holo-key holo-key-mod"></span>
+                                    <span class="holo-key holo-key-space"></span>
+                                    <span class="holo-key holo-key-mod"></span>
+                                    <span class="holo-key holo-key-mod"></span>
+                                </div>
+                            </div>
+
+                            <div class="holo-keyboard-numpad">
+                                @foreach (var rowLength in NumpadRows)
+                                {
+                                    <div class="holo-key-row" style="@($"--keys:{rowLength};")">
+                                        @for (var keyIndex = 0; keyIndex < rowLength; keyIndex++)
+                                        {
+                                            <span class="holo-key"></span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="holo-keyboard-signature holo-keyboard-signature-left"></div>
+                            <div class="holo-keyboard-signature holo-keyboard-signature-right"></div>
+                            <div class="holo-art-glow"></div>
+                        </div>
+                    </div>
+                    <div class="holo-face holo-bottom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private readonly int[] MainKeyRows = [14, 13, 13, 12];
+    private readonly int[] NumpadRows = [4, 4, 4, 4];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("hologramLab.init", "hologramStage", "hologramRig");
+        }
+    }
+}
