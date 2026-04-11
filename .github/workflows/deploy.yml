@@ -27,6 +27,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Remove stale build artifacts
+        run: rm -rf bin obj publish _site
+
       # CTRL+F: PUBLISH_STEP
       - name: Publish
         run: dotnet publish ./moosharp.dev.csproj -c Release -o publish
