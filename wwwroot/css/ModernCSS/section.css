@@ -99,6 +99,32 @@
     color: #00b7ff;
 }
 
+.nav-media-link {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.nav-box-thumb {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px;
+    box-shadow: inset 0 0 0 1px rgba(0, 183, 255, 0.12);
+}
+
+.nav-box-thumb-moocast {
+    width: 58px;
+    height: 58px;
+    padding: 6px;
+    transform: scale(1.28);
+}
+
 /* Hover effect for nav boxes */
 .nav-box:hover {
     transform: scale(1.03);
@@ -119,7 +145,7 @@
     grid-column: 1 / 2;
 }
 .nav-tritactic {
-    grid-row: 3 / 3;
+    grid-row: 3 / 4;
     grid-column: 2 / 3;
 }
 
@@ -217,5 +243,74 @@
     100% {
         transform: translateY(100%);
         opacity: 1;
+    }
+}
+
+@media (max-width: 900px) {
+    .projects-section {
+        padding: 10px 20px;
+    }
+
+    .nav-grid-section {
+        padding: 16px;
+        margin-top: 28px;
+    }
+
+    .nav-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        max-width: 560px;
+    }
+
+    .nav-terminal,
+    .nav-contact,
+    .nav-calendar,
+    .nav-tritactic {
+        grid-row: auto;
+        grid-column: auto;
+    }
+
+    .nav-box {
+        min-height: 104px;
+        font-size: 1rem;
+    }
+
+    .nav-terminal {
+        min-height: 180px;
+    }
+
+    .nav-media-link {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .terminal-reveal {
+        width: auto;
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .typed-terminal {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
+
+@media (max-width: 540px) {
+    .nav-box {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .nav-box-thumb {
+        width: 52px;
+        height: 52px;
+    }
+
+    .nav-box-thumb-moocast {
+        transform: scale(1.18);
     }
 }

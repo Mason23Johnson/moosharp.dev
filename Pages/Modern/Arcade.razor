@@ -4,88 +4,145 @@
 
 <canvas id="gamesMatrixBackground"></canvas>
 
-<div class="steam-arcade">
-    <aside class="steam-sidebar">
-        <div class="sidebar-header">Library</div>
-        <ul class="game-list">
-            @foreach (var g in Games)
-            {
-                <li class="game-item @(g == Selected ? "active" : "")" @onclick="() => Select(g)">
-                    <img class="game-icon" src="@g.Icon" alt="" onerror="this.style.display='none'">
-                    <div class="game-meta">
-                        <span class="game-name">@g.Name</span>
-                        <span class="game-tag">@g.Tagline</span>
+<section class="steam-arcade-page">
+    <header class="store-topbar">
+        <div>
+            <p class="store-kicker">Moochine Arcade</p>
+            <h1>Arcade library</h1>
+        </div>
+        <div class="store-pill">4 titles tracked</div>
+    </header>
+
+    <div class="steam-arcade">
+        <aside class="steam-sidebar">
+            <div class="sidebar-header">
+                <span>Library</span>
+                <span class="sidebar-count">@Games.Count</span>
+            </div>
+            <ul class="game-list">
+                @foreach (var g in Games)
+                {
+                    <li class="game-item @(g == Selected ? "active" : "")" @onclick="() => Select(g)">
+                        <img class="game-icon" src="@g.Icon" alt="" />
+                        <div class="game-meta">
+                            <span class="game-name">@g.Name</span>
+                            <span class="game-tag">@g.Tagline</span>
+                        </div>
+                        <span class="game-state">@g.Status</span>
+                    </li>
+                }
+            </ul>
+        </aside>
+
+        <section class="steam-detail">
+            <div class="hero" style="background-image: url('@Selected.Hero');">
+                <div class="hero-overlay"></div>
+                <div class="hero-info">
+                    <p class="store-kicker">@Selected.Badge</p>
+                    <h2 class="hero-title">@Selected.Name</h2>
+                    <p class="hero-desc">@Selected.Description</p>
+
+                    <div class="detail-actions">
+                        @if (Selected.CanPlay && !string.IsNullOrWhiteSpace(Selected.PlayUrl))
+                        {
+                            <a class="play-btn" target="_blank" href="@Selected.PlayUrl">Play Now</a>
+                        }
+                        else
+                        {
+                            <span class="play-btn disabled">Coming Soon</span>
+                        }
+                        <a class="visit-btn" href="/projects">Project Hub</a>
                     </div>
-                </li>
-            }
-        </ul>
-    </aside>
 
-    <section class="steam-detail">
-        <div class="hero" style="background-image: url('@Selected.Hero');">
-            <div class="hero-overlay"></div>
-            <div class="hero-info">
-                <h1 class="hero-title">@Selected.Name</h1>
-                <p class="hero-desc">@Selected.Description</p>
-
-                <div class="detail-actions">
-                    <a class="play-btn @(Selected.CanPlay ? "" : "disabled")" target="_blank"
-                        href="@(Selected.CanPlay? Selected.PlayUrl: "#")">
-                        Play
-                    </a>
-                    <a class="visit-btn" href="/projects">Details</a>
-                </div>
-
-                <div class="tags">
-                    @foreach (var t in Selected.Tags)
-                    {
-                        <span class="tag">@t</span>
-                    }
+                    <div class="tags">
+                        @foreach (var t in Selected.Tags)
+                        {
+                            <span class="tag">@t</span>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+
+            <div class="detail-grid">
+                <div class="detail-panel">
+                    <p class="panel-kicker">About This Game</p>
+                    <h3>@Selected.Tagline</h3>
+                    <p>@Selected.LongDescription</p>
+                </div>
+                <div class="detail-panel">
+                    <p class="panel-kicker">Game Data</p>
+                    <ul class="detail-stats">
+                        <li><span>Status</span><strong>@Selected.Status</strong></li>
+                        <li><span>Platform</span><strong>@Selected.Platform</strong></li>
+                        <li><span>Release</span><strong>@Selected.Release</strong></li>
+                        <li><span>Build Focus</span><strong>@Selected.Focus</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
 
 @code {
-    private List<GameItem> Games = new()
-{
-new GameItem("Quick Click", "/arcade/quickclick", canPlay: true)
-{
-Tagline = "Reflex and aim trainer",
-Description = "Click targets before the timer drains. Speed ramps up.",
-Tags = new() { "Web", "Blazor", "Casual" },
-Icon = "/images/games/quickclick.png",
-Hero = "/images/games/quickclick_hero.jpg"
-},
-new GameItem("Snake", "/arcade/snake", canPlay: true)
-{
-Tagline = "Classic Snake game in neon grid",
-Description = "Arrow/WASD, P to pause, R to restart. Local high score.",
-Tags = new() { "Web", "Canvas", "Arcade" },
-Icon = "/images/games/snake.png",
-Hero = "/images/games/snake_hero.jpg"
-},
-
-new GameItem("Tri-Tactic", null, canPlay: false)
-{
-Badge = "Soon",
-Tagline = "Infinite Tic-Tac-Toe",
-Description = "3-piece infinite grid with memory-based removal. Online mode coming.",
-Tags = new() { "Prototype", "Board", "Strategy" },
-Icon = "/images/games/tritactic.png",
-Hero = "/images/games/tritactic_hero.jpg"
-},
-new GameItem("21 Down", null, canPlay: false)
-{
-Badge = "2026",
-Tagline = "Blackjack Platformer",
-Description = "C# & Godot action‑platformer about cards, luck, and style.",
-Tags = new() { "Godot", "Action", "WIP" },
-Icon = "/images/games/21down.png",
-Hero = "/images/games/21down_hero.jpg"
-},
-};
+    private readonly List<GameItem> Games = new()
+    {
+        new("Quick Click", "/arcade/quickclick", true)
+        {
+            Badge = "Playable",
+            Status = "Live",
+            Release = "Available now",
+            Platform = "Web",
+            Focus = "Reaction Training",
+            Tagline = "Fast reflex clicks on a neon timer.",
+            Description = "A quick reaction game built for speed, rhythm, and repeat plays.",
+            LongDescription = "Quick Click is the sharpest arcade-style reflex test in the library right now. It is simple on purpose: clear target, rising pressure, immediate replay loop.",
+            Tags = new() { "Arcade", "Reflex", "Browser" },
+            Icon = "/images/projects/quickclick.png",
+            Hero = "/images/moosharpbackground.jpg"
+        },
+        new("Snake", "/arcade/snake", true)
+        {
+            Badge = "Playable",
+            Status = "Live",
+            Release = "Available now",
+            Platform = "Web",
+            Focus = "Classic Gameplay",
+            Tagline = "A familiar snake run wrapped in neon terminal energy.",
+            Description = "Classic movement, modern skin, and a clean session-based score chase.",
+            LongDescription = "Snake keeps the library grounded with something immediate and readable. It is a simple browser build with a retro feel, quick restart cycle, and a more polished presentation than the old-school original.",
+            Tags = new() { "Classic", "Neon", "Browser" },
+            Icon = "/images/projects/snake.png",
+            Hero = "/images/moosharpbackgroundblack.jpg"
+        },
+        new("Tri-Tactic", "/games/tri-tactic", true)
+        {
+            Badge = "Playable",
+            Status = "Live Prototype",
+            Release = "Available now",
+            Platform = "Web",
+            Focus = "Strategy Design",
+            Tagline = "Board-game thinking with a more tactical ruleset.",
+            Description = "A strategy concept that aims for more depth than a standard quick-play board game.",
+            LongDescription = "Tri-Tactic is where the arcade library leans into strategy. The core idea is a competitive board system with more memory, pacing, and positioning decisions than a classic grid game.",
+            Tags = new() { "Strategy", "Terminal", "Board Game" },
+            Icon = "/images/projects/TriTactic.png",
+            Hero = "/images/projects/TriTactic.png"
+        },
+        new("21 Down", null, false)
+        {
+            Badge = "Concept",
+            Status = "Planned",
+            Release = "2026 target",
+            Platform = "Godot + C#",
+            Focus = "Action Platforming",
+            Tagline = "A card-flavored action platformer with style and momentum.",
+            Description = "A longer-horizon game concept blending movement, risk, and card mechanics.",
+            LongDescription = "21 Down is the furthest-out concept in the lineup, but it sets the tone for where Moochine Arcade wants to go next: bigger systems, stronger identity, and game ideas that can grow beyond quick browser sessions.",
+            Tags = new() { "Action", "Godot", "Concept" },
+            Icon = "/icons/godot.png",
+            Hero = "/images/retroPC.png"
+        }
+    };
 
     private GameItem Selected = default!;
 
@@ -102,21 +159,30 @@ Hero = "/images/games/21down_hero.jpg"
         }
     }
 
-    private void Select(GameItem g) => Selected = g;
+    private void Select(GameItem game) => Selected = game;
 
-    private class GameItem
+    private sealed class GameItem
     {
         public GameItem(string name, string? playUrl, bool canPlay)
-        { Name = name; PlayUrl = playUrl; CanPlay = canPlay; }
+        {
+            Name = name;
+            PlayUrl = playUrl;
+            CanPlay = canPlay;
+        }
 
         public string Name { get; set; }
         public string? PlayUrl { get; set; }
         public bool CanPlay { get; set; }
+        public string Badge { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Release { get; set; } = "";
+        public string Platform { get; set; } = "";
+        public string Focus { get; set; } = "";
         public string Tagline { get; set; } = "";
         public string Description { get; set; } = "";
+        public string LongDescription { get; set; } = "";
         public List<string> Tags { get; set; } = new();
-        public string Icon { get; set; } = "/images/games/placeholder.png";
-        public string Hero { get; set; } = "/images/games/placeholder_hero.jpg";
-        public string? Badge { get; set; }
+        public string Icon { get; set; } = "/icons/folder-icon.png";
+        public string Hero { get; set; } = "/images/moosharpbackground.jpg";
     }
 }

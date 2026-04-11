@@ -1,139 +1,248 @@
 @page "/MooCast"
 @layout MainLayout
 
-<h1 class="scoreboard-title">Scoreboard Updater</h1>
-
-<div class="viewer-scoreboard">
-    <div class="viewer-team" style="--team-bg:@HomeBgColor">
-        <div class="team-name" style="color:@HomeColor;">@HomeName</div>
-        <div class="team-score">@HomeScore</div>
-    </div>
-    <div class="viewer-team" style="--team-bg:@AwayBgColor">
-        <div class="team-name" style="color:@AwayColor;">@AwayName</div>
-        <div class="team-score">@AwayScore</div>
-    </div>
-</div>
-
-@if (CurrentSport == "Softball" || CurrentSport == "Baseball")
-{
-    <div class="diamond-wrapper">
-        <svg viewBox="0 0 200 200" class="diamond-svg">
-            <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="white" stroke-width="2" />
-            <circle cx="100" cy="40" r="12" class="@(OccupiedBases.Contains(2) ? "base-circle active" : "base-circle")"
-                @onclick="() => ToggleBase(2)" />
-            <circle cx="140" cy="100" r="12" class="@(OccupiedBases.Contains(1) ? "base-circle active" : "base-circle")"
-                @onclick="() => ToggleBase(1)" />
-            <circle cx="100" cy="160" r="12" class="@(OccupiedBases.Contains(0) ? "base-circle active" : "base-circle")"
-                @onclick="() => ToggleBase(0)" />
-            <circle cx="60" cy="100" r="12" class="@(OccupiedBases.Contains(3) ? "base-circle active" : "base-circle")"
-                @onclick="() => ToggleBase(3)" />
-        </svg>
-
-        <div class="diamond-controls">
-            <div class="period-control vertical">
-                <label>Inning:</label>
-                <input type="number" min="1" @bind="CurrentPeriod" />
+<section class="scoreboard-tool">
+    <div class="scoreboard-workspace">
+        <section class="control-board">
+            <div class="board-header">
+                <p class="board-kicker">MooCastScoreboard</p>
+                <h1>Control Board</h1>
             </div>
-            <div class="period-control vertical">
-                <label>Balls:</label>
-                <input type="number" min="0" max="3" @bind="Balls" class="@GetErrorClass(Balls, 3)" />
-                <span class="error-hover"></span>
-            </div>
-            <div class="period-control vertical">
-                <label>Strikes:</label>
-                <input type="number" min="0" max="2" @bind="Strikes" class="@GetErrorClass(Strikes, 2)" />
-                <span class="error-hover"></span>
-            </div>
-            <div class="period-control vertical">
-                <label>Outs:</label>
-                <input type="number" min="0" max="2" @bind="Outs" class="@GetErrorClass(Outs, 2)" />
-                <span class="error-hover"></span>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div class="period-control">
-        <label>Quarter:</label>
-        <input type="number" min="1" @bind="CurrentPeriod" />
-    </div>
-}
 
-<div class="sport-selector">
-    @foreach (var sport in SportScores.Keys)
-    {
-        <button class="sport-button @(CurrentSport == sport ? "selected" : "")"
-            @onclick="() => SelectSport(sport)">@sport</button>
-    }
-</div>
+            <div class="control-stack">
+                <section class="control-panel">
+                    <div class="section-heading">
+                        <span>Sport</span>
+                    </div>
+                    <div class="sport-selector">
+                        @foreach (var sport in SportScores.Keys)
+                        {
+                            <button type="button"
+                                    class="sport-button @(CurrentSport == sport ? "selected" : "")"
+                                    @onclick="() => SelectSport(sport)">
+                                @sport
+                            </button>
+                        }
+                    </div>
+                </section>
 
-@if (!string.IsNullOrEmpty(CurrentSport))
-{
-    <div class="team-name-edit">
-        <input @bind="HomeName" placeholder="Home Team" class="team-input" />
-        <input type="color" @bind="HomeColor" title="Home Text Color" />
-        <input type="color" @bind="HomeBgColor" title="Home Background Color" />
-        <input @bind="AwayName" placeholder="Away Team" class="team-input" />
-        <input type="color" @bind="AwayColor" title="Away Text Color" />
-        <input type="color" @bind="AwayBgColor" title="Away Background Color" />
-    </div>
+                <section class="control-panel">
+                    <div class="section-heading">
+                        <span>@PeriodLabel</span>
+                    </div>
+                    <div class="period-row">
+                        <button type="button" class="period-button" @onclick="DecreasePeriod">-</button>
+                        <input type="number" min="1" @bind="CurrentPeriod" class="period-input" />
+                        <button type="button" class="period-button" @onclick="IncreasePeriod">+</button>
+                    </div>
+                </section>
 
-    <div class="team-container">
-        <div class="team-panel condensed-team" style="color:@HomeColor; background:@HomeBgColor;">
-            <h2>@HomeName</h2>
-            <div class="score-buttons">
-                @foreach (var points in SelectedPointValues)
+                <section class="control-panel">
+                    <div class="section-heading">
+                        <span>Score Input</span>
+                    </div>
+                    <div class="score-editor">
+                        <article class="score-team-editor" style="@GetTeamStyle(true)">
+                            <div class="score-team-top">
+                                <div>
+                                    <span class="team-side-label">Home</span>
+                                    <input @bind="HomeName" class="team-name-input" placeholder="Home Team" />
+                                </div>
+                                <strong class="live-score">@HomeScore</strong>
+                            </div>
+
+                            <div class="score-actions">
+                                @foreach (var points in SelectedPointValues)
+                                {
+                                    <button type="button" class="score-action add" @onclick="() => AddScore(true, points)">+@points</button>
+                                }
+                                @foreach (var points in SelectedPointValues)
+                                {
+                                    <button type="button" class="score-action subtract" @onclick="() => SubtractScore(true, points)">-@points</button>
+                                }
+                            </div>
+                        </article>
+
+                        <article class="score-team-editor" style="@GetTeamStyle(false)">
+                            <div class="score-team-top">
+                                <div>
+                                    <span class="team-side-label">Away</span>
+                                    <input @bind="AwayName" class="team-name-input" placeholder="Away Team" />
+                                </div>
+                                <strong class="live-score">@AwayScore</strong>
+                            </div>
+
+                            <div class="score-actions">
+                                @foreach (var points in SelectedPointValues)
+                                {
+                                    <button type="button" class="score-action add" @onclick="() => AddScore(false, points)">+@points</button>
+                                }
+                                @foreach (var points in SelectedPointValues)
+                                {
+                                    <button type="button" class="score-action subtract" @onclick="() => SubtractScore(false, points)">-@points</button>
+                                }
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="control-panel">
+                    <div class="section-heading">
+                        <span>Team Colors</span>
+                    </div>
+                    <div class="color-editor">
+                        <article class="color-card">
+                            <strong>Home</strong>
+                            <label>
+                                <span>Text</span>
+                                <input type="color" @bind="HomeColor" />
+                            </label>
+                            <label>
+                                <span>Background</span>
+                                <input type="color" @bind="HomeBgColor" />
+                            </label>
+                        </article>
+
+                        <article class="color-card">
+                            <strong>Away</strong>
+                            <label>
+                                <span>Text</span>
+                                <input type="color" @bind="AwayColor" />
+                            </label>
+                            <label>
+                                <span>Background</span>
+                                <input type="color" @bind="AwayBgColor" />
+                            </label>
+                        </article>
+                    </div>
+                </section>
+
+                @if (ShowDiamond)
                 {
-                    <button @onclick="() => AddScore(true, points)">+@points</button>
-                    <button @onclick="() => SubtractScore(true, points)">-@points</button>
+                    <section class="control-panel compact-panel">
+                        <div class="section-heading">
+                            <span>Baseball State</span>
+                        </div>
+
+                        <div class="diamond-control-layout">
+                            <svg viewBox="0 0 220 220" class="diamond-svg control" aria-label="Base runner controls">
+                                <polygon points="110,30 190,110 110,190 30,110" class="diamond-outline" />
+                                <circle cx="110" cy="52" r="15" class="@GetBaseClass(2)" @onclick="() => ToggleBase(2)" />
+                                <circle cx="168" cy="110" r="15" class="@GetBaseClass(1)" @onclick="() => ToggleBase(1)" />
+                                <circle cx="110" cy="168" r="15" class="@GetBaseClass(0)" @onclick="() => ToggleBase(0)" />
+                                <circle cx="52" cy="110" r="15" class="@GetBaseClass(3)" @onclick="() => ToggleBase(3)" />
+                            </svg>
+
+                            <div class="count-editor">
+                                <label>
+                                    <span>Balls</span>
+                                    <input type="number" min="0" max="3" @bind="Balls" class="@GetErrorClass(Balls, 3)" />
+                                </label>
+                                <label>
+                                    <span>Strikes</span>
+                                    <input type="number" min="0" max="2" @bind="Strikes" class="@GetErrorClass(Strikes, 2)" />
+                                </label>
+                                <label>
+                                    <span>Outs</span>
+                                    <input type="number" min="0" max="2" @bind="Outs" class="@GetErrorClass(Outs, 2)" />
+                                </label>
+                            </div>
+                        </div>
+                    </section>
                 }
             </div>
-        </div>
-        <div class="team-panel condensed-team" style="color:@AwayColor; background:@AwayBgColor;">
-            <h2>@AwayName</h2>
-            <div class="score-buttons">
-                @foreach (var points in SelectedPointValues)
+        </section>
+
+        <section class="score-preview">
+            <div class="preview-frame">
+                <header class="preview-topline">
+                    <span class="preview-brand">MooCast Live</span>
+                    <span class="preview-sport">@CurrentSport</span>
+                </header>
+
+                <div class="scoreboard-display">
+                    <div class="display-team away" style="@GetTeamStyle(false)">
+                        <span class="display-name">@AwayName</span>
+                        <span class="display-score">@AwayScore</span>
+                    </div>
+
+                    <div class="display-center">
+                        <span class="display-label">@PeriodLabel</span>
+                        <span class="display-value">@CurrentPeriod</span>
+                    </div>
+
+                    <div class="display-team home" style="@GetTeamStyle(true)">
+                        <span class="display-name">@HomeName</span>
+                        <span class="display-score">@HomeScore</span>
+                    </div>
+                </div>
+
+                @if (ShowDiamond)
                 {
-                    <button @onclick="() => AddScore(false, points)">+@points</button>
-                    <button @onclick="() => SubtractScore(false, points)">-@points</button>
+                    <div class="baseball-strip">
+                        <svg viewBox="0 0 220 220" class="diamond-svg preview" aria-label="Base runner diamond">
+                            <polygon points="110,30 190,110 110,190 30,110" class="diamond-outline" />
+                            <circle cx="110" cy="52" r="12" class="@GetBaseClass(2)" />
+                            <circle cx="168" cy="110" r="12" class="@GetBaseClass(1)" />
+                            <circle cx="110" cy="168" r="12" class="@GetBaseClass(0)" />
+                            <circle cx="52" cy="110" r="12" class="@GetBaseClass(3)" />
+                        </svg>
+
+                        <div class="count-strip">
+                            <div class="count-box">
+                                <span>Balls</span>
+                                <strong>@Balls</strong>
+                            </div>
+                            <div class="count-box">
+                                <span>Strikes</span>
+                                <strong>@Strikes</strong>
+                            </div>
+                            <div class="count-box">
+                                <span>Outs</span>
+                                <strong>@Outs</strong>
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
-        </div>
+        </section>
     </div>
-}
+</section>
 
 @code {
     private int HomeScore = 0;
     private int AwayScore = 0;
     private int CurrentPeriod = 1;
-    private string HomeName = "Home";
-    private string AwayName = "Away";
-    private string CurrentSport = string.Empty;
-    private string HomeColor = "#ffffff";
-    private string AwayColor = "#ffffff";
-    private string HomeBgColor = "#000000";
-    private string AwayBgColor = "#000000";
+    private string HomeName = "HOME";
+    private string AwayName = "AWAY";
+    private string CurrentSport = "Basketball";
+    private string HomeColor = "#f5f7ff";
+    private string AwayColor = "#f5f7ff";
+    private string HomeBgColor = "#0a84ff";
+    private string AwayBgColor = "#132033";
     private int Balls = 0;
     private int Strikes = 0;
     private int Outs = 0;
 
-    private string GetErrorClass(int value, int max) => value > max ? "input-error" : "";
-
-    private List<int> SelectedPointValues =>
-    string.IsNullOrEmpty(CurrentSport) ? new() : SportScores[CurrentSport];
-
     private Dictionary<string, List<int>> SportScores = new()
     {
-        ["Football"] = new() { 1, 2, 3, 6 },
         ["Basketball"] = new() { 1, 2, 3 },
+        ["Football"] = new() { 1, 2, 3, 6 },
         ["Baseball"] = new() { 1 },
         ["Softball"] = new() { 1 }
     };
 
     private HashSet<int> OccupiedBases = new();
 
-    void AddScore(bool isHome, int points)
+    private List<int> SelectedPointValues => SportScores[CurrentSport];
+
+    private bool ShowDiamond => CurrentSport is "Softball" or "Baseball";
+
+    private string PeriodLabel => ShowDiamond ? "Inning" : "Quarter";
+
+    private string GetErrorClass(int value, int max) => value > max ? "input-error" : "";
+
+    private void AddScore(bool isHome, int points)
     {
         if (isHome)
             HomeScore += points;
@@ -141,7 +250,7 @@ else
             AwayScore += points;
     }
 
-    void SubtractScore(bool isHome, int points)
+    private void SubtractScore(bool isHome, int points)
     {
         if (isHome)
             HomeScore = Math.Max(0, HomeScore - points);
@@ -149,18 +258,41 @@ else
             AwayScore = Math.Max(0, AwayScore - points);
     }
 
-    void SelectSport(string sport)
+    private void SelectSport(string sport)
     {
         CurrentSport = sport;
         HomeScore = 0;
         AwayScore = 0;
         CurrentPeriod = 1;
+        Balls = 0;
+        Strikes = 0;
+        Outs = 0;
         OccupiedBases.Clear();
     }
 
-    void ToggleBase(int baseNum)
+    private void IncreasePeriod() => CurrentPeriod++;
+
+    private void DecreasePeriod()
+    {
+        if (CurrentPeriod > 1)
+        {
+            CurrentPeriod--;
+        }
+    }
+
+    private void ToggleBase(int baseNum)
     {
         if (!OccupiedBases.Add(baseNum))
             OccupiedBases.Remove(baseNum);
+    }
+
+    private string GetBaseClass(int baseNum) =>
+        OccupiedBases.Contains(baseNum) ? "base-circle active" : "base-circle";
+
+    private string GetTeamStyle(bool isHome)
+    {
+        var bg = isHome ? HomeBgColor : AwayBgColor;
+        var color = isHome ? HomeColor : AwayColor;
+        return $"background:{bg}; color:{color};";
     }
 }

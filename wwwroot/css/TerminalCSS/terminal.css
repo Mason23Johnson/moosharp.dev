@@ -67,7 +67,7 @@
     align-items: center;
     background-color: black;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     transition: all 1s ease-in-out;
 }
 
@@ -181,4 +181,11 @@
 @keyframes toast-out {
   from { opacity: 1; }
   to { opacity: 0; }
+}
+
+html,
+body {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

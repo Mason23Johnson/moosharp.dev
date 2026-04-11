@@ -13,6 +13,13 @@
 /* go through each css file to find the highlight of Hi Im Mason on index.razor - on load/refresh | use cookies or session keys for terminal mode*/
 
 /* Base Structure */
+html,
+body {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 body 
 {
     margin: 0;
@@ -20,6 +27,14 @@ body
     background: 
         url('/images/moosharpbackgroundblack.jpg') no-repeat center center fixed;
     background-size: 1920px 1080px;
+}
+
+.modern-layout {
+    min-height: 100vh;
+}
+
+.modern-main {
+    min-height: calc(100vh - 72px);
 }
 
 .modern-footer 
@@ -127,4 +142,41 @@ body
 {
     color: #00b7ff;
     text-shadow: 0 0 2px #00b7ff, 0 0 10px #00b7ff;
+}
+
+@media (max-width: 900px)
+{
+    body
+    {
+        background-attachment: scroll;
+        background-position: center top;
+        background-size: cover;
+    }
+
+    .hero-container
+    {
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 48px;
+        padding: 0 18px;
+        text-align: center;
+    }
+
+    .hero-image
+    {
+        width: 140px;
+        height: 140px;
+    }
+
+    .hero-text
+    {
+        font-size: clamp(2.1rem, 9vw, 3.6rem);
+        line-height: 1.08;
+    }
+
+    .hero-text h1,
+    .hero-text h2
+    {
+        margin: 0;
+    }
 }

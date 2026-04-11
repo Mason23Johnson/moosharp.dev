@@ -1,32 +1,22 @@
-window.enableDrag = (element) => {
-    let startX = 0, startY = 0;
-    let offsetX = 0, offsetY = 0;
+function startDragSession(e, element) {
+    let offsetX = 0;
+    let offsetY = 0;
 
-    const header = element.querySelector(".window-header") || element;
+    e.preventDefault();
 
-    const dragMouseDown = (e) => {
-        e.preventDefault();
+    const rect = element.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
 
-        const rect = element.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
+    const dragElement = (moveEvent) => {
+        moveEvent.preventDefault();
 
-        startX = e.clientX;
-        startY = e.clientY;
-
-        document.addEventListener("mousemove", dragElement);
-        document.addEventListener("mouseup", stopDrag);
-    };
-
-    const dragElement = (e) => {
-        e.preventDefault();
-
-        const left = e.clientX - offsetX;
-        const top = e.clientY - offsetY;
+        const left = moveEvent.clientX - offsetX;
+        const top = moveEvent.clientY - offsetY;
 
         element.style.left = `${left}px`;
         element.style.top = `${top}px`;
-        element.style.position = "fixed"; // force fixed position
+        element.style.position = "fixed";
     };
 
     const stopDrag = () => {
@@ -34,5 +24,16 @@ window.enableDrag = (element) => {
         document.removeEventListener("mouseup", stopDrag);
     };
 
-    header.onmousedown = dragMouseDown;
+    document.addEventListener("mousemove", dragElement);
+    document.addEventListener("mouseup", stopDrag);
+}
+
+window.enableDrag = (element) => {
+    const header = element.querySelector(".window-header") || element;
+    header.onmousedown = (e) => startDragSession(e, element);
+};
+
+window.beginDrag = (e, element) => {
+    if (!element) return;
+    startDragSession(e, element);
 };

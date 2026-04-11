@@ -107,3 +107,32 @@
         flex: 1 1 100%;
     }
 }
+
+@media (max-width: 540px) {
+    .top-nav-bar {
+        padding: 10px 14px;
+    }
+
+    .nav-left {
+        gap: 10px;
+    }
+
+    .nav-center {
+        gap: 6px;
+    }
+
+    .nav-link-box,
+    .terminal-toggle-bar {
+        font-size: 0.82rem;
+        padding: 7px 10px;
+    }
+
+    .nav-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .nav-name {
+        font-size: 0.95rem;
+    }
+}

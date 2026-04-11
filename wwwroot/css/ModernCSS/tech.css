@@ -53,3 +53,30 @@
     white-space: nowrap;
 }
 
+@media (max-width: 900px) {
+    .tech-wrapper {
+        padding: 0 14px;
+    }
+
+    .tech-track {
+        height: 44px;
+    }
+
+    .track-row2 .tech-scroll {
+        margin-left: 32px;
+    }
+
+    .tech-item {
+        min-width: 96px;
+        margin-right: 12px;
+    }
+
+    .tech-item img {
+        height: 24px;
+    }
+
+    .tech-item span {
+        font-size: 0.8rem;
+    }
+}
+

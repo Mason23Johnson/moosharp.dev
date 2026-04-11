@@ -1,152 +1,129 @@
 @page "/projects"
 @layout MainLayout
 
-<section id="projects">
-
-@code {
-    private const string YT_CHANNEL_URL = "https://www.youtube.com/@moosharp";
-    private const string CHANNEL_HANDLE = "@moosharp";
-
-    // Sort state
-    private string sortMode = "hours_desc";
-
-    // YouTube data
-    private List<ProjectItem> Items = new()
-{
-new ProjectItem(
-Title: "MooDo Calendar (Web Version Coming Soon!)",
-Summary: "Task scheduler with notifications, auth, and EF Core.",
-Hours: 90,
-Thumbnail: "/images/projects/moodo.png",
-ProjectUrl: "/projects/moodo"
-),
-new ProjectItem(
-Title: "MooCast Scoreboard",
-Summary: "Livestream scoreboard editor for sports streamers.",
-Hours: 6,
-Thumbnail: "/images/projects/moocast.png",
-ProjectUrl: "/moocast"
-),
-new ProjectItem(
-Title: "Moochine Arcade",
-Summary: "A collection of indie prototypes and small web games.",
-Hours: 16,
-Thumbnail: "/images/projects/moochinearcade.png",
-ProjectUrl: "/arcade"
-),
-// placeholder cards
-new ProjectItem("Tritactic (Web Version Coming Soon!)", "Tactical card prototype", 3, "/images/projects/TriTactic.png", "/projects/tritactic"),
-@* new ProjectItem("Blog Engine (WIP)", "Minimal CMS + markdown", 18, "/images/projects/placeholder.png", "/projects/blog"), *@
-};
-
-    private IEnumerable<ProjectItem> SortedItems =>
-    sortMode switch
-    {
-        "hours_desc" => Items.OrderByDescending(i => i.Hours),
-        "hours_asc" => Items.OrderBy(i => i.Hours),
-        "az" => Items.OrderBy(i => i.Title),
-        "za" => Items.OrderByDescending(i => i.Title),
-        _ => Items
-    };
-
-    public record ProjectItem(string Title, string Summary, int Hours, string Thumbnail, string ProjectUrl);
-}
-
-<div class="ytc-page-scroll"><!-- enables scroll even if global CSS locks body -->
-
-    @* YT_HEADER *@
-    <header class="ytc-header">
-        <div class="ytc-cover"></div>
-
-        <div class="ytc-channel">
-            <img class="ytc-avatar" src="/images/MooSharpWhiteCircle.png" alt="MooSharp" />
-            <div class="ytc-meta">
-                <h1 class="ytc-name">MooSharp</h1>
-                <div class="ytc-handle"><span class="mono">@CHANNEL_HANDLE</span></div>
-                <div class="ytc-stats">
-                    <span class="dot">Salesforce</span>
-                    <span class="dot">Indie Dev</span>
-                    <span class="dot">C#</span>
-                    <span class="dot">Blazor</span>
-                </div>
-            </div>
-            <div class="ytc-actions">
-                <a class="ytc-sub" href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Subscribe</a>
+<section class="projects-page">
+    <header class="projects-hero">
+        <div class="projects-hero-copy projects-hero-single">
+            <p class="projects-kicker">MooSharp Projects</p>
+            <h1>Product builds, experiments, and launch targets.</h1>
+            <p class="projects-summary">
+                This is the current slate: shipping tools, game work, and the next major build on deck.
+                The roadmap is focused on prediction systems, polished tooling, and the next release wave planned for Deer Season 2026.
+            </p>
+            <div class="projects-badges">
+                <span>AI</span>
+                <span>Mobile + Web</span>
+                <span>Blazor + C#</span>
+                <span>Indie Systems</span>
             </div>
         </div>
-
-        <nav class="ytc-tabs">
-            <a class="active">Projects</a>
-            <a href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Videos</a>
-            <a href="@($"{YT_CHANNEL_URL}/playlists")" target="_blank" rel="noopener">Playlists</a>
-            <a href="/about">About</a>
-        </nav>
     </header>
 
-    @* YT_FEATURED *@
-    <section class="ytc-featured">
-        <div class="ytc-featured-thumb">
-            <a href="/arcade">
-                <img src="/images/projects/MooDo.png" alt="Featured: MooDo Calendar" />
-            </a>
+    <section class="projects-feature">
+        <div class="feature-art">
+            <img src="/images/projects/tinek.png" alt="Tinek" />
         </div>
-        <div class="ytc-featured-info">
-            <h2>MooDoo Calendar (Coming Soon!)
-            </h2>
-            <p>A growing to-do list utilizing full-stack and database features.</p>
-            <div class="ytc-meta-row">
-                <span class="chip">90 hours</span>
-                <span class="chip">Easy To Use</span>
-                <span class="chip">Web</span>
-            </div>
-            <div class="ytc-featured-actions">
-                <a class="btn primary" href="/MooDo">View Project</a>
-                <a class="btn ghost" href="@YT_CHANNEL_URL" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <div class="feature-copy">
+            <p class="projects-kicker">Roadmap Lead</p>
+            <h2>Tinek</h2>
+            <p>
+                Tinek is being built as a hunting prediction platform powered by AI models and mathematical logic.
+                The plan is to combine smart forecasts, field data storage, scouting notes, and long-term utility in
+                one system that works on both mobile and web.
+            </p>
+            <div class="feature-meta">
+                <span class="chip">Coming Soon</span>
+                <span class="chip">Prediction Engine</span>
+                <span class="chip">Data Storage</span>
+                <span class="chip">Field Utility</span>
             </div>
         </div>
     </section>
 
-    @* YT_TOOLBAR *@
-    <section class="ytc-toolbar">
-        <div class="ytc-toolbar-left">
-            <h3>Uploads</h3>
-        </div>
-        <div class="ytc-toolbar-right">
-            <label class="sr">Sort by</label>
-            <select class="ytc-sort" @bind="sortMode">
-                <option value="hours_desc">Most hours</option>
-                <option value="hours_asc">Least hours</option>
-                <option value="az">A-Z</option>
-                <option value="za">Z-A</option>
-            </select>
-        </div>
-    </section>
-
-    @* YT_GRID *@
-    <section class="ytc-grid">
-        @foreach (var v in SortedItems)
+    <section class="uploads-grid">
+        @foreach (var item in Items)
         {
-            <article class="ytc-card">
-                <a class="ytc-thumb" href="@v.ProjectUrl">
-                    <img src="@v.Thumbnail" alt="@v.Title" />
-                    <span class="ytc-length">@($"{v.Hours}h")</span>
-                </a>
-                <div class="ytc-card-body">
-                    <h4 class="ytc-title">
-                        <a href="@v.ProjectUrl">@v.Title</a>
-                    </h4>
-                    <p class="ytc-desc">@v.Summary</p>
-                    <div class="ytc-card-meta">
-                        <span>@($"{v.Hours}h dev")</span>
+            <article class="upload-card">
+                <div class="upload-thumb">
+                    <img src="@item.Thumbnail" alt="@item.Title" />
+                    <span class="upload-status">@item.Status</span>
+                </div>
+                <div class="upload-body">
+                    <div class="upload-heading">
+                        <h4>@item.Title</h4>
+                        <span class="upload-platform">@item.Platform</span>
                     </div>
+                    <p>@item.Summary</p>
+                    <div class="upload-tags">
+                        @foreach (var tag in item.Tags)
+                        {
+                            <span>@tag</span>
+                        }
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(item.ProjectUrl))
+                    {
+                        <a class="upload-link" href="@item.ProjectUrl">Open</a>
+                    }
+                    else
+                    {
+                        <span class="upload-link disabled">Coming Soon</span>
+                    }
+                </div>
+                <div class="upload-hover-panel">
+                    <p class="hover-kicker">Deeper Look</p>
+                    <h5>@item.Title</h5>
+                    <p>@item.DeepDescription</p>
+                    <p class="hover-build">@item.BuildNotes</p>
                 </div>
             </article>
         }
     </section>
 
-<h2>Disclaimer: All project logos are generated by AI and may not represent the actual project branding.
-            </h2>
-
-</div> <!-- /.ytc-page-scroll -->
-
 </section>
+
+@code {
+    private readonly List<ProjectItem> Items = new()
+    {
+        new(
+            "Moochine Arcade",
+            "A growing hub for prototypes, arcade experiments, and game concepts.",
+            "/images/projects/MoochineArcade.png",
+            "/arcade",
+            "Playable",
+            "Web",
+            new[] { "Arcade", "Prototype Lab", "Games" },
+            "Moochine Arcade is the testing ground for quick ideas, playable prototypes, and game concepts that can grow into bigger projects over time.",
+            "Built with a mix of Blazor, JavaScript, lightweight game logic, and a storefront-style shell that makes the collection feel more intentional than a loose page of links."),
+        new(
+            "MooCastScoreboard",
+            "Livestream scoreboard editor for sports streams and quick game-day overlays.",
+            "/images/projects/MooCast.png",
+            "/MooCast",
+            "Live",
+            "Web",
+            new[] { "Scoreboard", "Streaming", "Utility" },
+            "MooCastScoreboard is meant to be a practical streamer utility: update scores fast, switch sports, adjust team styling, and keep the overlay readable under pressure.",
+            "It is being built as a focused Blazor tool with sport-aware controls, editable team branding, and a live preview so streamers can tune the layout before it goes on-screen."),
+        new(
+            "Tritactic",
+            "Tactical board-game concept still in active development.",
+            "/images/projects/TriTactic.png",
+            "/games/tri-tactic",
+            "Playable Prototype",
+            "Web",
+            new[] { "Strategy", "Board Game", "Prototype" },
+            "Tri-Tactic is a memory-based twist on tic-tac-toe where pieces cycle off the board, which adds tempo, pressure, and more room for actual strategy.",
+            "The current build uses a C# game engine with Blazor UI, keyboard input support, and computer-turn logic that now runs more reliably inside the app.")
+    };
+
+    private sealed record ProjectItem(
+        string Title,
+        string Summary,
+        string Thumbnail,
+        string? ProjectUrl,
+        string Status,
+        string Platform,
+        string[] Tags,
+        string DeepDescription,
+        string BuildNotes);
+}

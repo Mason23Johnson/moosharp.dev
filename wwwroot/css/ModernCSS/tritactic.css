@@ -1,0 +1,167 @@
+.tri-page {
+    min-height: 100vh;
+    padding: 110px 24px 80px;
+    color: #ffffff;
+}
+
+.tri-shell {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    display: grid;
+    gap: 22px;
+}
+
+.tri-logo-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.tri-logo {
+    width: min(320px, 72vw);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 22px rgba(97, 205, 255, 0.28));
+}
+
+.tri-console {
+    border: 1px solid rgba(95, 186, 255, 0.22);
+    border-radius: 26px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(6, 11, 18, 0.98), rgba(3, 7, 12, 0.96));
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
+}
+
+.tri-console-topbar {
+    display: flex;
+    gap: 8px;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(95, 186, 255, 0.12);
+    background: linear-gradient(180deg, rgba(15, 32, 52, 0.94), rgba(8, 16, 27, 0.96));
+}
+
+.tri-console-topbar span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #58d7ff, #177bda);
+}
+
+.tri-console-body {
+    padding: 24px;
+    display: grid;
+    gap: 20px;
+}
+
+.tri-output {
+    margin: 0;
+    min-height: 280px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(95, 186, 255, 0.12);
+    background: rgba(0, 0, 0, 0.52);
+    color: #ffffff;
+    white-space: pre-wrap;
+    line-height: 1.65;
+    font-family: "Cascadia Mono", "Consolas", monospace;
+}
+
+.tri-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tri-btn,
+.tri-cell {
+    color: #ffffff;
+    border: 1px solid rgba(95, 186, 255, 0.2);
+    background: linear-gradient(180deg, rgba(12, 30, 49, 0.92), rgba(6, 14, 22, 0.96));
+    font-family: "Cascadia Mono", "Consolas", monospace;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.tri-btn {
+    min-width: 150px;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+.tri-btn.primary {
+    background: linear-gradient(180deg, rgba(21, 110, 177, 0.95), rgba(11, 63, 110, 0.98));
+}
+
+.tri-btn:hover,
+.tri-cell:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: rgba(95, 186, 255, 0.38);
+}
+
+.tri-board-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.tri-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 92px);
+    gap: 12px;
+}
+
+.tri-cell {
+    width: 92px;
+    height: 92px;
+    border-radius: 18px;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.tri-cell-active {
+    color: #ffffff;
+}
+
+.tri-cell-idle {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.tri-cell:disabled {
+    opacity: 1;
+    cursor: default;
+}
+
+.tri-disclaimer {
+    margin: 0;
+    text-align: center;
+    color: #ffffff;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+    .tri-page {
+        padding: 92px 14px 32px;
+    }
+
+    .tri-console-body {
+        padding: 18px;
+    }
+
+    .tri-output {
+        min-height: 220px;
+        font-size: 0.92rem;
+    }
+
+    .tri-grid {
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+    }
+
+    .tri-cell {
+        width: 100%;
+        aspect-ratio: 1;
+        height: auto;
+    }
+}

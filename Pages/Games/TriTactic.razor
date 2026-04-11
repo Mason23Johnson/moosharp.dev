@@ -1,47 +1,76 @@
 @page "/games/tri-tactic"
 @using MooSharp.Pages.Games
 @inject IJSRuntime JS
+@implements IDisposable
 
-<h2 class="matrix-font">Tri-Tactic</h2>
+<link href="css/ModernCSS/tritactic.css" rel="stylesheet" />
 
-<div class="terminal-container">
-    <pre>@outputText</pre>
-
-    @if (engine == null)
-    {
-        <button @onclick="StartGame">▶ Start Game</button>
-    }
-    else if (engine.AwaitingSymbol)
-    {
-        <div>
-            <button @onclick='() => engine.ReceiveSymbol("X")'>Play as X</button>
-            <button @onclick='() => engine.ReceiveSymbol("O")'>Play as O</button>
+<section class="tri-page">
+    <div class="tri-shell">
+        <div class="tri-logo-wrap">
+            <img src="/images/projects/TriTactic.png" alt="Tri-Tactic" class="tri-logo" />
         </div>
-    }
-    else if (awaitingMove)
-    {
-        <div class="game-grid-3">
-            @for (int i = 0; i < 9; i++)
-            {
-                <button disabled="@(!string.IsNullOrEmpty(engine.Board[i]))" @onclick="() => Move(i)">
-                    @(!string.IsNullOrEmpty(engine.Board[i]) ? engine.Board[i] : (i + 1).ToString())
-                </button>
-            }
+
+        <div class="tri-console">
+            <div class="tri-console-topbar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="tri-console-body">
+                <pre class="tri-output">@outputText</pre>
+
+                @if (engine == null)
+                {
+                    <div class="tri-actions">
+                        <button type="button" class="tri-btn primary" @onclick="StartGame">Start Game</button>
+                    </div>
+                }
+                else if (engine.AwaitingSymbol)
+                {
+                    <div class="tri-actions">
+                        <button type="button" class="tri-btn" @onclick='() => SelectSymbol("X")'>Play as X</button>
+                        <button type="button" class="tri-btn" @onclick='() => SelectSymbol("O")'>Play as O</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="tri-board-wrap">
+                        <div class="game-grid-3 tri-grid">
+                            @for (int i = 0; i < 9; i++)
+                            {
+                                <button type="button"
+                                        class="tri-cell @(awaitingMove && string.IsNullOrEmpty(engine.Board[i]) ? "tri-cell-active" : "tri-cell-idle")"
+                                        disabled="@(!awaitingMove || !string.IsNullOrEmpty(engine.Board[i]))"
+                                        @onclick="() => Move(i)">
+                                    @GetCellLabel(i)
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    }
-</div>
+
+        <p class="tri-disclaimer">
+            Disclaimer: this is a console game for your computer, not HTML. Written with only C#.
+        </p>
+    </div>
+</section>
 
 @code {
     private TriTacticEngine? engine;
     private string outputText = "";
-    private bool awaitingMove = false;
-
+    private bool awaitingMove;
+    private DotNetObjectReference<TriTactic>? dotNetRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("addKeydownListener", DotNetObjectReference.Create(this));
+            dotNetRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("addKeydownListener", dotNetRef);
         }
     }
 
@@ -56,40 +85,94 @@
 
     private void StartGame()
     {
+        outputText = "";
+        awaitingMove = false;
         engine = new TriTacticEngine(AppendOutput, PromptSymbol, PromptBoard);
         engine.Start();
+        SyncOutput();
+        awaitingMove = engine.IsPlayerTurn;
+        StateHasChanged();
+    }
+
+    private void SelectSymbol(string symbol)
+    {
+        if (engine is null)
+            return;
+
+        var accepted = engine.ReceiveSymbol(symbol);
+        if (accepted)
+        {
+            SyncOutput();
+            awaitingMove = engine.IsPlayerTurn;
+            StateHasChanged();
+        }
     }
 
     private void AppendOutput(string text)
     {
-        outputText += text + "\n";
-        StateHasChanged();
+        _ = InvokeAsync(() =>
+        {
+            SyncOutput();
+            StateHasChanged();
+        });
     }
 
     private void PromptSymbol()
     {
-        awaitingMove = false;
-        StateHasChanged();
+        _ = InvokeAsync(() =>
+        {
+            awaitingMove = false;
+            StateHasChanged();
+        });
     }
 
     private void PromptBoard()
     {
-        awaitingMove = true;
-        StateHasChanged();
+        _ = InvokeAsync(() =>
+        {
+            awaitingMove = engine?.IsPlayerTurn == true;
+            SyncOutput();
+            StateHasChanged();
+        });
     }
 
     private void Move(int index)
     {
-        awaitingMove = false;
-        if (engine != null)
+        if (engine is null)
+            return;
+
+        var accepted = engine.ReceiveMove(index);
+        if (accepted)
         {
-            engine.ReceiveMove(index);
+            SyncOutput();
+            awaitingMove = engine.IsPlayerTurn;
+            StateHasChanged();
         }
     }
 
-	[JSInvokable]
-	public void RestartGame()
-	{
-		StartGame();
-	}
+    [JSInvokable]
+    public void RestartGame()
+    {
+        StartGame();
+    }
+
+    public void Dispose()
+    {
+        dotNetRef?.Dispose();
+    }
+
+    private string GetCellLabel(int index)
+    {
+        if (engine is null)
+            return (index + 1).ToString();
+
+        return string.IsNullOrEmpty(engine.Board[index]) ? (index + 1).ToString() : engine.Board[index];
+    }
+
+    private void SyncOutput()
+    {
+        outputText = engine is null
+            ? string.Empty
+            : string.Join("\n", engine.LogLines);
+    }
 }

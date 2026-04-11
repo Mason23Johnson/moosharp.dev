@@ -1,100 +1,187 @@
-.qc-header {
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 20px;
-    color: white;
+.qc-page {
+    min-height: 100vh;
+    padding: 110px 24px 80px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
 }
 
-.qc-info {
+.qc-shell {
+    width: min(860px, 100%);
+    display: grid;
+    gap: 18px;
+}
+
+.qc-logo-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.qc-logo {
+    width: min(300px, 72vw);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(97, 205, 255, 0.26));
+}
+
+.qc-stage {
+    position: relative;
+    border-radius: 24px;
+    border: 1px solid rgba(97, 205, 255, 0.18);
+    background: linear-gradient(180deg, rgba(7, 14, 23, 0.96), rgba(4, 9, 15, 0.98));
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+    padding: 18px;
+    display: grid;
+    gap: 16px;
+}
+
+.qc-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.qc-stat {
+    flex: 1;
+    border-radius: 18px;
+    border: 1px solid rgba(97, 205, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 14px 16px;
+    display: grid;
+    gap: 8px;
     text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: white !important; /* ensure timer is white */
+}
+
+.qc-stat span,
+.qc-info,
+.qc-start-panel p {
+    color: #ffffff;
+}
+
+.qc-stat span {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.78;
+}
+
+.qc-stat strong {
+    font-size: 1.6rem;
+    color: #ffffff;
+}
+
+.qc-start-panel {
+    min-height: 500px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    gap: 16px;
+    text-align: center;
+    background:
+        radial-gradient(circle at center, rgba(255, 56, 56, 0.14), transparent 32%),
+        rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(97, 205, 255, 0.1);
+    padding: 24px;
 }
 
 .qc-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    background-color: #000;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(97, 205, 255, 0.18);
+    background: linear-gradient(180deg, rgba(21, 110, 177, 0.95), rgba(11, 63, 110, 0.98));
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.qc-btn.ghost {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .qc-play-area {
     width: 500px;
     height: 500px;
     margin: 0 auto;
-    background-color: #000;
-    border: 2px solid #ff0000;
+    background:
+        radial-gradient(circle at center, rgba(255, 0, 76, 0.08), transparent 40%),
+        #050910;
+    border: 1px solid rgba(255, 72, 72, 0.36);
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
 .qc-target {
     width: 50px;
     height: 50px;
-    background-color: red;
+    background: radial-gradient(circle at 35% 35%, #ffb3b3, #ff3838 58%, #8a0000);
     border-radius: 50%;
     position: absolute;
     transition: all 0.15s ease;
     cursor: pointer;
+    box-shadow: 0 0 18px rgba(255, 67, 67, 0.38);
 }
 
 .qc-target:active {
-    transform: scale(0.8);
+    transform: scale(0.84);
     box-shadow: 0 0 20px white;
 }
 
 .qc-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    inset: 0;
     background: rgba(0, 0, 0, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    pointer-events: none;
+    z-index: 10;
+    padding: 20px;
 }
 
 .qc-modal {
-    pointer-events: auto;
-    background-color: #333;
-    padding: 30px;
-    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(17, 24, 37, 0.98), rgba(8, 14, 24, 0.98));
+    padding: 28px;
+    border-radius: 20px;
     text-align: center;
-    color: white;
-    box-shadow: 0 0 15px #008cff;
-    max-width: 300px;
-    width: 80%;
-    animation: fadeIn 0.3s ease-out;
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(0, 140, 255, 0.24);
+    width: min(360px, 100%);
+    display: grid;
+    gap: 12px;
 }
 
-.copy-btn {
-    background-color: #008cff;
-    color: white;
+.qc-modal h2,
+.qc-modal p {
+    margin: 0;
+    color: #ffffff;
 }
 
-.qc-copy-confirm {
-    color: #fff;
-    margin-top: 10px;
-    font-size: 0.9rem;
+.qc-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
+@media (max-width: 640px) {
+    .qc-page {
+        padding: 92px 14px 32px;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+
+    .qc-topbar {
+        flex-direction: column;
+    }
+
+    .qc-play-area,
+    .qc-start-panel {
+        width: 100%;
+        min-height: 360px;
+        height: 360px;
+    }
+
+    .qc-stage,
+    .qc-modal {
+        padding: 14px;
     }
 }

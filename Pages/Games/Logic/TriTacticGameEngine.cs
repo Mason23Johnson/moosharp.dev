@@ -17,9 +17,12 @@ public class TriTacticEngine
     private string computer = "";
     private string currentPlayer = "X";
     private bool gameActive = false;
+    private readonly List<string> logLines = new();
 
     public bool AwaitingSymbol => player == "";
+    public bool IsPlayerTurn => gameActive && currentPlayer == player;
     public string[] Board => (string[])boardState.Clone();
+    public IReadOnlyList<string> LogLines => logLines.AsReadOnly();
 
     public TriTacticEngine(Action<string> output, Action promptSymbol, Action promptBoard)
     {
@@ -31,30 +34,31 @@ public class TriTacticEngine
     public void Start()
     {
         Reset();
-        Output("Welcome to Mason's Tri-Tactic!");
-        Output("An infinite version of Tic-Tac-Toe with memory-based piece removal.");
-        Output("Select X or O to begin.");
+        WriteLine("Welcome to Mason's Tri-Tactic!");
+        WriteLine("An infinite version of Tic-Tac-Toe with memory-based piece removal.");
+        WriteLine("Select X or O to begin.");
         PromptSymbol();
     }
 
-    public void ReceiveSymbol(string symbol)
+    public bool ReceiveSymbol(string symbol)
     {
         symbol = symbol.ToUpper();
-        if (symbol != "X" && symbol != "O") return;
+        if (symbol != "X" && symbol != "O") return false;
 
         player = symbol;
         computer = (player == "X") ? "O" : "X";
         currentPlayer = "X";
         gameActive = true;
-        Output($"You are {player}. Computer is {computer}.");
+        WriteLine($"You are {player}. Computer is {computer}.");
         PrintBoard();
         NextTurn();
+        return true;
     }
 
-    public void ReceiveMove(int index)
+    public bool ReceiveMove(int index)
     {
         if (!gameActive || boardState[index] != "" || currentPlayer != player)
-            return;
+            return false;
 
         PlacePiece(index, player);
         PrintBoard();
@@ -62,13 +66,14 @@ public class TriTacticEngine
         var winner = CheckWinner();
         if (winner != null)
         {
-            Output(winner == "T" ? "It's a tie!" : $"{winner} wins!");
+            WriteLine(winner == "T" ? "It's a tie!" : $"{winner} wins!");
             gameActive = false;
-            return;
+            return true;
         }
 
         currentPlayer = computer;
         NextTurn();
+        return true;
     }
 
     public void Restart()
@@ -82,29 +87,36 @@ public class TriTacticEngine
 
         if (currentPlayer == computer)
         {
-            Output("Computer's move...");
-            System.Threading.Tasks.Task.Delay(600).ContinueWith(_ =>
-            {
-                int move = GetComputerMove();
-                PlacePiece(move, computer);
-                PrintBoard();
-
-                var winner = CheckWinner();
-                if (winner != null)
-                {
-                    Output(winner == "T" ? "It's a tie!" : $"{winner} wins!");
-                    gameActive = false;
-                    return;
-                }
-
-                currentPlayer = player;
-                PromptBoard();
-            });
+            WriteLine("Computer's move...");
+            _ = RunComputerTurnAsync();
         }
         else
         {
             PromptBoard();
         }
+    }
+
+    private async Task RunComputerTurnAsync()
+    {
+        await Task.Delay(600);
+
+        if (!gameActive || currentPlayer != computer)
+            return;
+
+        int move = GetComputerMove();
+        PlacePiece(move, computer);
+        PrintBoard();
+
+        var winner = CheckWinner();
+        if (winner != null)
+        {
+            WriteLine(winner == "T" ? "It's a tie!" : $"{winner} wins!");
+            gameActive = false;
+            return;
+        }
+
+        currentPlayer = player;
+        PromptBoard();
     }
 
     private void PlacePiece(int index, string symbol)
@@ -188,8 +200,7 @@ public class TriTacticEngine
 
     private void PrintBoard()
     {
-        string[] b = boardState;
-        Output($"\n {Cell(0)} | {Cell(1)} | {Cell(2)}\n---+---+---\n {Cell(3)} | {Cell(4)} | {Cell(5)}\n---+---+---\n {Cell(6)} | {Cell(7)} | {Cell(8)}\n");
+        WriteLine($"\n {Cell(0)} | {Cell(1)} | {Cell(2)}\n---+---+---\n {Cell(3)} | {Cell(4)} | {Cell(5)}\n---+---+---\n {Cell(6)} | {Cell(7)} | {Cell(8)}\n");
     }
 
     private string Cell(int i) => boardState[i] == "" ? (i + 1).ToString() : boardState[i];
@@ -199,8 +210,15 @@ public class TriTacticEngine
         for (int i = 0; i < 9; i++) boardState[i] = "";
         xPositions.Clear();
         oPositions.Clear();
+        logLines.Clear();
         player = "";
         computer = "";
         gameActive = false;
+    }
+
+    private void WriteLine(string message)
+    {
+        logLines.Add(message);
+        Output(message);
     }
 }

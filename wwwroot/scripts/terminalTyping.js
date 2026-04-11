@@ -138,7 +138,7 @@ function handleCommand(command)
     switch (cmd) 
     {
         case "/help":
-            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/arcade: Moochine Arcade\n/modern: Redirect to ModernCSS/main.css\n/index: Redirect to Home\n";
+            terminalContent += "\n/help: List commands\n/home: Go Home\n/about: About Me\n/projects: View Projects\n/contact: Contact Me\n/arcade: Moochine Arcade\n";
             break;
         case "/home":
             window.location.href = "/";
@@ -160,15 +160,6 @@ function handleCommand(command)
                 window.location.href = "/arcade";
             }, 4000);
             break;
-        case "/modern":
-            terminalContent += "\n>> SYSTEM: Redirecting back to home using Modern\n";
-            updateTerminal();
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 3000);
-            break;
-        case "/index":
-            window.location.href = "/";
         default:
             if (command.trim() !== "") 
             {
@@ -292,31 +283,3 @@ function resetTerminal() {
     if (terminal) terminal.innerText = "";
 }
 
-let _toastTimeout;
-
-function showTerminalToast(message = "Press Enter to skip typing") {
-  clearTimeout(_toastTimeout);
-
-  let container = document.querySelector(".terminal-toast-container");
-  if (!container) {
-    container = document.createElement("div");
-    container.className = "terminal-toast-container";
-    document.body.appendChild(container);
-  }
-
-  // Remove any existing toast(s)
-  container.innerHTML = "";
-
-  const toast = document.createElement("div");
-  toast.className = "terminal-toast";
-  toast.textContent = message;
-  container.appendChild(toast);
-
-  // Remove toast after 5 seconds
-  _toastTimeout = setTimeout(() => {
-    container.removeChild(toast);
-  }, 5000);
-}
-
-// Call once when terminal typing starts
-showTerminalToast();

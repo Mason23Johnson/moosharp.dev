@@ -1036,9 +1036,9 @@ C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\kcv6p23co5-{0}-tjcz0u77k
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\aohes92wnu-{0}-tptq2av103-tptq2av103.gz
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\hwss3r2cq5-{0}-lfu7j35m59-lfu7j35m59.gz
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\v4808nn63p-{0}-oyz0vx2fzb-oyz0vx2fzb.gz
-C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\z0okjwx527-{0}-hhg884xau7-hhg884xau7.gz
-C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\uoi39nmnoa-{0}-6mamlcirbc-6mamlcirbc.gz
-C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\72anmcwuye-{0}-g8em0fkbs3-g8em0fkbs3.gz
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\z0okjwx527-{0}-8yx2kmkji5-8yx2kmkji5.gz
+C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\uoi39nmnoa-{0}-ezo3xvc5m0-ezo3xvc5m0.gz
+C:\Users\Mason\moosharp.dev\obj\Debug\net8.0\compressed\72anmcwuye-{0}-9ro3ng46sc-9ro3ng46sc.gz
