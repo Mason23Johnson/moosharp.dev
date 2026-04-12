@@ -111,6 +111,7 @@ public class TriTacticEngine
         {
             WriteLine(winner == "T" ? "It's a tie!" : $"{winner} wins!");
             gameActive = false;
+            PromptBoard();
             return;
         }
 
