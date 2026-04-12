@@ -4,3 +4,14 @@
 /out-publish/
 /wwwroot/_framework/
 /docs/_framework/
+
+# Local tooling / assistant files
+.gitignore
+.claude
+.claude/
+.claude*
+.codex
+.codex/
+.codex*
+CLAUDE.md
+CODEX.md

@@ -38,7 +38,6 @@ function setupIntroText(page) {
             "- Networking and security expertise including firewalls, VPNs, VLANS, and more.",
             "- Indie games using Godot (with C# scripting).",
             "- Freelance contracts and custom backend tools.",
-            "- YouTube content under the alias MooSharp.",
             "",
             "This is only the beginning of my frontend specialties. I can make your website look however you'd like.",
             "",
@@ -152,7 +151,7 @@ function handleCommand(command) {
             window.location.href = "/";
             break;
         case "/about":
-            window.location.href = "/terminal/about";
+            window.location.href = "/about";
             break;
         case "/projects":
             window.location.href = "/projects";

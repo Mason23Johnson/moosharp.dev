@@ -1,167 +1,877 @@
 @page "/"
+@implements IDisposable
 @layout MainLayout
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@inject HttpClient Http
 
-<div class="ytc-page-scroll"><!-- enables scroll even if global CSS locks body -->
+<link href="css/ModernCSS/hologram.css" rel="stylesheet" />
+<link href="css/ModernCSS/home.css" rel="stylesheet" />
 
-<div class="hero-container">
-	<img src="images/Mason.png" alt="Mason Profile" class="hero-image" />
-	<div class="hero-text">
-		<h1>Hi, I'm <span class="blue-name">Mason</span></h1>
-		<h2>A <span class="highlight">Salesforce Developer</span></h2>
-	</div>
+<div class="ytc-page-scroll home-page-shell">
+    <section class="home-viewport">
+        <div class="hero-container home-hero">
+            <img src="images/Mason.png" alt="Mason Profile" class="hero-image" />
+            <div class="hero-text home-hero-text">
+                <h1>Hi, I'm <span class="blue-name">Mason</span></h1>
+                <h2>
+                    A
+                    <span class="home-role-glitch" data-text="@CurrentRole">@CurrentRole</span>
+                </h2>
+            </div>
+        </div>
+
+        <section class="home-focus-row">
+            <div class="home-pc-column">
+                <div class="home-pc-stage" id="homeIndexPcStage" aria-label="Interactive hologram retro PC preview">
+                    <div class="holo-grid-overlay"></div>
+                    <div class="holo-ring ring-one"></div>
+                    <div class="holo-ring ring-two"></div>
+                    <div class="holo-floor"></div>
+                    <div class="holo-glow-core"></div>
+
+                    <div class="holo-rig home-index-pc-rig" id="homeIndexPcRig">
+                        <div class="holo-computer">
+                            <div class="holo-desktop-box holo-box">
+                                <div class="holo-face holo-front">
+                                    <div class="holo-desktop-front">
+                                        <div class="holo-desktop-panel holo-desktop-panel-left">
+                                            <div class="holo-panel-slot holo-panel-slot-wide"></div>
+                                            <div class="holo-panel-latch"></div>
+                                            <div class="holo-panel-pin"></div>
+                                        </div>
+
+                                        <div class="holo-desktop-panel holo-desktop-panel-right">
+                                            <div class="holo-drive-stack">
+                                                <div class="holo-drive-bay holo-drive-bay-large"></div>
+                                                <div class="holo-drive-bay"></div>
+                                                <div class="holo-drive-bay"></div>
+                                            </div>
+
+                                            <div class="holo-power-cluster">
+                                                <div class="holo-power-button"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="holo-face holo-back"></div>
+                                <div class="holo-face holo-left"></div>
+                                <div class="holo-face holo-right"></div>
+                                <div class="holo-face holo-top">
+                                    <div class="holo-desktop-top-vent"></div>
+                                </div>
+                                <div class="holo-face holo-bottom"></div>
+                            </div>
+
+                            <div class="holo-monitor-pedestal">
+                                <div class="holo-pedestal-disc holo-pedestal-disc-bottom"></div>
+                                <div class="holo-pedestal-column"></div>
+                                <div class="holo-pedestal-disc holo-pedestal-disc-top"></div>
+                            </div>
+
+                            <div class="holo-monitor-box holo-box">
+                                <div class="holo-face holo-front">
+                                    <div class="holo-monitor-front">
+                                        <div class="holo-monitor-bezel">
+                                            <div class="holo-screen-shell">
+                                                <div class="holo-screen-bevel">
+                                                    <div class="holo-screen home-index-monitor-display @ScreenModeClass">
+                                                        <div class="holo-desktop-surface">
+                                                            <div class="holo-desktop-topbar">
+                                                                <div class="holo-desktop-status">
+                                                                    <span class="holo-status-dot"></span>
+                                                                    <span class="holo-status-dot"></span>
+                                                                    <span class="holo-status-dot"></span>
+                                                                </div>
+                                                                <div class="holo-desktop-time">@DesktopTime</div>
+                                                            </div>
+
+                                                            <div class="holo-desktop-icons">
+                                                                <button type="button"
+                                                                        class="holo-desktop-icon holo-desktop-icon-terminal"
+                                                                        @onclick="OpenTerminalFrame">
+                                                                    <span class="holo-desktop-glyph holo-desktop-glyph-terminal"></span>
+                                                                    <span class="holo-desktop-label">cmd.exe</span>
+                                                                </button>
+
+                                                                <button type="button"
+                                                                        class="holo-desktop-icon holo-desktop-icon-explorer"
+                                                                        @onclick="OpenExplorerApp">
+                                                                    <span class="holo-desktop-glyph holo-desktop-glyph-explorer"></span>
+                                                                    <span class="holo-desktop-label">File Explorer</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        @if (screenMode == "terminal")
+                                                        {
+                                                            <div class="holo-screen-window holo-screen-window-terminal" data-holo-interactive="true">
+                                                                <div class="holo-screen-window-bar">
+                                                                    <span class="holo-screen-window-title">cmd.exe</span>
+                                                                    <div class="holo-screen-window-actions">
+                                                                        <button type="button" class="holo-mini-button" @onclick="ReturnToDesktop">Desktop</button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="holo-terminal-shell" data-holo-interactive="true">
+                                                                    <div class="holo-terminal-output" @onclick="SkipTerminalBoot">
+                                                                        <pre class="holo-terminal-text">@terminalOutput</pre>
+                                                                        @if (!terminalReady)
+                                                                        {
+                                                                            <div class="holo-terminal-skip">Click terminal to skip boot</div>
+                                                                        }
+                                                                    </div>
+
+                                                                    <div class="holo-terminal-input-shell">
+                                                                        <span class="holo-terminal-prompt">&gt;</span>
+                                                                        <input class="holo-terminal-input"
+                                                                               @bind="terminalCommand"
+                                                                               @bind:event="oninput"
+                                                                               @onkeydown="HandleTerminalKeydown"
+                                                                               disabled="@(!terminalReady)"
+                                                                               placeholder="/help" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else if (screenMode == "explorer")
+                                                        {
+                                                            <div class="holo-screen-window holo-screen-window-explorer" data-holo-interactive="true">
+                                                                <div class="holo-screen-window-bar">
+                                                                    <span class="holo-screen-window-title">File Explorer</span>
+                                                                    <div class="holo-screen-window-actions">
+                                                                        <button type="button" class="holo-mini-button" @onclick="NavigateUp">Up</button>
+                                                                        <button type="button" class="holo-mini-button" @onclick="ReturnToDesktop">Desktop</button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="holo-explorer-shell">
+                                                                    <div class="holo-explorer-sidebar">
+                                                                        <div class="holo-explorer-heading">This PC</div>
+                                                                        <button type="button"
+                                                                                class="holo-explorer-nav @(currentDrive == RootDrive ? "active" : string.Empty)"
+                                                                                @onclick="OpenExplorerApp">Home</button>
+                                                                        <button type="button"
+                                                                                class="holo-explorer-nav @(currentDrive == "hdrive" ? "active" : string.Empty)"
+                                                                                @onclick='() => OpenDrive("hdrive")'>H:</button>
+                                                                        <button type="button"
+                                                                                class="holo-explorer-nav @(currentDrive == "gdrive" ? "active" : string.Empty)"
+                                                                                @onclick='() => OpenDrive("gdrive")'>G:</button>
+                                                                        <button type="button"
+                                                                                class="holo-explorer-nav @(currentDrive == "sdrive" ? "active" : string.Empty)"
+                                                                                @onclick='() => OpenDrive("sdrive")'>S:</button>
+                                                                    </div>
+
+                                                                    <div class="holo-explorer-main">
+                                                                        <div class="holo-explorer-toolbar">
+                                                                            <div class="holo-explorer-path">@ExplorerPath</div>
+                                                                        </div>
+
+                                                                        <div class="holo-explorer-body">
+                                                                            <div class="holo-folder-grid @(CurrentGridColumnCount > 2 ? "home-folder-grid-compact" : string.Empty)"
+                                                                                 style="@CurrentGridTemplateStyle">
+                                                                                @foreach (var entry in CurrentEntries)
+                                                                                {
+                                                                                    <button type="button"
+                                                                                            class="holo-folder-card @(entry.Kind)"
+                                                                                            @onclick="@(() => ActivateExplorerEntry(entry))">
+                                                                                        <span class="holo-folder-badge">@entry.Glyph</span>
+                                                                                        <span class="holo-folder-title">@entry.Title</span>
+                                                                                    </button>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                @if (openedFileEntry is not null && !IsCodeFileOpen)
+                                                                {
+                                                                    <div class="holo-file-window home-screen-file-window" data-holo-interactive="true">
+                                                                        <div class="holo-file-window-bar">
+                                                                            <span class="holo-file-window-title">@OpenedFileTitle</span>
+                                                                            <button type="button" class="holo-mini-button" @onclick="CloseOpenedFile">Close</button>
+                                                                        </div>
+
+                                                                        <div class="holo-file-window-content">
+                                                                            <div class="holo-file-window-copy">@((MarkupString)OpenedFileMarkup)</div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                        @if (screenMode == "explorer" && openedFileEntry is not null && IsCodeFileOpen)
+                                                        {
+                                                            <div class="holo-screen-window home-screen-code-window" data-holo-interactive="true">
+                                                                <div class="holo-file-window-bar">
+                                                                    <span class="holo-file-window-title">@OpenedFileTitle</span>
+                                                                    <button type="button" class="holo-mini-button" @onclick="CloseOpenedFile">Close</button>
+                                                                </div>
+
+                                                                <div class="holo-file-window-content">
+                                                                    <div class="home-ide-shell">
+                                                                        <div class="home-ide-tabs">
+                                                                            <span class="home-ide-tab active">@OpenedFileTitle</span>
+                                                                        </div>
+
+                                                                        <div class="home-ide-editor">
+                                                                            @if (codeFileLoading)
+                                                                            {
+                                                                                <div class="home-ide-loading">Loading source...</div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div class="home-ide-code">
+                                                                                    @for (var lineIndex = 0; lineIndex < openedCodeLines.Count; lineIndex++)
+                                                                                    {
+                                                                                        var codeLine = string.IsNullOrEmpty(openedCodeLines[lineIndex]) ? "\u00A0" : openedCodeLines[lineIndex];
+                                                                                        <div class="home-ide-line">
+                                                                                            <span class="home-ide-line-number">@(lineIndex + 1)</span>
+                                                                                            <span class="home-ide-line-code">@codeLine</span>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                        <button type="button"
+                                                                class="home-screen-fullscreen"
+                                                                title="Open fullscreen hologram"
+                                                                aria-label="Open fullscreen hologram"
+                                                                data-holo-interactive="true"
+                                                                @onclick="OpenFullscreenHologram">
+                                                            <span class="home-screen-fullscreen-icon" aria-hidden="true"></span>
+                                                        </button>
+
+                                                        <div class="holo-screen-terminal">
+                                                            <span class="holo-term-icon"></span>
+                                                            <span class="holo-term-line holo-term-line-main"></span>
+                                                            <span class="holo-term-line"></span>
+                                                            <span class="holo-term-line holo-term-line-short"></span>
+                                                        </div>
+                                                        <div class="holo-screen-sun"></div>
+                                                        <div class="holo-screen-cloud holo-screen-cloud-top"></div>
+                                                        <div class="holo-screen-cloud holo-screen-cloud-mid"></div>
+                                                        <div class="holo-screen-horizon"></div>
+                                                        <div class="holo-screen-mountain">
+                                                            <span class="holo-mountain-ridge holo-mountain-ridge-main"></span>
+                                                            <span class="holo-mountain-ridge holo-mountain-ridge-shadow"></span>
+                                                            <span class="holo-mountain-ridge holo-mountain-ridge-base"></span>
+                                                        </div>
+                                                        <div class="holo-screen-ground holo-screen-ground-left"></div>
+                                                        <div class="holo-screen-ground holo-screen-ground-right"></div>
+                                                        <div class="holo-screen-water"></div>
+                                                        <div class="holo-screen-grid"></div>
+                                                        <div class="holo-art-scan"></div>
+                                                        <div class="holo-art-glow"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="holo-monitor-controls">
+                                            <span class="holo-monitor-led"></span>
+                                            <span class="holo-monitor-power"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="holo-face holo-back"></div>
+                                <div class="holo-face holo-left"></div>
+                                <div class="holo-face holo-right">
+                                    <div class="holo-monitor-side-vent"></div>
+                                </div>
+                                <div class="holo-face holo-top">
+                                    <div class="holo-monitor-top-vent"></div>
+                                </div>
+                                <div class="holo-face holo-bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="home-link-column">
+                <div class="home-link-panel home-link-panel-github">
+                    <span class="home-link-kicker">Code</span>
+                    <div class="home-link-body">
+                        <a class="home-link-primary" href="https://github.com/mason23johnson" target="_blank" rel="noreferrer">
+                            <img src="icons/github.png" alt="GitHub" class="home-link-icon" />
+                            <h3>GitHub</h3>
+                        </a>
+                        <p>Projects, experiments, and the live build history behind MooSharp.</p>
+                    </div>
+                </div>
+
+                <div class="home-link-panel home-link-panel-tinek">
+                    <span class="home-link-kicker">Coming Soon</span>
+                    <div class="home-link-body">
+                        <a class="home-link-primary" href="/projects">
+                            <img src="images/projects/tinek.png" alt="Tinek" class="home-link-logo" />
+                            <h3>Tinek</h3>
+                        </a>
+                        <p>AI hunting predictions, data workflows, storage, mobile, and web utility.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tech-marquee triple home-tech-bottom">
+            <div class="tech-wrapper">
+                <div class="tech-track track-row1">
+                    <div class="tech-scroll">
+                        <div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
+                        <div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
+                        <div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
+                        <div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
+                        <div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
+                        <div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
+                        <div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
+                        <div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
+                        <div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
+                        <div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
+                    </div>
+                </div>
+
+                <div class="tech-track track-row2">
+                    <div class="tech-scroll">
+                        <div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
+                        <div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
+                        <div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
+                        <div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
+                        <div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
+                        <div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
+                        <div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
+                        <div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
+                        <div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
+                        <div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
+                    </div>
+                </div>
+
+                <div class="tech-track track-row3">
+                    <div class="tech-scroll">
+                        <div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
+                        <div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
+                        <div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
+                        <div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
+                        <div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
+                        <div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
+                        <div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
+                        <div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
+                        <div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
+                        <div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 </div>
 
-<section class="tech-marquee triple" style="margin-top: 30px;">
-	<div class="tech-wrapper">
-		<div class="tech-track track-row1">
-			<div class="tech-scroll">
-				<div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
-				<div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
-				<div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
-				<div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
-				<div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
-				@*Duplicates*@
-				<div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
-				<div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
-				<div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
-				<div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
-				<div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
-			</div>
-		</div>
+@code {
+    private const string RootDrive = "root";
 
-		<div class="tech-track track-row2">
-			<div class="tech-scroll">
-				<div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
-				<div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
-				<div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
-				<div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
-				<div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
-				@* Duplicates*@
-				<div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
-				<div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
-				<div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
-				<div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
-				<div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
-			</div>
-		</div>
+    private readonly string[] rotatingRoles =
+    [
+        "Salesforce Developer",
+        "Full-Stack Developer",
+        "Game Developer",
+        "Business Creator",
+        "Client Solutions Builder"
+    ];
 
-		<div class="tech-track track-row3">
-			<div class="tech-scroll">
-				<div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
-				<div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
-				<div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
-				<div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
-				<div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
-				@* Duplicates *@
-				<div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
-				<div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
-				<div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
-				<div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
-				<div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
-			</div>
-		</div>
-	</div>
-</section>
+    private int currentRoleIndex;
+    private string screenMode = "desktop";
+    private string currentDrive = RootDrive;
+    private string desktopTime = DateTime.Now.ToString("h:mm tt");
+    private string? explorerSubfolder;
+    private HoloExplorerEntry? openedFileEntry;
+    private IReadOnlyList<string> openedCodeLines = Array.Empty<string>();
+    private string terminalOutput = string.Empty;
+    private string terminalCommand = string.Empty;
+    private bool terminalReady;
+    private bool codeFileLoading;
+    private CancellationTokenSource? titleCycleCts;
+    private CancellationTokenSource? clockCts;
+    private CancellationTokenSource? terminalBootCts;
 
-<!-- Navigation Grid -->
-<section class="nav-grid-section">
-	<div class="nav-grid">
-		<div class="nav-box nav-terminal matrix-true">
-			<div class="matrix-streams">
-				@for (int i = 0; i < 100; i++)
-				{
-					var delay = $"{Random.Shared.NextDouble() * 5:0.00}s";
-					var duration = $"{4 + Random.Shared.NextDouble() * 10:0.00}s";
-					var chars = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-					var column = string.Join("", Enumerable.Range(0, 12).Select(_ =>
-					chars[Random.Shared.Next(chars.Length)]));
-					<div class="matrix-column" style="animation-delay:@delay; animation-duration:@duration">
-						@foreach (var c in column)
-						{
-							<span>@c</span>
-						}
-					</div>
-				}
-			</div>
-			<a class="terminal-reveal" href="/terminal">
-				<span class="typed-terminal">Terminal Mode</span>
-			</a>
+    private readonly string[] terminalBootLines =
+    [
+        ">> CONNECTING TO moosharp.dev...",
+        ">> AUTHORIZING USER...",
+        ">> ACCESS GRANTED.",
+        ">> INITIALIZING TERMINAL...",
+        ">> SUCCESSFULLY EXECUTED.",
+        "",
+        ">> TYPE '/help' FOR COMMANDS"
+    ];
 
-		</div>
+    private readonly List<HoloExplorerEntry> hDriveRoot =
+    [
+        new("fullResume", "Resume_Full.txt", "Full resume overview and background.", "file", "TXT"),
+        new("resumeParts", "Resume Parts", "Project experience and skills breakdown.", "folder", "DIR")
+    ];
 
-		<div class="nav-box nav-contact">
-			<a href="/contact">Contact - Email</a>
-		</div>
-		<div class="nav-box nav-calendar">
-			<a href="/projects" class="nav-media-link">
-				<img src="images/projects/tinek.png" alt="Tinek" class="nav-box-thumb" />
-				<span>Tinek | Coming Soon</span>
-			</a>
-		</div>
-		<div class="nav-box nav-tritactic">
-			<a href="/MooCast" class="nav-media-link">
-				<img src="images/projects/MooCast.png" alt="MooCast" class="nav-box-thumb nav-box-thumb-moocast" />
-				<span>MooCast | Scoreboard</span>
-			</a>
-		</div>
-		<div class="nav-box nav-github">
-			<a href="https://github.com/mason23johnson" target="_blank">GitHub - Mason23Johnson</a>
-		</div>
-	</div>
-</section>
+    private readonly List<HoloExplorerEntry> driveRoot =
+    [
+        new("hdrive", "H: MooVault", "Projects and resume archive.", "drive", "DRV"),
+        new("gdrive", "G: Personal", "Photos, hobbies, and personal files.", "drive", "DRV"),
+        new("sdrive", "S: Source", "Hologram source snapshots in an IDE-style viewer.", "drive", "DRV")
+    ];
 
-@* <!-- Experience Placeholder -->
-<section class="experience">
-	<h2 class="section-header">Experience</h2>
-	<p class="bio" style="max-width: 800px; margin: 0 auto; text-align: center;">
-		3+ years
-	</p>
-</section> *@
+    private readonly List<HoloExplorerEntry> resumeParts =
+    [
+        new("projExp", "ProjectExp.txt", "Apps, tools, games, and shipped experiments.", "file", "TXT"),
+        new("skills", "Skills.txt", "Languages, tooling, platform work, and Salesforce specialties.", "file", "TXT")
+    ];
 
-<!-- Matrix Script -->
-<script>
-	document.addEventListener("DOMContentLoaded", () => {
-		const canvas = document.getElementById("matrixCanvas");
-		if (!canvas) return;
+    private readonly List<HoloExplorerEntry> gDriveRoot =
+    [
+        new("marriage", "Marriage", "Photos and personal life updates.", "folder", "DIR"),
+        new("hobbies", "Hobbies", "Fishing, golf, pickleball, and more.", "folder", "DIR")
+    ];
 
-		const ctx = canvas.getContext("2d");
+    private readonly List<HoloExplorerEntry> marriageFolder =
+    [
+        new("marriageTxt", "marriage.txt", "Quick note about 2024 and the honeymoon trip.", "file", "TXT"),
+        new("marriagePng", "wedding.png", "Favorite wedding photo.", "file", "PNG")
+    ];
 
-		function resizeCanvas() {
-			canvas.width = canvas.offsetWidth;
-			canvas.height = canvas.offsetHeight;
-		}
+    private readonly List<HoloExplorerEntry> hobbiesFolder =
+    [
+        new("hobbiesTxt", "hobbies.txt", "How time away from work usually looks.", "file", "TXT"),
+        new("fish", "fishing.png", "Water, gear, and quiet mornings.", "file", "PNG"),
+        new("pickle", "pickleball.png", "Fast pace and just enough competition.", "file", "PNG"),
+        new("golf", "golfing.png", "A good reset, with a little chaos.", "file", "PNG")
+    ];
 
-		resizeCanvas();
+    private readonly List<HoloExplorerEntry> sDriveRoot =
+    [
+        new("sourceRazor", "Hologram.razor", "Interactive hologram page source.", "code", "RAZ"),
+        new("sourceCss", "hologram.css", "Hologram styling source.", "code", "CSS"),
+        new("sourceJs", "hologramLab.js", "Hologram interaction script.", "code", "JS")
+    ];
 
-		const letters = "01";
-		const fontSize = 14;
-		let columns = Math.floor(canvas.width / fontSize);
-		let drops = Array(columns).fill(1);
+    private string CurrentRole => rotatingRoles[currentRoleIndex];
+    private string DesktopTime => desktopTime;
+    private bool IsCodeFileOpen => openedFileEntry?.Kind == "code";
+    private int CurrentGridColumnCount => Math.Max(1, CurrentEntries.Count());
+    private string CurrentGridTemplateStyle => $"grid-template-columns: repeat({CurrentGridColumnCount}, minmax(0, 1fr));";
 
-		function drawMatrix() {
-			ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
+    private string ScreenModeClass => screenMode switch
+    {
+        "terminal" => "terminal-active",
+        "explorer" => "explorer-active",
+        _ => "desktop-active"
+    };
 
-			ctx.fillStyle = "#0f0";
-			ctx.font = fontSize + "px monospace";
+    private IEnumerable<HoloExplorerEntry> CurrentEntries =>
+        (currentDrive, explorerSubfolder) switch
+        {
+            (RootDrive, _) => driveRoot,
+            ("hdrive", "resumeParts") => resumeParts,
+            ("hdrive", _) => hDriveRoot,
+            ("gdrive", "marriage") => marriageFolder,
+            ("gdrive", "hobbies") => hobbiesFolder,
+            ("gdrive", _) => gDriveRoot,
+            ("sdrive", _) => sDriveRoot,
+            _ => hDriveRoot
+        };
 
-			for (let i = 0; i < drops.length; i++) {
-				const text = letters[Math.floor(Math.random() * letters.length)];
-				ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    private string ExplorerPath
+    {
+        get
+        {
+            if (currentDrive == RootDrive)
+            {
+                return "This PC";
+            }
 
-				if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-					drops[i] = 0;
-				}
-				drops[i]++;
-			}
-		}
+            var root = currentDrive switch
+            {
+                "gdrive" => "This PC > G: Personal",
+                "sdrive" => "This PC > S: Source",
+                _ => "This PC > H: MooVault"
+            };
 
-		setInterval(drawMatrix, 45);
-		window.addEventListener("resize", () => {
-			resizeCanvas();
-			columns = Math.floor(canvas.width / fontSize);
-			drops = Array(columns).fill(1);
-		});
-	});
-</script>
-</div>
+            return explorerSubfolder switch
+            {
+                "resumeParts" => $"{root} > Resume Parts",
+                "marriage" => $"{root} > Marriage",
+                "hobbies" => $"{root} > Hobbies",
+                _ => root
+            };
+        }
+    }
+
+    private string OpenedFileTitle => openedFileEntry?.Title ?? "File";
+
+    private string OpenedFileMarkup => openedFileEntry?.Id switch
+    {
+        "fullResume" => "<p>Full resume available on request through the contact page.</p><p>Highlights include Salesforce development, Blazor work, backend systems, and product-building across web and app ideas.</p>",
+        "projExp" => "<p>Tinek App - AI Integration, AI Building, Data Analytics, Mobile Dev, Blazor Dev, DB, APIs, etc.</p><p>moosharp.dev - portfolio, brand system, experiments, UI direction, and iteration.</p><p>salesforce internship - real platform work, flows, debugging, and delivery inside business constraints.</p><p>Moosharp website building - company websites, polished branding, and redacted client work.</p>",
+        "skills" => "<p>Salesforce: Apex, flows, Lightning, integrations, SOQL, and delivery inside live orgs.</p><p>Full stack: C#, JS, HTML, CSS, ASP.NET, Blazor, EF Core, SQLite, APIs, and Linux/Windows tooling.</p>",
+        "marriageTxt" => "<p>Married in 2024 and honeymooned in the Virgin Islands.</p>",
+        "marriagePng" => "<img src=\"images/wedding.png\" class=\"holo-preview-image\" alt=\"Wedding\" />",
+        "hobbiesTxt" => "<p>Outside of software, I enjoy fishing, golf, pickleball, games, woodworking, and developing ideas into real things.</p>",
+        "fish" => "<img src=\"images/fishing.png\" class=\"holo-preview-image\" alt=\"Fishing\" />",
+        "pickle" => "<img src=\"images/pickleball.png\" class=\"holo-preview-image\" alt=\"Pickleball\" />",
+        "golf" => "<img src=\"images/golfing.png\" class=\"holo-preview-image\" alt=\"Golf\" />",
+        _ => "<p>File preview unavailable.</p>"
+    };
+
+    protected override void OnInitialized()
+    {
+        titleCycleCts = new CancellationTokenSource();
+        clockCts = new CancellationTokenSource();
+        _ = CycleTitlesAsync(titleCycleCts.Token);
+        _ = UpdateClockAsync(clockCts.Token);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await JS.InvokeVoidAsync("hologramLab.init", "homeIndexPcStage", "homeIndexPcRig", new
+        {
+            startPitch = -7,
+            startYaw = -30,
+            idleSpin = true,
+            idleResumeDelayMs = 5000,
+            idleYawAmplitude = 18,
+            idlePitchAmplitude = 5,
+            idleYawSpeed = 0.00075,
+            idlePitchSpeed = 0.00105
+        });
+    }
+
+    private void OpenTerminalFrame()
+    {
+        screenMode = "terminal";
+        _ = StartTerminalBootAsync();
+    }
+
+    private void OpenFullscreenHologram()
+    {
+        Navigation.NavigateTo("/hologram");
+    }
+
+    private void OpenDrive(string drive)
+    {
+        CancelTerminalBoot();
+        currentDrive = drive;
+        explorerSubfolder = null;
+        screenMode = "explorer";
+        ClearOpenedFile();
+    }
+
+    private void OpenExplorerApp()
+    {
+        CancelTerminalBoot();
+        currentDrive = RootDrive;
+        explorerSubfolder = null;
+        screenMode = "explorer";
+        ClearOpenedFile();
+    }
+
+    private void NavigateUp()
+    {
+        if (!string.IsNullOrEmpty(explorerSubfolder))
+        {
+            explorerSubfolder = null;
+            ClearOpenedFile();
+            return;
+        }
+
+        if (currentDrive != RootDrive)
+        {
+            currentDrive = RootDrive;
+            ClearOpenedFile();
+            return;
+        }
+
+        ReturnToDesktop();
+    }
+
+    private void ReturnToDesktop()
+    {
+        CancelTerminalBoot();
+        screenMode = "desktop";
+        ClearOpenedFile();
+    }
+
+    private async Task ActivateExplorerEntry(HoloExplorerEntry entry)
+    {
+        if (entry.Id is "hdrive" or "gdrive" or "sdrive")
+        {
+            OpenDrive(entry.Id);
+            return;
+        }
+
+        if (entry.Kind == "folder")
+        {
+            explorerSubfolder = entry.Id;
+            ClearOpenedFile();
+            return;
+        }
+
+        openedFileEntry = entry;
+
+        if (entry.Kind == "code")
+        {
+            await LoadCodeFileAsync(entry);
+            return;
+        }
+
+        openedCodeLines = Array.Empty<string>();
+        codeFileLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void CloseOpenedFile()
+    {
+        ClearOpenedFile();
+    }
+
+    private void ClearOpenedFile()
+    {
+        openedFileEntry = null;
+        openedCodeLines = Array.Empty<string>();
+        codeFileLoading = false;
+    }
+
+    private async Task LoadCodeFileAsync(HoloExplorerEntry entry)
+    {
+        codeFileLoading = true;
+        openedCodeLines = Array.Empty<string>();
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            var source = await Http.GetStringAsync(GetCodeSourcePath(entry.Id));
+            openedCodeLines = source.Replace("\r\n", "\n").Split('\n');
+        }
+        catch
+        {
+            openedCodeLines =
+            [
+                "// Unable to load source snapshot.",
+                "// Refresh the page or check the static source files."
+            ];
+        }
+        finally
+        {
+            codeFileLoading = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private static string GetCodeSourcePath(string fileId) => fileId switch
+    {
+        "sourceRazor" => "ide/Hologram.razor.txt",
+        "sourceCss" => "ide/hologram.css.txt",
+        "sourceJs" => "ide/hologramLab.js.txt",
+        _ => string.Empty
+    };
+
+    private async Task CycleTitlesAsync(CancellationToken token)
+    {
+        try
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(2.6));
+
+            while (await timer.WaitForNextTickAsync(token))
+            {
+                currentRoleIndex = (currentRoleIndex + 1) % rotatingRoles.Length;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private async Task UpdateClockAsync(CancellationToken token)
+    {
+        try
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+            while (await timer.WaitForNextTickAsync(token))
+            {
+                var nextTime = DateTime.Now.ToString("h:mm tt");
+                if (nextTime == desktopTime)
+                {
+                    continue;
+                }
+
+                desktopTime = nextTime;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private async Task StartTerminalBootAsync()
+    {
+        CancelTerminalBoot(disposeOnly: true);
+        terminalBootCts = new CancellationTokenSource();
+        var token = terminalBootCts.Token;
+
+        terminalOutput = string.Empty;
+        terminalCommand = string.Empty;
+        terminalReady = false;
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            foreach (var line in terminalBootLines)
+            {
+                foreach (var character in line)
+                {
+                    terminalOutput += character;
+                    await InvokeAsync(StateHasChanged);
+                    await Task.Delay(18, token);
+                }
+
+                terminalOutput += "\n";
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(140, token);
+            }
+
+            terminalReady = true;
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private void SkipTerminalBoot()
+    {
+        if (terminalReady || screenMode != "terminal")
+        {
+            return;
+        }
+
+        terminalBootCts?.Cancel();
+        terminalOutput = string.Join("\n", terminalBootLines) + "\n";
+        terminalReady = true;
+    }
+
+    private async Task HandleTerminalKeydown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter" || !terminalReady)
+        {
+            return;
+        }
+
+        await ExecuteTerminalCommandAsync();
+    }
+
+    private async Task ExecuteTerminalCommandAsync()
+    {
+        var command = terminalCommand.Trim();
+        if (string.IsNullOrWhiteSpace(command))
+        {
+            return;
+        }
+
+        terminalOutput += $"> {command}\n";
+
+        switch (command.ToLowerInvariant())
+        {
+            case "/help":
+                terminalOutput += "/help  /home  /about  /projects  /contact  /arcade\n";
+                terminalOutput += "/desktop  /hdrive  /gdrive  /sdrive  /clear\n";
+                break;
+            case "/home":
+                Navigation.NavigateTo("/");
+                return;
+            case "/about":
+                Navigation.NavigateTo("/about");
+                return;
+            case "/projects":
+                Navigation.NavigateTo("/projects");
+                return;
+            case "/contact":
+                Navigation.NavigateTo("/contact");
+                return;
+            case "/arcade":
+                terminalOutput += ">> SYSTEM: Redirecting to Moochine Arcade...\n";
+                terminalCommand = string.Empty;
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(900);
+                Navigation.NavigateTo("/arcade");
+                return;
+            case "/desktop":
+                terminalOutput += "Returning to desktop...\n";
+                ReturnToDesktop();
+                break;
+            case "/hdrive":
+            case "/h":
+                terminalOutput += "Opening H: MooVault...\n";
+                OpenDrive("hdrive");
+                break;
+            case "/gdrive":
+            case "/g":
+                terminalOutput += "Opening G: Personal...\n";
+                OpenDrive("gdrive");
+                break;
+            case "/sdrive":
+            case "/s":
+                terminalOutput += "Opening S: Source...\n";
+                OpenDrive("sdrive");
+                break;
+            case "/clear":
+                terminalOutput = string.Empty;
+                break;
+            default:
+                terminalOutput += $"Unknown command: {command}\n";
+                break;
+        }
+
+        terminalCommand = string.Empty;
+    }
+
+    private void CancelTerminalBoot(bool disposeOnly = false)
+    {
+        if (terminalBootCts is null)
+        {
+            return;
+        }
+
+        terminalBootCts.Cancel();
+        terminalBootCts.Dispose();
+        terminalBootCts = null;
+
+        if (!disposeOnly)
+        {
+            terminalReady = false;
+            terminalCommand = string.Empty;
+        }
+    }
+
+    public void Dispose()
+    {
+        CancelTerminalBoot(disposeOnly: true);
+
+        titleCycleCts?.Cancel();
+        titleCycleCts?.Dispose();
+        titleCycleCts = null;
+
+        clockCts?.Cancel();
+        clockCts?.Dispose();
+        clockCts = null;
+    }
+
+    private sealed record HoloExplorerEntry(string Id, string Title, string Description, string Kind, string Glyph);
+}

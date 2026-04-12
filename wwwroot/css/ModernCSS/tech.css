@@ -21,17 +21,32 @@
     width: 100%;
     height: 50px;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .tech-scroll {
     display: flex;
+    align-items: center;
     gap: 0px;
-    animation: scrollLoop 25s linear infinite;
-    width: fit-content;
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    animation: techScrollLoop var(--tech-duration, 34s) linear infinite;
+}
+
+.track-row1 .tech-scroll {
+    --tech-duration: 34s;
 }
 
 .track-row2 .tech-scroll {
-    margin-left: 75px;
+    --tech-duration: 38s;
+    animation-delay: -12s;
+}
+
+.track-row3 .tech-scroll {
+    --tech-duration: 36s;
+    animation-delay: -6s;
 }
 
 .tech-item {
@@ -40,6 +55,7 @@
     gap: 6px;
     min-width: 120px;
     margin-right: 8px;
+    flex-shrink: 0;
 }
 
 .tech-item img {
@@ -53,6 +69,21 @@
     white-space: nowrap;
 }
 
+@keyframes techScrollLoop {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tech-scroll {
+        animation: none;
+    }
+}
+
 @media (max-width: 900px) {
     .tech-wrapper {
         padding: 0 14px;
@@ -60,10 +91,6 @@
 
     .tech-track {
         height: 44px;
-    }
-
-    .track-row2 .tech-scroll {
-        margin-left: 32px;
     }
 
     .tech-item {

@@ -3,7 +3,6 @@
 @layout MainLayout
 @inject IJSRuntime JS
 @inject NavigationManager Navigation
-@inject HttpClient Http
 
 <link href="css/ModernCSS/hologram.css" rel="stylesheet" />
 
@@ -73,19 +72,21 @@
                                                 </div>
 
                                                 <div class="holo-desktop-icons">
-                                                    <button type="button"
-                                                            class="holo-desktop-icon holo-desktop-icon-terminal"
-                                                            @onclick="OpenTerminalFrame">
+                                                    <button type="button" class="holo-desktop-icon holo-desktop-icon-terminal" @onclick="OpenTerminalFrame">
                                                         <span class="holo-desktop-glyph holo-desktop-glyph-terminal"></span>
                                                         <span class="holo-desktop-label">cmd.exe</span>
                                                     </button>
 
-                                                    <button type="button"
-                                                            class="holo-desktop-icon holo-desktop-icon-explorer"
-                                                            @onclick="OpenExplorerApp">
+                                                    <button type="button" class="holo-desktop-icon holo-desktop-icon-explorer" @onclick="OpenExplorerApp">
                                                         <span class="holo-desktop-glyph holo-desktop-glyph-explorer"></span>
                                                         <span class="holo-desktop-label">File Explorer</span>
                                                     </button>
+                                                </div>
+
+                                                <div class="holo-desktop-taskbar">
+                                                    <span class="holo-taskbar-chip">Desktop</span>
+                                                    <span class="holo-taskbar-chip">MooSharp</span>
+                                                    <span class="holo-taskbar-chip">Prototype</span>
                                                 </div>
                                             </div>
 
@@ -134,18 +135,9 @@
                                                     <div class="holo-explorer-shell">
                                                         <div class="holo-explorer-sidebar">
                                                             <div class="holo-explorer-heading">This PC</div>
-                                                            <button type="button"
-                                                                    class="holo-explorer-nav @(currentDrive == RootDrive ? "active" : string.Empty)"
-                                                                    @onclick="OpenExplorerApp">Home</button>
-                                                            <button type="button"
-                                                                    class="holo-explorer-nav @(currentDrive == "hdrive" ? "active" : string.Empty)"
-                                                                    @onclick='() => OpenDrive("hdrive")'>H:</button>
-                                                            <button type="button"
-                                                                    class="holo-explorer-nav @(currentDrive == "gdrive" ? "active" : string.Empty)"
-                                                                    @onclick='() => OpenDrive("gdrive")'>G:</button>
-                                                            <button type="button"
-                                                                    class="holo-explorer-nav @(currentDrive == "sdrive" ? "active" : string.Empty)"
-                                                                    @onclick='() => OpenDrive("sdrive")'>S:</button>
+                                                            <button type="button" class="holo-explorer-nav @(currentDrive == RootDrive ? "active" : string.Empty)" @onclick="OpenExplorerApp">Home</button>
+                                                            <button type="button" class="holo-explorer-nav @(currentDrive == "hdrive" ? "active" : string.Empty)" @onclick='() => OpenDrive("hdrive")'>H:</button>
+                                                            <button type="button" class="holo-explorer-nav @(currentDrive == "gdrive" ? "active" : string.Empty)" @onclick='() => OpenDrive("gdrive")'>G:</button>
                                                         </div>
 
                                                         <div class="holo-explorer-main">
@@ -154,71 +146,30 @@
                                                             </div>
 
                                                             <div class="holo-explorer-body">
-                                                                <div class="holo-folder-grid @(CurrentGridColumnCount > 2 ? "home-folder-grid-compact" : string.Empty)"
-                                                                     style="@CurrentGridTemplateStyle">
+                                                                <div class="holo-folder-grid">
                                                                     @foreach (var entry in CurrentEntries)
                                                                     {
-                                                                        <button type="button"
-                                                                                class="holo-folder-card @(entry.Kind)"
-                                                                                @onclick="@(() => ActivateExplorerEntry(entry))">
+                                                                        <button type="button" class="holo-folder-card @(entry.Kind)" @onclick="@(() => ActivateExplorerEntry(entry))">
                                                                             <span class="holo-folder-badge">@entry.Glyph</span>
                                                                             <span class="holo-folder-title">@entry.Title</span>
                                                                         </button>
                                                                     }
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
 
-                                                    @if (openedFileEntry is not null && !IsCodeFileOpen)
-                                                    {
-                                                        <div class="holo-file-window home-screen-file-window" data-holo-interactive="true">
-                                                            <div class="holo-file-window-bar">
-                                                                <span class="holo-file-window-title">@OpenedFileTitle</span>
-                                                                <button type="button" class="holo-mini-button" @onclick="CloseOpenedFile">Close</button>
-                                                            </div>
-
-                                                            <div class="holo-file-window-content">
-                                                                <div class="holo-file-window-copy">@((MarkupString)OpenedFileMarkup)</div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            }
-
-                                            @if (screenMode == "explorer" && openedFileEntry is not null && IsCodeFileOpen)
-                                            {
-                                                <div class="holo-screen-window home-screen-code-window" data-holo-interactive="true">
-                                                    <div class="holo-file-window-bar">
-                                                        <span class="holo-file-window-title">@OpenedFileTitle</span>
-                                                        <button type="button" class="holo-mini-button" @onclick="CloseOpenedFile">Close</button>
-                                                    </div>
-
-                                                    <div class="holo-file-window-content">
-                                                        <div class="home-ide-shell">
-                                                            <div class="home-ide-tabs">
-                                                                <span class="home-ide-tab active">@OpenedFileTitle</span>
-                                                            </div>
-
-                                                            <div class="home-ide-editor">
-                                                                @if (codeFileLoading)
-                                                                {
-                                                                    <div class="home-ide-loading">Loading source...</div>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="home-ide-code">
-                                                                        @for (var lineIndex = 0; lineIndex < openedCodeLines.Count; lineIndex++)
-                                                                        {
-                                                                            var codeLine = string.IsNullOrEmpty(openedCodeLines[lineIndex]) ? "\u00A0" : openedCodeLines[lineIndex];
-                                                                            <div class="home-ide-line">
-                                                                                <span class="home-ide-line-number">@(lineIndex + 1)</span>
-                                                                                <span class="home-ide-line-code">@codeLine</span>
-                                                                            </div>
-                                                                        }
+                                                            @if (openedFileEntry is not null)
+                                                            {
+                                                                <div class="holo-file-window" data-holo-interactive="true">
+                                                                    <div class="holo-file-window-bar">
+                                                                        <span class="holo-file-window-title">@OpenedFileTitle</span>
+                                                                        <button type="button" class="holo-mini-button" @onclick="CloseOpenedFile">Close</button>
                                                                     </div>
-                                                                }
-                                                            </div>
+
+                                                                    <div class="holo-file-window-content">
+                                                                        <div class="holo-file-window-copy">@((MarkupString)OpenedFileMarkup)</div>
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -282,15 +233,11 @@
 
     private string screenMode = "desktop";
     private string currentDrive = RootDrive;
-    private string desktopTime = DateTime.Now.ToString("h:mm tt");
     private string? explorerSubfolder;
     private HoloExplorerEntry? openedFileEntry;
-    private IReadOnlyList<string> openedCodeLines = Array.Empty<string>();
     private string terminalOutput = string.Empty;
     private string terminalCommand = string.Empty;
     private bool terminalReady;
-    private bool codeFileLoading;
-    private CancellationTokenSource? clockCts;
     private CancellationTokenSource? terminalBootCts;
 
     private readonly string[] terminalBootLines =
@@ -313,8 +260,7 @@
     private readonly List<HoloExplorerEntry> driveRoot =
     [
         new("hdrive", "H: MooVault", "Projects and resume archive.", "drive", "DRV"),
-        new("gdrive", "G: Personal", "Photos, hobbies, and personal files.", "drive", "DRV"),
-        new("sdrive", "S: Source", "Hologram source snapshots in an IDE-style viewer.", "drive", "DRV")
+        new("gdrive", "G: Personal", "Photos, hobbies, and personal files.", "drive", "DRV")
     ];
 
     private readonly List<HoloExplorerEntry> resumeParts =
@@ -343,18 +289,6 @@
         new("golf", "golfing.png", "A good reset, with a little chaos.", "file", "PNG")
     ];
 
-    private readonly List<HoloExplorerEntry> sDriveRoot =
-    [
-        new("sourceRazor", "Hologram.razor", "Interactive hologram page source.", "code", "RAZ"),
-        new("sourceCss", "hologram.css", "Hologram styling source.", "code", "CSS"),
-        new("sourceJs", "hologramLab.js", "Hologram interaction script.", "code", "JS")
-    ];
-
-    private string DesktopTime => desktopTime;
-    private bool IsCodeFileOpen => openedFileEntry?.Kind == "code";
-    private int CurrentGridColumnCount => Math.Max(1, CurrentEntries.Count());
-    private string CurrentGridTemplateStyle => $"grid-template-columns: repeat({CurrentGridColumnCount}, minmax(0, 1fr));";
-
     private string ScreenModeClass => screenMode switch
     {
         "terminal" => "terminal-active",
@@ -371,9 +305,10 @@
             ("gdrive", "marriage") => marriageFolder,
             ("gdrive", "hobbies") => hobbiesFolder,
             ("gdrive", _) => gDriveRoot,
-            ("sdrive", _) => sDriveRoot,
             _ => hDriveRoot
         };
+
+    private string DesktopTime => DateTime.Now.ToString("h:mm tt");
 
     private string ExplorerPath
     {
@@ -384,13 +319,7 @@
                 return "This PC";
             }
 
-            var root = currentDrive switch
-            {
-                "gdrive" => "This PC > G: Personal",
-                "sdrive" => "This PC > S: Source",
-                _ => "This PC > H: MooVault"
-            };
-
+            var root = currentDrive == "gdrive" ? "This PC > G: Personal" : "This PC > H: MooVault";
             return explorerSubfolder switch
             {
                 "resumeParts" => $"{root} > Resume Parts",
@@ -413,28 +342,16 @@
         "hobbiesTxt" => "<p>Outside of software, I enjoy fishing, golf, pickleball, games, woodworking, and developing ideas into real things.</p>",
         "fish" => "<img src=\"images/fishing.png\" class=\"holo-preview-image\" alt=\"Fishing\" />",
         "pickle" => "<img src=\"images/pickleball.png\" class=\"holo-preview-image\" alt=\"Pickleball\" />",
-        "golf" => "<img src=\"images/golfing.png\" class=\"holo-preview-image\" alt=\"Golf\" />",
+        "golf" => "<img src=\"images/golfing.png\" class=\"holo-preview-image\" alt=\"Golfing\" />",
         _ => "<p>File preview unavailable.</p>"
     };
 
-    protected override void OnInitialized()
-    {
-        clockCts = new CancellationTokenSource();
-        _ = UpdateClockAsync(clockCts.Token);
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender)
+        if (firstRender)
         {
-            return;
+            await JS.InvokeVoidAsync("hologramLab.init", "hologramStage", "hologramRig");
         }
-
-        await JS.InvokeVoidAsync("hologramLab.init", "hologramStage", "hologramRig", new
-        {
-            startPitch = -7,
-            startYaw = -30
-        });
     }
 
     private void OpenTerminalFrame()
@@ -449,7 +366,7 @@
         currentDrive = drive;
         explorerSubfolder = null;
         screenMode = "explorer";
-        ClearOpenedFile();
+        openedFileEntry = null;
     }
 
     private void OpenExplorerApp()
@@ -458,7 +375,7 @@
         currentDrive = RootDrive;
         explorerSubfolder = null;
         screenMode = "explorer";
-        ClearOpenedFile();
+        openedFileEntry = null;
     }
 
     private void NavigateUp()
@@ -466,14 +383,14 @@
         if (!string.IsNullOrEmpty(explorerSubfolder))
         {
             explorerSubfolder = null;
-            ClearOpenedFile();
+            openedFileEntry = null;
             return;
         }
 
         if (currentDrive != RootDrive)
         {
             currentDrive = RootDrive;
-            ClearOpenedFile();
+            openedFileEntry = null;
             return;
         }
 
@@ -484,12 +401,12 @@
     {
         CancelTerminalBoot();
         screenMode = "desktop";
-        ClearOpenedFile();
+        openedFileEntry = null;
     }
 
-    private async Task ActivateExplorerEntry(HoloExplorerEntry entry)
+    private void ActivateExplorerEntry(HoloExplorerEntry entry)
     {
-        if (entry.Id is "hdrive" or "gdrive" or "sdrive")
+        if (entry.Id is "hdrive" or "gdrive")
         {
             OpenDrive(entry.Id);
             return;
@@ -498,90 +415,16 @@
         if (entry.Kind == "folder")
         {
             explorerSubfolder = entry.Id;
-            ClearOpenedFile();
+            openedFileEntry = null;
             return;
         }
 
         openedFileEntry = entry;
-
-        if (entry.Kind == "code")
-        {
-            await LoadCodeFileAsync(entry);
-            return;
-        }
-
-        openedCodeLines = Array.Empty<string>();
-        codeFileLoading = false;
-        await InvokeAsync(StateHasChanged);
     }
 
     private void CloseOpenedFile()
     {
-        ClearOpenedFile();
-    }
-
-    private void ClearOpenedFile()
-    {
         openedFileEntry = null;
-        openedCodeLines = Array.Empty<string>();
-        codeFileLoading = false;
-    }
-
-    private async Task LoadCodeFileAsync(HoloExplorerEntry entry)
-    {
-        codeFileLoading = true;
-        openedCodeLines = Array.Empty<string>();
-        await InvokeAsync(StateHasChanged);
-
-        try
-        {
-            var source = await Http.GetStringAsync(GetCodeSourcePath(entry.Id));
-            openedCodeLines = source.Replace("\r\n", "\n").Split('\n');
-        }
-        catch
-        {
-            openedCodeLines =
-            [
-                "// Unable to load source snapshot.",
-                "// Refresh the page or check the static source files."
-            ];
-        }
-        finally
-        {
-            codeFileLoading = false;
-            await InvokeAsync(StateHasChanged);
-        }
-    }
-
-    private static string GetCodeSourcePath(string fileId) => fileId switch
-    {
-        "sourceRazor" => "ide/Hologram.razor.txt",
-        "sourceCss" => "ide/hologram.css.txt",
-        "sourceJs" => "ide/hologramLab.js.txt",
-        _ => string.Empty
-    };
-
-    private async Task UpdateClockAsync(CancellationToken token)
-    {
-        try
-        {
-            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-
-            while (await timer.WaitForNextTickAsync(token))
-            {
-                var nextTime = DateTime.Now.ToString("h:mm tt");
-                if (nextTime == desktopTime)
-                {
-                    continue;
-                }
-
-                desktopTime = nextTime;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-        catch (OperationCanceledException)
-        {
-        }
     }
 
     private async Task StartTerminalBootAsync()
@@ -655,7 +498,7 @@
         {
             case "/help":
                 terminalOutput += "/help  /home  /about  /projects  /contact  /arcade\n";
-                terminalOutput += "/desktop  /hdrive  /gdrive  /sdrive  /clear\n";
+                terminalOutput += "/desktop  /hdrive  /gdrive  /clear\n";
                 break;
             case "/home":
                 Navigation.NavigateTo("/");
@@ -670,10 +513,11 @@
                 Navigation.NavigateTo("/contact");
                 return;
             case "/arcade":
+                terminalOutput += ">> SYSTEM: Redirecting back to Modern for Moochine Arcade\n";
                 terminalOutput += ">> SYSTEM: Redirecting to Moochine Arcade...\n";
                 terminalCommand = string.Empty;
                 await InvokeAsync(StateHasChanged);
-                await Task.Delay(900);
+                await Task.Delay(4000);
                 Navigation.NavigateTo("/arcade");
                 return;
             case "/desktop":
@@ -689,11 +533,6 @@
             case "/g":
                 terminalOutput += "Opening G: Personal...\n";
                 OpenDrive("gdrive");
-                break;
-            case "/sdrive":
-            case "/s":
-                terminalOutput += "Opening S: Source...\n";
-                OpenDrive("sdrive");
                 break;
             case "/clear":
                 terminalOutput = string.Empty;
@@ -727,10 +566,6 @@
     public void Dispose()
     {
         CancelTerminalBoot(disposeOnly: true);
-
-        clockCts?.Cancel();
-        clockCts?.Dispose();
-        clockCts = null;
     }
 
     private sealed record HoloExplorerEntry(string Id, string Title, string Description, string Kind, string Glyph);

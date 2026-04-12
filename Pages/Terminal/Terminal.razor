@@ -1,43 +1,9 @@
 @page "/terminal"
-@layout TerminalLayout
-@inject IJSRuntime JS
-
-<div class="terminal-container">
-    <div class="banner-container">
-        <img src="images/MooSharpWhiteCircle.png" alt="MooSharp Logo" class="banner-logo" />
-        <div id="welcomeBase" class="banner-title">WELCOME USER</div>
-    </div>
-
-    <div id="terminalText"></div>
-
-    <div class="terminal-input-shell">
-        <span class="terminal-prompt">&gt;</span>
-        <input id="terminalCommandInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Type /help and press enter" />
-    </div>
-</div>
+@inject NavigationManager Navigation
 
 @code {
-    private bool introSkipped = false;
-
-    [JSInvokable]
-    public void CompleteTyping()
+    protected override void OnInitialized()
     {
-        if (!introSkipped)
-        {
-            introSkipped = true;
-            JS.InvokeVoidAsync("completeTerminalIntro");
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            var reference = DotNetObjectReference.Create(this);
-            await JS.InvokeVoidAsync("startTerminalTyping", "index");
-            await JS.InvokeVoidAsync("initTerminalInput");
-            await JS.InvokeVoidAsync("addKeypressListener", reference);
-            await JS.InvokeVoidAsync("startRotatingWelcome");
-        }
+        Navigation.NavigateTo("/hologram", true);
     }
 }

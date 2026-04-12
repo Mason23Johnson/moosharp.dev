@@ -6,8 +6,10 @@
     <section class="deck-slide slide-stack">
         <div class="stack-hover-wrapper">
             <div class="stack-mobile-tabs">
-                <button type="button" class="stack-tab @(activeStackPanel == "stack" ? "active" : "")" @onclick='() => SetStackPanel("stack")'>Stack</button>
-                <button type="button" class="stack-tab @(activeStackPanel == "brand" ? "active" : "")" @onclick='() => SetStackPanel("brand")'>Brand</button>
+                <button type="button" class="stack-tab @(activeStackPanel == "stack" ? "active" : "")"
+                        @onclick='() => SetStackPanel("stack")'>Stack</button>
+                <button type="button" class="stack-tab @(activeStackPanel == "brand" ? "active" : "")"
+                        @onclick='() => SetStackPanel("brand")'>Brand</button>
             </div>
 
             <div class="hover-zone hover-left-zone"></div>
@@ -42,249 +44,144 @@
         </div>
     </section>
 
-    <section class="deck-slide slide-personal explorer-layout visible">
-        <div class="explorer-shell">
-            <aside class="explorer-sidebar">
-                <h3>Quick Access</h3>
-                <ul>
-                    <li @onclick="@(() => ToggleFolder("hdrive"))" class="@(openFolder == "hdrive" ? "active" : "")">
-                        H: MooVault
-                    </li>
-                    <li @onclick="@(() => ToggleFolder("personal"))" class="@(openFolder == "personal" ? "active" : "")">
-                        G: Personal
-                    </li>
-                </ul>
-            </aside>
+    <section class="deck-slide slide-experience visible">
+        <div class="experience-shell">
+            <div class="experience-head">
+                <div class="experience-kicker">Experience</div>
+                <h2 class="experience-heading">A live view of the work behind MooSharp.</h2>
+                <p class="experience-intro">
+                    Education laid the foundation, the internship sharpened execution, and the company work turned that
+                    into products,
+                    systems, and branded websites that had to hold up outside a classroom.
+                </p>
+            </div>
 
-            <section class="explorer-main">
-                <div class="explorer-toolbar">
-                    <div class="explorer-breadcrumb">
-                        <button type="button" class="crumb-button" @onclick="NavigateToExplorerRoot">Quick Access</button>
-                        <span>/</span>
-                        <button type="button" class="crumb-button" @onclick="NavigateToFolderRoot">@CurrentFolderName</button>
-                        @if (!string.IsNullOrEmpty(subFolder))
-                        {
-                            <span>/</span>
-                            <span class="crumb-current">@CurrentSubfolderName</span>
-                        }
-                    </div>
-                </div>
-
-                <div class="folder-grid">
-                    @foreach (var entry in CurrentEntries)
+            <div class="experience-frame">
+                <nav class="experience-rail" aria-label="Experience navigation">
+                    @foreach (var entry in experienceEntries)
                     {
-                        <button type="button" class="folder-tile @(entry.Kind)" @onclick="@(() => ActivateEntry(entry))">
-                            <div class="folder-tab"></div>
-                            <div class="folder-face">
-                                <img src="@entry.Icon" alt="" />
-                                <div class="folder-copy">
-                                    <span>@entry.Title</span>
-                                    <small>@entry.Description</small>
-                                </div>
-                            </div>
+                        <button type="button" class="experience-node @(selectedExperienceId == entry.Id ? "active" : "")"
+                                @onclick="@(() => SetExperience(entry.Id))">
+                            <span class="experience-index">@entry.Index</span>
+                            <span class="experience-node-copy">
+                                <strong>@entry.Title</strong>
+                                <small>@entry.Subtitle</small>
+                            </span>
                         </button>
                     }
-                </div>
-            </section>
-        </div>
+                </nav>
 
-        @for (var i = 0; i < openWindows.Count; i++)
-        {
-            var windowId = openWindows[i];
-            <div class="explorer-window"
-                 style="top:@(120 + (i * 26))px; left:@(110 + (i * 28))px;">
-                <div class="window-header" onmousedown="beginDrag(event, this.closest('.explorer-window'))">
-                    <div class="window-title-group">
-                        <span class="window-title">@GetWindowTitle(windowId)</span>
-                        <span class="window-subtitle">@GetWindowSubtitle(windowId)</span>
+                <section class="experience-stage">
+                    <div class="experience-stage-top">
+                        <span class="experience-stage-kicker">@SelectedExperience.StageLabel</span>
+                        <span class="experience-stage-rule"></span>
+                        <span class="experience-stage-subtitle">@SelectedExperience.Subtitle</span>
                     </div>
-                    <button @onclick="@(() => CloseWindow(windowId))">Close</button>
-                </div>
-                <div class="window-body">
-                    @switch (windowId)
-                    {
-                        case "fullResume":
-                            <div class="window-copy">
-                                <p>Full resume available on request through the contact page.</p>
-                                <p>Highlights: Salesforce development, full-stack Blazor work, backend systems, and indie game experiments.</p>
-                            </div>
-                            break;
-                        case "projExp":
-                            <div class="window-copy">
-                                <p>Tinek App - AI Integration, AI Building, Data Analytics, Mobile Dev, Blazor Dev, DB, APIs, etc.</p>
-                                <p>moosharp.dev - ...</p>
-                                <p>salesforce internship - ...</p>
-                                <p>Moosharp website building - ... redacted websites</p>
-                            </div>
-                            break;
-                        case "skills":
-                            <div class="window-copy">
-                                <p>Salesforce: Apex, Visualforce, Lightning, SOQL, flows, integrations.</p>
-                                <p>Full stack: C#, JS, HTML5, CSS, ASP.NET, Blazor, SQLite, EF Core.</p>
-                                <p>Platform: Linux, Windows, Docker, NAS, Git, Azure DevOps.</p>
-                            </div>
-                            break;
-                        case "marriageTxt":
-                            <div class="window-copy">
-                                <p>Married in 2024 and honeymooned in the Virgin Islands.</p>
-                            </div>
-                            break;
-                        case "marriagePng":
-                            <img src="images/wedding.png" class="window-image" alt="Wedding" />
-                            break;
-                        case "hobbiesTxt":
-                            <div class="window-copy">
-                                <p>Outside of software, I enjoy fishing, golf, pickleball, games, woodworking, and developing ideas into real things.</p>
-                            </div>
-                            break;
-                        case "fish":
-                            <img src="images/fishing.png" class="window-image" alt="Fishing" />
-                            break;
-                        case "pickle":
-                            <img src="images/pickleball.png" class="window-image" alt="Pickleball" />
-                            break;
-                        case "golf":
-                            <img src="images/golfing.png" class="window-image" alt="Golfing" />
-                            break;
-                    }
-                </div>
+
+                    <h3 class="experience-stage-title">@SelectedExperience.Title</h3>
+                    <p class="experience-stage-copy">@SelectedExperience.Overview</p>
+
+                    <div class="experience-signal-row">
+                        @foreach (var focus in SelectedExperience.FocusAreas)
+                        {
+                            <span class="experience-signal">@focus</span>
+                        }
+                    </div>
+
+                    <div class="experience-detail-lines">
+                        @foreach (var detail in SelectedExperience.Details)
+                        {
+                            <p>@detail</p>
+                        }
+                    </div>
+
+                    <div class="experience-focus-strip">
+                        <span class="experience-focus-label">Focus</span>
+                        <div class="experience-focus-items">
+                            @foreach (var focus in SelectedExperience.FocusAreas)
+                            {
+                                <span>@focus</span>
+                            }
+                        </div>
+                    </div>
+                </section>
             </div>
-        }
+        </div>
     </section>
 </div>
 
 @code {
-    private string? openFolder = "hdrive";
-    private string? subFolder;
     private string activeStackPanel = "center";
-    private readonly List<string> openWindows = new();
+    private string selectedExperienceId = "education";
 
-    private readonly List<ExplorerEntry> hDriveRoot = new()
+    private readonly List<ExperienceEntry> experienceEntries = new()
     {
-        new("fullResume", "Resume_Full.txt", "Full resume overview and core background.", "file", "icons/txt-icon.png"),
-        new("resumeParts", "Resume_Parts", "Project experience and skills breakdown.", "folder", "icons/folder-icon.png")
+        new(
+            "education",
+            "01",
+            "Education",
+            "UCO",
+            "Student",
+            "Education directed towards not just development, but software engineering, systems thinking, and problem-solving for applications and companies.",
+            new[]
+            {
+                "Data structures, algorithms, and software engineering principles that could be applied in real-world contexts.",
+                "Full-stack development experience across multiple languages, frameworks, and project types, with a focus on clean code and maintainable systems.",
+                "Mathematics, logic, and problem-solving skills that could be applied to complex technical challenges and product design questions."
+            },
+            new[] { "Foundations", "Problem Solving", "Full Stack", "Systems" }),
+        new(
+            "internship",
+            "02",
+            "Salesforce Internship",
+            "Platform Delivery",
+            "Producer",
+            "Real delivery work inside business constraints, where clean implementation mattered as much as speed and communication.",
+            new[]
+            {
+                "Worked through live Salesforce platform tasks involving flows, debugging, data handling, and feature delivery.",
+                "Learned how to balance correctness, platform limitations, and stakeholder expectations in a production environment.",
+                "Strengthened the habits around testing changes carefully, documenting decisions, and shipping inside an established stack."
+            },
+            new[] { "Salesforce", "Flows", "Apex", "Delivery" }),
+        new(
+            "tinek",
+            "03",
+            "Tinek",
+            "Product Building",
+            "Product",
+            "An AI-driven hunting product that combines predictions, data workflows, application design, and long-term product thinking.",
+            new[]
+            {
+                "Building the product around AI integration, analytics, storage, and app-first functionality across mobile and web.",
+                "Using Blazor, APIs, and structured data flows to shape a usable tool instead of a one-off prototype.",
+                "Treating the app as a living product roadmap with room for prediction systems, user data, and ongoing feature expansion."
+            },
+            new[] { "AI", "Blazor", "APIs", "Analytics" }),
+        new(
+            "moosharp",
+            "04",
+            "MooSharp Website Building",
+            "Client Work",
+            "Client",
+            "Website building for companies under the MooSharp brand, focused on clean presentation, custom direction, and practical delivery.",
+            new[]
+            {
+                "Built company websites with stronger visual direction, cleaner structure, and clearer communication than generic templates.",
+                "Handled the mix of branding, development, iteration, and client-facing refinement needed to land a finished result.",
+                "Used MooSharp as both the portfolio and the service layer for delivering redacted company website work."
+            },
+            new[] { "Branding", "Web Delivery", "Client Work", "UI Systems" })
     };
 
-    private readonly List<ExplorerEntry> resumeParts = new()
-    {
-        new("projExp", "ProjectExp.txt", "Apps, tools, games, and shipped experiments.", "file", "icons/txt-icon.png"),
-        new("skills", "Skills.txt", "Languages, platforms, tooling, and Salesforce specialties.", "file", "icons/txt-icon.png")
-    };
-
-    private readonly List<ExplorerEntry> personalRoot = new()
-    {
-        new("marriage", "Marriage", "Photos and life update folder.", "folder", "icons/folder-icon.png"),
-        new("hobbies", "Hobbies", "Fishing, golf, pickleball, and more.", "folder", "icons/folder-icon.png")
-    };
-
-    private readonly List<ExplorerEntry> marriageFolder = new()
-    {
-        new("marriageTxt", "marriage.txt", "A quick note about 2024 and the honeymoon trip.", "file", "icons/txt-icon.png"),
-        new("marriagePng", "wedding.png", "One of my favorite photos from the day.", "file", "icons/image-icon.png")
-    };
-
-    private readonly List<ExplorerEntry> hobbiesFolder = new()
-    {
-        new("hobbiesTxt", "hobbies.txt", "How I spend time away from work.", "file", "icons/txt-icon.png"),
-        new("fish", "fishing.png", "Water, gear, quiet mornings, and a good catch.", "file", "icons/image-icon.png"),
-        new("pickle", "pickleball.png", "Fast pace and just enough competition.", "file", "icons/image-icon.png"),
-        new("golf", "golfing.png", "A lot of walking, a little chaos, and a great reset.", "file", "icons/image-icon.png")
-    };
-
-    private IEnumerable<ExplorerEntry> CurrentEntries =>
-        (openFolder, subFolder) switch
-        {
-            ("hdrive", "resumeParts") => resumeParts,
-            ("hdrive", _) => hDriveRoot,
-            ("personal", "marriage") => marriageFolder,
-            ("personal", "hobbies") => hobbiesFolder,
-            ("personal", _) => personalRoot,
-            _ => hDriveRoot
-        };
-
-    private string CurrentFolderName => openFolder == "personal" ? "G: Personal" : "H: MooVault";
-
-    private string CurrentSubfolderName => subFolder switch
-    {
-        "resumeParts" => "Resume Parts",
-        "marriage" => "Marriage",
-        "hobbies" => "Hobbies",
-        _ => string.Empty
-    };
-
-    private void ToggleFolder(string id)
-    {
-        openFolder = id;
-        subFolder = null;
-    }
+    private ExperienceEntry SelectedExperience => experienceEntries.First(entry => entry.Id == selectedExperienceId);
 
     private void SetStackPanel(string panel)
     {
         activeStackPanel = activeStackPanel == panel ? "center" : panel;
     }
 
-    private void NavigateToExplorerRoot()
-    {
-        openFolder = "hdrive";
-        subFolder = null;
-    }
-
-    private void NavigateToFolderRoot()
-    {
-        subFolder = null;
-    }
-
-    private void ActivateEntry(ExplorerEntry entry)
-    {
-        if (entry.Kind == "folder")
-        {
-            subFolder = entry.Id;
-            return;
-        }
-
-        OpenWindow(entry.Id);
-    }
-
-    private void OpenWindow(string id)
-    {
-        if (!openWindows.Contains(id))
-        {
-            openWindows.Add(id);
-        }
-    }
-
-    private void CloseWindow(string id)
-    {
-        openWindows.Remove(id);
-    }
-
-    private string GetWindowTitle(string id) => id switch
-    {
-        "fullResume" => "Resume_Full.txt",
-        "projExp" => "ProjectExp.txt",
-        "skills" => "Skills.txt",
-        "marriageTxt" => "marriage.txt",
-        "marriagePng" => "wedding.png",
-        "hobbiesTxt" => "hobbies.txt",
-        "fish" => "fishing.png",
-        "pickle" => "pickleball.png",
-        "golf" => "golfing.png",
-        _ => id
-    };
-
-    private string GetWindowSubtitle(string id) => id switch
-    {
-        "fullResume" => "Professional overview",
-        "projExp" => "Project archive",
-        "skills" => "Technical stack",
-        "marriageTxt" => "Personal note",
-        "marriagePng" => "Photo viewer",
-        "hobbiesTxt" => "Lifestyle note",
-        "fish" => "Photo viewer",
-        "pickle" => "Photo viewer",
-        "golf" => "Photo viewer",
-        _ => "Explorer window"
-    };
+    private void SetExperience(string id) => selectedExperienceId = id;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -307,5 +204,13 @@ document.querySelectorAll('.deck-slide').forEach(sec => observer.observe(sec));
 ");
     }
 
-    private sealed record ExplorerEntry(string Id, string Title, string Description, string Kind, string Icon);
+    private sealed record ExperienceEntry(
+        string Id,
+        string Index,
+        string Title,
+        string Subtitle,
+        string StageLabel,
+        string Overview,
+        string[] Details,
+        string[] FocusAreas);
 }
