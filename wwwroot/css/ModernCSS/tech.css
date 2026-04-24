@@ -28,7 +28,7 @@
 .tech-scroll {
     display: flex;
     align-items: center;
-    gap: 0px;
+    gap: 8px;
     width: max-content;
     will-change: transform;
     transform: translate3d(0, 0, 0);
@@ -37,16 +37,17 @@
 
 .track-row1 .tech-scroll {
     --tech-duration: 34s;
+    --tech-start: 0%;
 }
 
 .track-row2 .tech-scroll {
     --tech-duration: 38s;
-    animation-delay: -12s;
+    --tech-start: -18%;
 }
 
 .track-row3 .tech-scroll {
     --tech-duration: 36s;
-    animation-delay: -6s;
+    --tech-start: -34%;
 }
 
 .tech-item {
@@ -54,7 +55,6 @@
     align-items: center;
     gap: 6px;
     min-width: 120px;
-    margin-right: 8px;
     flex-shrink: 0;
 }
 
@@ -71,10 +71,10 @@
 
 @keyframes techScrollLoop {
     from {
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(var(--tech-start, 0%), 0, 0);
     }
     to {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(var(--tech-start, 0%) - 50%), 0, 0);
     }
 }
 
@@ -95,7 +95,6 @@
 
     .tech-item {
         min-width: 96px;
-        margin-right: 12px;
     }
 
     .tech-item img {
