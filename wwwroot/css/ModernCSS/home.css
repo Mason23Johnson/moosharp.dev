@@ -346,6 +346,14 @@ body:has(.home-page-shell) .modern-footer {
     gap: 12px;
 }
 
+.home-link-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
 .home-link-body p,
 .home-link-primary h3 {
     margin: 0;
@@ -366,6 +374,28 @@ body:has(.home-page-shell) .modern-footer {
 
 .home-link-primary h3 {
     font-size: 1.38rem;
+    color: #ffffff;
+}
+
+.home-link-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(90, 209, 255, 0.2);
+    background: linear-gradient(180deg, rgba(12, 107, 177, 0.82), rgba(10, 63, 112, 0.92));
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.home-link-button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(120, 222, 255, 0.3);
+    background: linear-gradient(180deg, rgba(18, 121, 197, 0.88), rgba(11, 71, 127, 0.96));
     color: #ffffff;
 }
 
@@ -897,6 +927,10 @@ body:has(.home-page-shell) .holo-folder-badge {
 
     .home-link-body {
         text-align: center;
+    }
+
+    .home-link-header {
+        justify-content: center;
     }
 
     .home-link-primary {
