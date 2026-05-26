@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("moosharp.dev")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb718808d2d68dac68675b9fef356089fd876786")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7538ec8ba927fc44b102e26e8bfaa86d948a0912")]
 [assembly: System.Reflection.AssemblyProductAttribute("moosharp.dev")]
 [assembly: System.Reflection.AssemblyTitleAttribute("moosharp.dev")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

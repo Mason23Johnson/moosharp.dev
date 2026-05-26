@@ -3,20 +3,9 @@
 
 <section class="projects-page">
     <header class="projects-hero">
-        <div class="projects-hero-copy projects-hero-single">
-            <p class="projects-kicker">MooSharp Projects</p>
-            <h1>Product builds, experiments, and launch targets.</h1>
-            <p class="projects-summary">
-                This is the current slate: shipping tools, game work, and the next major build on deck.
-                The roadmap is focused on prediction systems, polished tooling, and the next release wave planned for Deer Season 2026.
-            </p>
-            <div class="projects-badges">
-                <span>AI</span>
-                <span>Mobile + Web</span>
-                <span>Blazor + C#</span>
-                <span>Indie Systems</span>
-            </div>
-        </div>
+        <p class="projects-kicker">MooSharp</p>
+        <h1 class="projects-page-title">Projects</h1>
+        <div class="projects-title-rule"></div>
     </header>
 
     <section class="projects-feature">
@@ -32,7 +21,8 @@
                 one system that works on both mobile and web.
             </p>
             <div class="feature-meta">
-                <span class="chip">Coming Soon</span>
+                <a class="chip chip-link" href="https://tinek.us" target="_blank" rel="noopener noreferrer">tinek.us</a>
+                <span class="chip">Out Now</span>
                 <span class="chip">Prediction Engine</span>
                 <span class="chip">Data Storage</span>
                 <span class="chip">Field Utility</span>
@@ -47,7 +37,16 @@
                 <div class="upload-card-shell">
                     <div class="upload-card-face upload-card-front">
                         <div class="upload-thumb">
-                            <img src="@item.Thumbnail" alt="@item.Title" />
+                            @if (!string.IsNullOrEmpty(item.Thumbnail))
+                            {
+                                <img src="@item.Thumbnail" alt="@item.Title" />
+                            }
+                            else
+                            {
+                                <div class="upload-thumb-placeholder">
+                                    <span>@item.Platform</span>
+                                </div>
+                            }
                             <span class="upload-status">@item.Status</span>
                         </div>
                         <div class="upload-body">
@@ -78,11 +77,22 @@
                 <div class="upload-footer">
                     @if (!string.IsNullOrWhiteSpace(item.ProjectUrl))
                     {
-                        <a class="upload-link" href="@item.ProjectUrl">Open</a>
+                        @if (item.IsDownload)
+                        {
+                            <a class="upload-link" href="@item.ProjectUrl" download>Download</a>
+                        }
+                        else
+                        {
+                            <a class="upload-link" href="@item.ProjectUrl" target="@(item.IsExternal ? "_blank" : null)" rel="@(item.IsExternal ? "noopener noreferrer" : null)">Open</a>
+                        }
                     }
-                    else
+                    else if (string.IsNullOrWhiteSpace(item.GithubUrl))
                     {
                         <span class="upload-link disabled">Coming Soon</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(item.GithubUrl))
+                    {
+                        <a class="upload-link upload-link-ghost" href="@item.GithubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
                     }
                 </div>
             </article>
@@ -95,15 +105,31 @@
     private readonly List<ProjectItem> Items = new()
     {
         new(
-            "Moochine Arcade",
-            "A growing hub for prototypes, arcade experiments, and game concepts.",
-            "/images/projects/MoochineArcade.png",
-            "/arcade",
-            "Playable",
-            "Web",
-            new[] { "Arcade", "Prototype Lab", "Games" },
-            "Moochine Arcade is the testing ground for quick ideas, playable prototypes, and game concepts that can grow into bigger projects over time.",
-            "Built with a mix of Blazor, JavaScript, lightweight game logic, and a storefront-style shell that makes the collection feel more intentional than a loose page of links."),
+            "rParrot",
+            "A screen reader with voice output for accessibility on Windows.",
+            "/images/projects/rParrot.png",
+            "/downloads/rParrot.exe",
+            "Download",
+            "Windows",
+            new[] { "Windows", "Accessibility", "Screen Reader" },
+            "rParrot is a screen reader application that uses Windows Voice to provide voice output, making Windows applications more accessible for visually impaired users.",
+            "Packaged as a standalone Windows executable - download and run, no installation required.",
+            IsDownload: true,
+            IsExternal: false,
+            GithubUrl: "https://github.com/Mason23Johnson/rParrot"),
+        new(
+            "Windows Button Disabler",
+            "Disable the Windows key and system shortcuts during gameplay to stop accidental alt-tabs.",
+            "/images/projects/winDisable.png",
+            null,
+            "Open Source",
+            "Windows",
+            new[] { "Gaming", "Utility", "Windows" },
+            "A lightweight utility that blocks the Windows key and other disruptive system shortcuts while gaming, preventing accidental minimization mid-match.",
+            "Targeted initially at Overwatch but works across any fullscreen game on Windows.",
+            IsDownload: false,
+            IsExternal: false,
+            GithubUrl: "https://github.com/Mason23Johnson/Video-Game-Windows-Button-Disabler-Currently-Overwatch-"),
         new(
             "MooCastScoreboard",
             "Livestream scoreboard editor for sports streams and quick game-day overlays.",
@@ -113,27 +139,47 @@
             "Web",
             new[] { "Scoreboard", "Streaming", "Utility" },
             "MooCastScoreboard is meant to be a practical streamer utility: update scores fast, switch sports, adjust team styling, and keep the overlay readable under pressure.",
-            "It is being built as a focused Blazor tool with sport-aware controls, editable team branding, and a live preview so streamers can tune the layout before it goes on-screen."),
+            "Built as a focused Blazor tool with sport-aware controls, editable team branding, and a live preview so streamers can tune the layout before it goes on-screen.",
+            IsDownload: false,
+            IsExternal: false),
         new(
-            "Tritactic",
-            "Tactical board-game concept still in active development.",
-            "/images/projects/TriTactic.png",
-            "/games/tri-tactic",
-            "Playable Prototype",
+            "Moochine Arcade",
+            "A growing hub for prototypes, arcade experiments, and game concepts.",
+            "/images/projects/MoochineArcade.png",
+            "/arcade",
+            "Playable",
             "Web",
-            new[] { "Strategy", "Board Game", "Prototype" },
-            "Tri-Tactic is a memory-based twist on tic-tac-toe where pieces cycle off the board, which adds tempo, pressure, and more room for actual strategy.",
-            "The current build uses a C# game engine with Blazor UI, keyboard input support, and computer-turn logic that now runs more reliably inside the app.")
+            new[] { "Arcade", "Prototype Lab", "Games" },
+            "Moochine Arcade is the testing ground for quick ideas, playable prototypes, and game concepts that can grow into bigger projects over time.",
+            "Built with Blazor, JavaScript, lightweight game logic, and a storefront-style shell that makes the collection feel more intentional than a loose page of links.",
+            IsDownload: false,
+            IsExternal: false),
+        new(
+            "Arctis 7 HID Protocol",
+            "Reverse engineering the USB HID protocol for SteelSeries Arctis 7 headsets.",
+            null,
+            null,
+            "Research",
+            "Hardware",
+            new[] { "Reverse Engineering", "USB HID", "Hardware" },
+            "A deep dive into the USB HID protocol used by the SteelSeries Arctis 7 - documenting byte structures of commands and building custom control software outside the official app.",
+            "USB packet captures, protocol analysis, and documentation of undisclosed hardware communication specs.",
+            IsDownload: false,
+            IsExternal: false,
+            GithubUrl: "https://github.com/Mason23Johnson/SteelSeries-Arctis-7-USB-HID-Protocol-Reverse-Engineering")
     };
 
     private sealed record ProjectItem(
         string Title,
         string Summary,
-        string Thumbnail,
+        string? Thumbnail,
         string? ProjectUrl,
         string Status,
         string Platform,
         string[] Tags,
         string DeepDescription,
-        string BuildNotes);
+        string BuildNotes,
+        bool IsDownload = false,
+        bool IsExternal = false,
+        string? GithubUrl = null);
 }

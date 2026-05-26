@@ -28,7 +28,7 @@ function setupIntroText(page) {
             ">> USER CONNECTING.",
             ">> STATUS: Connected to Backend. Preparing Full Stack...",
             "",
-            "Welcome to MooSharp — the digital headquarters of Mason Johnson, a 20 year old full stack developer with a backend core.",
+            "Welcome to MooSharp - the digital headquarters of Mason Johnson, a 20 year old full stack developer with a backend core.",
             "",
             "My nickname “Moo” traces back to the early 1990s when my father programmed using LambdaMOO.",
             "Programming is in my blood with DNA tracing back 30 years.",
