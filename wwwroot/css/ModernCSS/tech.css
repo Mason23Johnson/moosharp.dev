@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    animation: fadeIn 1.2s ease-in both;
 }
 
 .tech-wrapper {
@@ -35,19 +34,21 @@
     animation: techScrollLoop var(--tech-duration, 34s) linear infinite;
 }
 
+/* Rows are staggered with a negative delay rather than a start offset. A start
+   offset eats into the content still ahead of the viewport, which is what left
+   the rows running out of icons partway through the loop. */
 .track-row1 .tech-scroll {
     --tech-duration: 34s;
-    --tech-start: 0%;
 }
 
 .track-row2 .tech-scroll {
     --tech-duration: 38s;
-    --tech-start: -18%;
+    animation-delay: -14s;
 }
 
 .track-row3 .tech-scroll {
     --tech-duration: 36s;
-    --tech-start: -34%;
+    animation-delay: -24s;
 }
 
 .tech-item {
@@ -69,12 +70,13 @@
     white-space: nowrap;
 }
 
+/* 50% is exactly one of the two identical halves, so the reset is invisible. */
 @keyframes techScrollLoop {
     from {
-        transform: translate3d(var(--tech-start, 0%), 0, 0);
+        transform: translate3d(0, 0, 0);
     }
     to {
-        transform: translate3d(calc(var(--tech-start, 0%) - 50%), 0, 0);
+        transform: translate3d(-50%, 0, 0);
     }
 }
 

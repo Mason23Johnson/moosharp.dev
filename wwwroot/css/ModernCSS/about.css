@@ -37,8 +37,9 @@
 .slide-experience {
     justify-content: flex-start;
     background:
-        radial-gradient(circle at top right, rgba(0, 183, 255, 0.12), transparent 26%),
-        linear-gradient(180deg, rgba(6, 11, 19, 0.98), rgba(9, 13, 22, 0.98));
+        radial-gradient(circle at bottom right, rgba(0, 217, 255, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(4, 10, 18, 0.98), rgba(8, 12, 20, 0.98));
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .scroll-down-indicator {
@@ -216,295 +217,204 @@
 }
 
 .experience-shell {
-    position: relative;
-    width: min(1220px, 100%);
-    margin-top: 30px;
-    padding: 34px;
-    border-radius: 28px;
-    border: 1px solid rgba(102, 214, 255, 0.18);
-    background:
-        linear-gradient(180deg, rgba(10, 17, 27, 0.96), rgba(5, 10, 18, 0.98)),
-        radial-gradient(circle at top right, rgba(0, 183, 255, 0.1), transparent 24%),
-        radial-gradient(circle at bottom left, rgba(0, 255, 238, 0.08), transparent 22%);
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-        0 28px 60px rgba(0, 0, 0, 0.34);
-    overflow: hidden;
-}
-
-.experience-shell::before,
-.experience-shell::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.experience-shell::before {
-    background:
-        linear-gradient(rgba(122, 222, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(122, 222, 255, 0.04) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 100%);
-}
-
-.experience-shell::after {
-    background:
-        radial-gradient(circle at 14% 14%, rgba(0, 255, 238, 0.12), transparent 16%),
-        radial-gradient(circle at 84% 22%, rgba(0, 166, 255, 0.1), transparent 20%);
-}
-
-.experience-head,
-.experience-frame {
-    position: relative;
-    z-index: 1;
+    width: min(760px, 100%);
+    margin-top: 8px;
 }
 
 .experience-head {
     display: grid;
-    gap: 12px;
-    margin-bottom: 28px;
+    gap: 18px;
+    margin-bottom: 56px;
 }
 
 .experience-kicker {
-    font-size: 0.8rem;
-    letter-spacing: 0.24em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #72ebff;
+    color: #6b7280;
 }
 
 .experience-heading {
     margin: 0;
-    max-width: 860px;
-    font-size: clamp(2rem, 3vw, 3.3rem);
-    line-height: 1.04;
-    color: #f3fbff;
+    font-size: clamp(2.1rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #f5f5f7;
 }
 
 .experience-intro {
     margin: 0;
-    max-width: 760px;
-    font-size: 1rem;
-    line-height: 1.75;
-    color: rgba(212, 235, 255, 0.84);
+    max-width: 46ch;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #9a9aa2;
 }
 
-.experience-frame {
+/* ========== EXPERIENCE TIMELINE ========== */
+.timeline {
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    min-height: 540px;
-    border: 1px solid rgba(102, 214, 255, 0.14);
-    border-radius: 24px;
-    overflow: hidden;
-    background:
-        linear-gradient(180deg, rgba(7, 12, 21, 0.94), rgba(4, 8, 15, 0.98));
 }
 
-.experience-rail {
-    display: grid;
-    align-content: start;
-    gap: 0;
-    padding: 18px 0;
-    border-right: 1px solid rgba(102, 214, 255, 0.12);
-    background:
-        linear-gradient(180deg, rgba(12, 20, 33, 0.95), rgba(7, 11, 18, 0.98));
-}
-
-.experience-node {
-    position: relative;
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr);
-    gap: 16px;
-    align-items: start;
-    width: 100%;
-    padding: 18px 22px;
-    border: none;
-    border-left: 3px solid transparent;
-    background: transparent;
-    color: #d9efff;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.experience-node::after {
-    content: "";
-    position: absolute;
-    left: 23px;
-    top: calc(100% - 6px);
-    width: 1px;
-    height: 22px;
-    background: linear-gradient(180deg, rgba(104, 216, 255, 0.34), transparent);
-}
-
-.experience-node:last-child::after {
+.timeline-rail {
     display: none;
 }
 
-.experience-node:hover,
-.experience-node.active {
-    background: rgba(0, 150, 255, 0.08);
-    border-left-color: #67d8ff;
-    transform: translateX(4px);
+.timeline-item {
+    border-top: 1px solid #1f1f24;
 }
 
-.experience-index {
-    display: inline-flex;
+.timeline-item:last-child {
+    border-bottom: 1px solid #1f1f24;
+}
+
+.timeline-header {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto 16px;
     align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    border: 1px solid rgba(102, 214, 255, 0.22);
-    border-radius: 999px;
-    font-size: 0.76rem;
-    letter-spacing: 0.18em;
-    color: #7fe4ff;
-}
-
-.experience-node-copy {
-    display: grid;
-    gap: 6px;
-}
-
-.experience-node-copy strong {
-    font-size: 1rem;
-    line-height: 1.2;
-    color: #f4fbff;
-}
-
-.experience-node-copy small {
-    font-size: 0.74rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(169, 214, 242, 0.62);
-}
-
-.experience-stage {
-    display: grid;
-    align-content: start;
     gap: 20px;
-    padding: 28px 30px 30px;
-    background:
-        linear-gradient(180deg, rgba(6, 11, 18, 0.62), rgba(6, 10, 17, 0.96)),
-        radial-gradient(circle at top right, rgba(0, 174, 255, 0.08), transparent 24%);
+    width: 100%;
+    padding: 24px 4px;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
 }
 
-.experience-stage-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.timeline-index {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b4b52;
+    font-variant-numeric: tabular-nums;
+}
+
+.timeline-item.open .timeline-index {
+    color: #f5f5f7;
+}
+
+.timeline-heading {
+    display: grid;
+    gap: 4px;
     min-width: 0;
 }
 
-.experience-stage-kicker,
-.experience-stage-subtitle {
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+.timeline-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #f5f5f7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.experience-stage-kicker {
-    color: #73efff;
+.timeline-org {
+    font-size: 0.88rem;
+    color: #7a7a82;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.experience-stage-subtitle {
-    color: rgba(188, 223, 244, 0.64);
+.timeline-dates {
+    font-size: 0.82rem;
+    color: #5c5c64;
+    white-space: nowrap;
 }
 
-.experience-stage-rule {
-    flex: 1;
-    min-width: 30px;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(102, 214, 255, 0.44), transparent);
-}
-
-.experience-stage-title {
-    margin: 0;
-    font-size: clamp(1.9rem, 2.8vw, 3rem);
-    line-height: 1.02;
-    color: #ffffff;
-}
-
-.experience-stage-copy {
-    margin: 0;
-    max-width: 720px;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: rgba(220, 238, 249, 0.86);
-}
-
-.experience-signal-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.experience-signal {
-    padding: 8px 12px;
-    border: 1px solid rgba(105, 214, 255, 0.16);
-    border-radius: 999px;
-    background: rgba(0, 145, 255, 0.08);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #dcf8ff;
-}
-
-.experience-detail-lines {
-    display: grid;
-    gap: 14px;
-    padding-left: 18px;
-    border-left: 1px solid rgba(102, 214, 255, 0.18);
-}
-
-.experience-detail-lines p {
-    position: relative;
-    margin: 0;
-    font-size: 0.98rem;
-    line-height: 1.75;
-    color: rgba(205, 229, 244, 0.84);
-}
-
-.experience-detail-lines p::before {
-    content: "";
-    position: absolute;
-    left: -24px;
-    top: 0.78em;
+.timeline-chevron {
+    justify-self: end;
     width: 8px;
     height: 8px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #7fedff, rgba(0, 197, 255, 0.16));
-    box-shadow: 0 0 14px rgba(0, 229, 255, 0.28);
+    border-right: 1.5px solid #5c5c64;
+    border-bottom: 1.5px solid #5c5c64;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
 }
 
-.experience-focus-strip {
+.timeline-item.open .timeline-chevron {
+    transform: rotate(-135deg);
+}
+
+.timeline-panel {
     display: grid;
-    gap: 10px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(102, 214, 255, 0.12);
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
 }
 
-.experience-focus-label {
+.timeline-item.open .timeline-panel {
+    grid-template-rows: 1fr;
+}
+
+.timeline-panel-inner {
+    overflow: hidden;
+    padding: 0 4px 0 54px;
+}
+
+.timeline-item.open .timeline-panel-inner {
+    padding-bottom: 26px;
+}
+
+.timeline-lede {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #b5b5bc;
+}
+
+.timeline-notes-head {
+    margin: 20px 0 10px;
     font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(166, 214, 236, 0.62);
+    color: #5c5c64;
 }
 
-.experience-focus-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.timeline-notes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
 }
 
-.experience-focus-items span {
-    color: #eefbff;
-    font-size: 0.86rem;
+.timeline-notes li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #a8a8b0;
 }
 
-.experience-focus-items span:not(:last-child)::after {
-    content: "/";
-    margin-left: 10px;
-    color: rgba(114, 231, 255, 0.48);
+.timeline-notes li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #46464e;
+}
+
+.timeline-tags {
+    margin-top: 18px;
+    font-size: 0.82rem;
+    color: #5c5c64;
+}
+
+.timeline-tags span {
+    display: inline;
+}
+
+.timeline-tags span:not(:last-child)::after {
+    content: " · ";
+    color: #3a3a40;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .timeline-panel {
+        transition: none;
+    }
 }
 
 .explorer-shell {
@@ -779,36 +689,17 @@ body {
         min-height: unset;
     }
 
-    .experience-shell {
-        padding: 26px 22px;
+    .timeline-header {
+        grid-template-columns: 26px minmax(0, 1fr) 14px;
+        gap: 14px;
     }
 
-    .experience-frame {
-        grid-template-columns: 1fr;
-        min-height: unset;
-    }
-
-    .experience-rail {
-        grid-auto-flow: column;
-        grid-auto-columns: minmax(220px, 1fr);
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 14px;
-        border-right: none;
-        border-bottom: 1px solid rgba(102, 214, 255, 0.12);
-    }
-
-    .experience-node {
-        min-height: 100%;
-        padding: 16px 18px;
-    }
-
-    .experience-node::after {
+    .timeline-dates {
         display: none;
     }
 
-    .experience-stage {
-        padding: 24px 22px 24px;
+    .timeline-panel-inner {
+        padding-left: 40px;
     }
 }
 
@@ -905,18 +796,9 @@ body {
         width: calc(100vw - 32px);
     }
 
-    .experience-shell {
-        padding: 22px 16px;
-        border-radius: 22px;
-    }
-
     .experience-head {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .experience-kicker {
-        font-size: 0.68rem;
+        gap: 12px;
+        margin-bottom: 36px;
     }
 
     .experience-heading {
@@ -924,60 +806,25 @@ body {
     }
 
     .experience-intro,
-    .experience-stage-copy,
-    .experience-detail-lines p {
-        font-size: 0.94rem;
-        line-height: 1.7;
-    }
-
-    .experience-rail {
-        grid-auto-columns: minmax(188px, 1fr);
-        padding: 12px;
-    }
-
-    .experience-node {
-        grid-template-columns: 42px minmax(0, 1fr);
-        gap: 12px;
-        padding: 14px 14px 15px;
-    }
-
-    .experience-index {
-        min-height: 30px;
-        font-size: 0.66rem;
-    }
-
-    .experience-node-copy strong {
+    .timeline-lede,
+    .timeline-notes li {
         font-size: 0.92rem;
+        line-height: 1.65;
     }
 
-    .experience-node-copy small,
-    .experience-stage-kicker,
-    .experience-stage-subtitle,
-    .experience-focus-label,
-    .experience-signal {
-        font-size: 0.66rem;
+    .timeline-header {
+        padding: 20px 2px;
     }
 
-    .experience-stage {
-        gap: 16px;
-        padding: 20px 16px 18px;
+    .timeline-title {
+        font-size: 1rem;
     }
 
-    .experience-stage-top {
-        flex-wrap: wrap;
-        gap: 8px;
+    .timeline-org {
+        font-size: 0.8rem;
     }
 
-    .experience-stage-rule {
-        width: 100%;
-        flex-basis: 100%;
-    }
-
-    .experience-focus-items {
-        gap: 8px;
-    }
-
-    .experience-focus-items span {
-        font-size: 0.78rem;
+    .timeline-panel-inner {
+        padding: 0 2px 0 34px;
     }
 }

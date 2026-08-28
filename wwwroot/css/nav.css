@@ -1,6 +1,6 @@
 .top-nav-bar {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: transparent;
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;

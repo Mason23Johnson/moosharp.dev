@@ -306,7 +306,7 @@
 
     private readonly List<HoloExplorerEntry> hDriveRoot =
     [
-        new("fullResume", "Resume_Full.txt", "Full resume overview and background.", "file", "TXT"),
+        new("fullResume", "Resume_Full.txt", "Summary, work history, and education.", "file", "TXT"),
         new("resumeParts", "Resume Parts", "Project experience and skills breakdown.", "folder", "DIR")
     ];
 
@@ -319,8 +319,8 @@
 
     private readonly List<HoloExplorerEntry> resumeParts =
     [
-        new("projExp", "ProjectExp.txt", "Apps, tools, games, and shipped experiments.", "file", "TXT"),
-        new("skills", "Skills.txt", "Languages, tooling, platform work, and Salesforce specialties.", "file", "TXT")
+        new("projExp", "ProjectExp.txt", "TINEK, MooSharp, and the Salesforce internship.", "file", "TXT"),
+        new("skills", "Skills.txt", "Salesforce, full-stack, web, cloud, and tooling.", "file", "TXT")
     ];
 
     private readonly List<HoloExplorerEntry> gDriveRoot =
@@ -405,9 +405,19 @@
 
     private string OpenedFileMarkup => openedFileEntry?.Id switch
     {
-        "fullResume" => "<p>Full resume available on request through the contact page.</p><p>Highlights include Salesforce development, Blazor work, backend systems, and product-building across web and app ideas.</p>",
-        "projExp" => "<p>Tinek App - AI Integration, AI Building, Data Analytics, Mobile Dev, Blazor Dev, DB, APIs, etc.</p><p>moosharp.dev - portfolio, brand system, experiments, UI direction, and iteration.</p><p>salesforce internship - real platform work, flows, debugging, and delivery inside business constraints.</p><p>Moosharp website building - company websites, polished branding, and redacted client work.</p>",
-        "skills" => "<p>Salesforce: Apex, flows, Lightning, integrations, SOQL, and delivery inside live orgs.</p><p>Full stack: C#, JS, HTML, CSS, ASP.NET, Blazor, EF Core, SQLite, APIs, and Linux/Windows tooling.</p>",
+        "fullResume" => "<p><strong>Mason Johnson</strong> - Salesforce Developer | Full-Stack Software Engineer<br />Edmond, OK</p>"
+            + "<p>Software engineering student and Salesforce Developer Intern with experience building Salesforce solutions, API integrations, and database-backed web applications. Skilled in Apex, SOQL, C#, Blazor, ASP.NET, JavaScript, REST/SOAP APIs, Docker, and Linux. Founder and lead developer of TINEK, an interactive hunting-prediction and property-mapping platform.</p>"
+            + "<p><strong>Work</strong><br />Salesforce Developer Intern - American Fidelity, Oklahoma City, OK | August 2025 - Current<br />Founder and Full-Stack Developer - TINEK, Oklahoma | April 2026 - Current</p>"
+            + "<p><strong>Education</strong><br />University of Oklahoma - Software Development and Integration | Expected May 2027<br />Dean's Honor Roll. Former Treasurer of the Central Oklahoma AISES chapter and the Chickasaw Nation CNRR program.<br />High School Diploma, Epic Charter Schools | August 2019 - May 2022, Honor Roll 2019-2022</p>"
+            + "<p>Full PDF available on request through the contact page.</p>",
+        "projExp" => "<p><strong>TINEK Hunting Predictions App | tinek.us</strong><br />Mobile-first hunting platform built with C#, Blazor, ASP.NET, JavaScript, SQL, and Leaflet. Interactive property mapping, weather integrations, scoring logic, and AI-assisted hunting recommendations.</p>"
+            + "<p><strong>MooSharp Portfolio | moosharp.dev</strong><br />Responsive portfolio built with Blazor, Razor, JavaScript, HTML, and CSS. Reusable project cards, interactive animations, hover effects, and a desktop-inspired project interface.</p>"
+            + "<p><strong>Salesforce Developer Intern - American Fidelity</strong><br />Apex, SOQL, Visualforce, and Lightning features. REST and SOAP integrations with external business systems. Flows, objects, reports, and validation rules. Agile debugging and test coverage for reliable deployments.</p>",
+        "skills" => "<p><strong>Salesforce Dev &amp; Config:</strong> Apex, Visualforce, Lightning Components, Flows, Reports &amp; Process, SOQL/SOSL.</p>"
+            + "<p><strong>Languages &amp; Full-Stack:</strong> Apex, C#, Java, JavaScript, HTML, CSS, ASP.NET, Blazor, SQLite, MySQL, SQL.</p>"
+            + "<p><strong>Web &amp; UI:</strong> Responsive web design, JavaScript interop, REST/SOAP APIs, HTML/CSS UI design.</p>"
+            + "<p><strong>Cloud &amp; DevOps:</strong> Azure Cloud &amp; DevOps, Git &amp; GitHub, Docker &amp; Linux Server.</p>"
+            + "<p><strong>Tools &amp; Platforms:</strong> Windows &amp; Linux, Visual Studio &amp; VS Code, Synology NAS, Agile Scrum.</p>",
         "marriageTxt" => "<p>Married in 2024 and honeymooned in the Virgin Islands.</p>",
         "marriagePng" => "<img src=\"images/wedding.png\" class=\"holo-preview-image\" alt=\"Wedding\" />",
         "hobbiesTxt" => "<p>Outside of software, I enjoy fishing, golf, pickleball, games, woodworking, and developing ideas into real things.</p>",

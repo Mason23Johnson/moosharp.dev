@@ -96,9 +96,60 @@ body:has(.home-page-shell) .modern-footer {
 }
 
 .home-pc-column {
+    position: relative;
     display: grid;
     justify-items: start;
     gap: 14px;
+}
+
+.home-terminal-hint {
+    position: absolute;
+    top: 44px;
+    left: 40px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(14, 22, 33, 0.95);
+    border: 1px solid rgba(120, 220, 255, 0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 18px rgba(0, 200, 255, 0.15);
+    color: #eafcff;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    animation: homeTerminalHintIn 0.4s ease both, homeTerminalHintFloat 2.2s ease-in-out 0.4s infinite;
+}
+
+.home-terminal-hint-arrow {
+    position: absolute;
+    bottom: -7px;
+    left: 34px;
+    width: 12px;
+    height: 12px;
+    background: rgba(14, 22, 33, 0.95);
+    border-right: 1px solid rgba(120, 220, 255, 0.35);
+    border-bottom: 1px solid rgba(120, 220, 255, 0.35);
+    transform: rotate(45deg);
+}
+
+@keyframes homeTerminalHintIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes homeTerminalHintFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-terminal-hint {
+        animation: none;
+    }
 }
 
 .home-pc-stage {
