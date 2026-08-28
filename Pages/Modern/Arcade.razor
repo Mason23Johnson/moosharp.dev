@@ -10,7 +10,7 @@
             <p class="store-kicker">Moochine Arcade</p>
             <h1>Arcade library</h1>
         </div>
-        <div class="store-pill">4 titles tracked</div>
+        <div class="store-pill">5 titles tracked</div>
     </header>
 
     <div class="steam-arcade">
@@ -51,6 +51,17 @@
                         {
                             <span class="play-btn disabled">Coming Soon</span>
                         }
+                        @if (Selected.HasSteam)
+                        {
+                            @if (!string.IsNullOrWhiteSpace(Selected.SteamUrl))
+                            {
+                                <a class="steam-btn" href="@Selected.SteamUrl" target="_blank" rel="noopener noreferrer">Wishlist on Steam</a>
+                            }
+                            else
+                            {
+                                <span class="steam-btn disabled">Steam - Coming Soon</span>
+                            }
+                        }
                         <a class="visit-btn" href="/projects">Project Hub</a>
                     </div>
 
@@ -86,6 +97,22 @@
 @code {
     private readonly List<GameItem> Games = new()
     {
+        new("BeamRunners", null, false)
+        {
+            Badge = "Coming to Steam",
+            Status = "In Development",
+            Release = "Steam - TBA",
+            Platform = "PC / Steam",
+            Focus = "Multiplayer Arena",
+            Tagline = "Leave your trail. Trap your rivals. Last beam standing wins.",
+            Description = "A neon multiplayer arena racer where your path becomes the battlefield. Outmaneuver opponents as the grid fills with lethal light trails.",
+            LongDescription = "BeamRunners drops players into a high-speed arena where every move you make leaves a permanent glowing trail. The longer you survive, the more dangerous the grid becomes. Cut off opponents, force bad angles, and be the last one running. Built for fast competitive sessions with a clean neon aesthetic and tight multiplayer mechanics.",
+            Tags = new() { "Multiplayer", "Arena", "PC", "Steam" },
+            Icon = "/icons/folder-icon.png",
+            Hero = "/images/moosharpbackgroundblack.jpg",
+            HasSteam = true,
+            SteamUrl = null
+        },
         new("Quick Click", "/arcade/quickclick", true)
         {
             Badge = "Playable",
@@ -184,5 +211,7 @@
         public List<string> Tags { get; set; } = new();
         public string Icon { get; set; } = "/icons/folder-icon.png";
         public string Hero { get; set; } = "/images/moosharpbackground.jpg";
+        public bool HasSteam { get; set; } = false;
+        public string? SteamUrl { get; set; } = null;
     }
 }

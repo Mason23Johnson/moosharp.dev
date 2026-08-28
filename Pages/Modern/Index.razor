@@ -23,6 +23,13 @@
 
         <section class="home-focus-row">
             <div class="home-pc-column">
+                @if (showTerminalHint)
+                {
+                    <div class="home-terminal-hint" @onclick="DismissTerminalHint">
+                        <span class="home-terminal-hint-text">Try the terminal</span>
+                        <span class="home-terminal-hint-arrow"></span>
+                    </div>
+                }
                 <div class="home-pc-stage" id="homeIndexPcStage" aria-label="Interactive hologram retro PC preview">
                     <div class="holo-grid-overlay"></div>
                     <div class="holo-ring ring-one"></div>
@@ -325,50 +332,26 @@
 
         <section class="tech-marquee triple home-tech-bottom">
             <div class="tech-wrapper">
-                <div class="tech-track track-row1">
-                    <div class="tech-scroll">
-                        <div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
-                        <div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
-                        <div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
-                        <div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
-                        <div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
-                        <div class="tech-item"><img src="icons/aspnet.png" alt="ASP.NET" /><span>ASP.NET</span></div>
-                        <div class="tech-item"><img src="icons/docker.png" alt="Docker" /><span>Docker</span></div>
-                        <div class="tech-item"><img src="icons/vscode.png" alt="VS Code" /><span>VS Code</span></div>
-                        <div class="tech-item"><img src="icons/blazor.png" alt="Blazor" /><span>Blazor</span></div>
-                        <div class="tech-item"><img src="icons/cs.png" alt="C#" /><span>C#</span></div>
+                @foreach (var row in techRows)
+                {
+                    <div class="tech-track @row.RowClass">
+                        @* Two identical halves. The loop travels exactly one half, so the seam never shows. *@
+                        <div class="tech-scroll">
+                            @for (var half = 0; half < 2; half++)
+                            {
+                                @for (var pass = 0; pass < TechRepeatsPerHalf; pass++)
+                                {
+                                    @foreach (var item in row.Items)
+                                    {
+                                        <div class="tech-item" aria-hidden="@(half == 1 ? "true" : "false")">
+                                            <img src="@item.Icon" alt="@item.Name" /><span>@item.Name</span>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
                     </div>
-                </div>
-
-                <div class="tech-track track-row2">
-                    <div class="tech-scroll">
-                        <div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
-                        <div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
-                        <div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
-                        <div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
-                        <div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
-                        <div class="tech-item"><img src="icons/java.png" alt="Java" /><span>Java</span></div>
-                        <div class="tech-item"><img src="icons/python.png" alt="Python" /><span>Python</span></div>
-                        <div class="tech-item"><img src="icons/sqlite.png" alt="SQLite" /><span>SQLite</span></div>
-                        <div class="tech-item"><img src="icons/js.png" alt="JavaScript" /><span>JavaScript</span></div>
-                        <div class="tech-item"><img src="icons/html5.png" alt="HTML5" /><span>HTML5</span></div>
-                    </div>
-                </div>
-
-                <div class="tech-track track-row3">
-                    <div class="tech-scroll">
-                        <div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
-                        <div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
-                        <div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
-                        <div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
-                        <div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
-                        <div class="tech-item"><img src="icons/linux.png" alt="Linux" /><span>Linux</span></div>
-                        <div class="tech-item"><img src="icons/git.png" alt="Git" /><span>Git</span></div>
-                        <div class="tech-item"><img src="icons/css3.png" alt="CSS3" /><span>CSS3</span></div>
-                        <div class="tech-item"><img src="icons/github.png" alt="GitHub" /><span>GitHub</span></div>
-                        <div class="tech-item"><img src="icons/godot.png" alt="Godot" /><span>Godot</span></div>
-                    </div>
-                </div>
+                }
             </div>
         </section>
     </section>
@@ -376,6 +359,39 @@
 
 @code {
     private const string RootDrive = "root";
+
+    // Each half of a track repeats the row this many times, so one half stays wider
+    // than the visible wrapper (1280px on this page). Without that the track runs
+    // out of items mid-scroll and the row visibly empties out before snapping back.
+    private const int TechRepeatsPerHalf = 3;
+
+    private readonly TechRow[] techRows =
+    [
+        new("track-row1",
+        [
+            new("icons/aspnet.png", "ASP.NET"),
+            new("icons/docker.png", "Docker"),
+            new("icons/vscode.png", "VS Code"),
+            new("icons/blazor.png", "Blazor"),
+            new("icons/cs.png", "C#")
+        ]),
+        new("track-row2",
+        [
+            new("icons/java.png", "Java"),
+            new("icons/python.png", "Python"),
+            new("icons/sqlite.png", "SQLite"),
+            new("icons/js.png", "JavaScript"),
+            new("icons/html5.png", "HTML5")
+        ]),
+        new("track-row3",
+        [
+            new("icons/linux.png", "Linux"),
+            new("icons/git.png", "Git"),
+            new("icons/css3.png", "CSS3"),
+            new("icons/github.png", "GitHub"),
+            new("icons/godot.png", "Godot")
+        ])
+    ];
 
     private readonly string[] rotatingRoles =
     [
@@ -400,6 +416,8 @@
     private CancellationTokenSource? titleCycleCts;
     private CancellationTokenSource? clockCts;
     private CancellationTokenSource? terminalBootCts;
+    private CancellationTokenSource? terminalHintCts;
+    private bool showTerminalHint;
 
     private readonly string[] terminalBootLines =
     [
@@ -414,7 +432,7 @@
 
     private readonly List<HoloExplorerEntry> hDriveRoot =
     [
-        new("fullResume", "Resume_Full.txt", "Full resume overview and background.", "file", "TXT"),
+        new("fullResume", "Resume_Full.txt", "Summary, work history, and education.", "file", "TXT"),
         new("resumeParts", "Resume Parts", "Project experience and skills breakdown.", "folder", "DIR")
     ];
 
@@ -427,8 +445,8 @@
 
     private readonly List<HoloExplorerEntry> resumeParts =
     [
-        new("projExp", "ProjectExp.txt", "Apps, tools, games, and shipped experiments.", "file", "TXT"),
-        new("skills", "Skills.txt", "Languages, tooling, platform work, and Salesforce specialties.", "file", "TXT")
+        new("projExp", "ProjectExp.txt", "TINEK, MooSharp, and the Salesforce internship.", "file", "TXT"),
+        new("skills", "Skills.txt", "Salesforce, full-stack, web, cloud, and tooling.", "file", "TXT")
     ];
 
     private readonly List<HoloExplorerEntry> gDriveRoot =
@@ -514,9 +532,19 @@
 
     private string OpenedFileMarkup => openedFileEntry?.Id switch
     {
-        "fullResume" => "<p>Full resume available on request through the contact page.</p><p>Highlights include Salesforce development, Blazor work, backend systems, and product-building across web and app ideas.</p>",
-        "projExp" => "<p>Tinek App - AI Integration, AI Building, Data Analytics, Mobile Dev, Blazor Dev, DB, APIs, etc.</p><p>moosharp.dev - portfolio, brand system, experiments, UI direction, and iteration.</p><p>salesforce internship - real platform work, flows, debugging, and delivery inside business constraints.</p><p>Moosharp website building - company websites, polished branding, and redacted client work.</p>",
-        "skills" => "<p>Salesforce: Apex, flows, Lightning, integrations, SOQL, and delivery inside live orgs.</p><p>Full stack: C#, JS, HTML, CSS, ASP.NET, Blazor, EF Core, SQLite, APIs, and Linux/Windows tooling.</p>",
+        "fullResume" => "<p><strong>Mason Johnson</strong> - Salesforce Developer | Full-Stack Software Engineer<br />Edmond, OK</p>"
+            + "<p>Software engineering student and Salesforce Developer Intern with experience building Salesforce solutions, API integrations, and database-backed web applications. Skilled in Apex, SOQL, C#, Blazor, ASP.NET, JavaScript, REST/SOAP APIs, Docker, and Linux. Founder and lead developer of TINEK, an interactive hunting-prediction and property-mapping platform.</p>"
+            + "<p><strong>Work</strong><br />Salesforce Developer Intern - American Fidelity, Oklahoma City, OK | August 2025 - August 2026<br />Founder and Software Engineer - TINEK, Oklahoma | April 2026 - Current</p>"
+            + "<p><strong>Education</strong><br />University of Oklahoma - B.S. in Software Development and Integration | Expected August 2027<br />Dean's Honor Roll at Oklahoma State University and the University of Central Oklahoma. Former Treasurer of the Central Oklahoma AISES chapter and the Chickasaw Nation CNRR program.<br />High School Diploma, Epic Charter Schools | August 2019 - May 2022, Honor Roll 2019-2022</p>"
+            + "<p>Full PDF available on request through the contact page.</p>",
+        "projExp" => "<p><strong>TINEK Hunting Predictions App | tinek.us</strong><br />Mobile-first hunting platform built with C#, Blazor, ASP.NET, JavaScript, SQL, and Leaflet. Interactive property mapping, weather integrations, scoring logic, and AI-assisted hunting recommendations.</p>"
+            + "<p><strong>MooSharp Portfolio | moosharp.dev</strong><br />Responsive portfolio built with Blazor, Razor, JavaScript, HTML, and CSS. Reusable project cards, interactive animations, hover effects, and a desktop-inspired project interface.</p>"
+            + "<p><strong>Salesforce Developer Intern - American Fidelity</strong><br />Apex, SOQL, Visualforce, and Lightning features. REST and SOAP integrations with external business systems. Flows, objects, reports, and validation rules. Agile debugging and test coverage for reliable deployments.</p>",
+        "skills" => "<p><strong>Salesforce Dev &amp; Config:</strong> Apex, Visualforce, Lightning Components, Flows, Reports &amp; Process, SOQL/SOSL.</p>"
+            + "<p><strong>Languages &amp; Full-Stack:</strong> Apex, C#, Java, JavaScript, HTML, CSS, ASP.NET, Blazor, SQLite, MySQL, SQL.</p>"
+            + "<p><strong>Web &amp; UI:</strong> Responsive web design, JavaScript interop, REST/SOAP APIs, HTML/CSS UI design.</p>"
+            + "<p><strong>Cloud &amp; DevOps:</strong> Azure Cloud &amp; DevOps, Git &amp; GitHub, Docker &amp; Linux Server.</p>"
+            + "<p><strong>Tools &amp; Platforms:</strong> Windows &amp; Linux, Visual Studio &amp; VS Code, Synology NAS, Agile Scrum.</p>",
         "marriageTxt" => "<p>Married in 2024 and honeymooned in the Virgin Islands.</p>",
         "marriagePng" => "<img src=\"images/wedding.png\" class=\"holo-preview-image\" alt=\"Wedding\" />",
         "hobbiesTxt" => "<p>Outside of software, I enjoy fishing, golf, pickleball, games, woodworking, and developing ideas into real things.</p>",
@@ -552,6 +580,39 @@
             idleYawSpeed = 0.00075,
             idlePitchSpeed = 0.00105
         });
+
+        var alreadySeen = await JS.InvokeAsync<bool>("eval", "!!localStorage.getItem('moosharp-terminal-hint-seen')");
+        if (!alreadySeen)
+        {
+            terminalHintCts = new CancellationTokenSource();
+            _ = ShowTerminalHintAfterDelayAsync(terminalHintCts.Token);
+        }
+    }
+
+    private async Task ShowTerminalHintAfterDelayAsync(CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(10), token);
+
+            showTerminalHint = true;
+            await InvokeAsync(StateHasChanged);
+            await JS.InvokeVoidAsync("eval", "localStorage.setItem('moosharp-terminal-hint-seen', '1')");
+
+            await Task.Delay(TimeSpan.FromSeconds(7), token);
+
+            showTerminalHint = false;
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+    private void DismissTerminalHint()
+    {
+        showTerminalHint = false;
+        terminalHintCts?.Cancel();
     }
 
     private void OpenTerminalFrame()
@@ -874,7 +935,15 @@
         clockCts?.Cancel();
         clockCts?.Dispose();
         clockCts = null;
+
+        terminalHintCts?.Cancel();
+        terminalHintCts?.Dispose();
+        terminalHintCts = null;
     }
 
     private sealed record HoloExplorerEntry(string Id, string Title, string Description, string Kind, string Glyph);
+
+    private sealed record TechItem(string Icon, string Name);
+
+    private sealed record TechRow(string RowClass, TechItem[] Items);
 }

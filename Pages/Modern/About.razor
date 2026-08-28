@@ -48,63 +48,54 @@
         <div class="experience-shell">
             <div class="experience-head">
                 <div class="experience-kicker">Experience</div>
-                <h2 class="experience-heading">A live view of the work behind MooSharp.</h2>
+                <h2 class="experience-heading">Four chapters, so far.</h2>
                 <p class="experience-intro">
-                    Education laid the foundation, the internship sharpened execution, and the company work turned that
-                    into products,
-                    systems, and branded websites that had to hold up outside a classroom.
+                    School, a Salesforce internship, a product of my own, and client work.
+                    Pick a chapter or turn the page.
                 </p>
             </div>
 
-            <div class="experience-frame">
-                <nav class="experience-rail" aria-label="Experience navigation">
-                    @foreach (var entry in experienceEntries)
-                    {
-                        <button type="button" class="experience-node @(selectedExperienceId == entry.Id ? "active" : "")"
-                                @onclick="@(() => SetExperience(entry.Id))">
-                            <span class="experience-index">@entry.Index</span>
-                            <span class="experience-node-copy">
-                                <strong>@entry.Title</strong>
-                                <small>@entry.Subtitle</small>
+            <div class="timeline">
+                <div class="timeline-rail" aria-hidden="true"></div>
+
+                @foreach (var chapter in chapters)
+                {
+                    <div class="timeline-item @(selectedChapterId == chapter.Id ? "open" : "")">
+                        <button type="button" class="timeline-header" @onclick="@(() => ToggleChapter(chapter.Id))"
+                                aria-expanded="@(selectedChapterId == chapter.Id ? "true" : "false")">
+                            <span class="timeline-node">
+                                <span class="timeline-index">@chapter.Numeral</span>
                             </span>
+                            <span class="timeline-heading">
+                                <span class="timeline-title">@chapter.Title</span>
+                                <span class="timeline-org">@chapter.Org</span>
+                            </span>
+                            <span class="timeline-dates">@chapter.Dates</span>
+                            <span class="timeline-chevron" aria-hidden="true"></span>
                         </button>
-                    }
-                </nav>
 
-                <section class="experience-stage">
-                    <div class="experience-stage-top">
-                        <span class="experience-stage-kicker">@SelectedExperience.StageLabel</span>
-                        <span class="experience-stage-rule"></span>
-                        <span class="experience-stage-subtitle">@SelectedExperience.Subtitle</span>
-                    </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-panel-inner">
+                                <p class="timeline-lede">@chapter.Lede</p>
 
-                    <h3 class="experience-stage-title">@SelectedExperience.Title</h3>
-                    <p class="experience-stage-copy">@SelectedExperience.Overview</p>
+                                <h4 class="timeline-notes-head">@chapter.NotesHeading</h4>
+                                <ul class="timeline-notes">
+                                    @foreach (var note in chapter.Notes)
+                                    {
+                                        <li>@note</li>
+                                    }
+                                </ul>
 
-                    <div class="experience-signal-row">
-                        @foreach (var focus in SelectedExperience.FocusAreas)
-                        {
-                            <span class="experience-signal">@focus</span>
-                        }
-                    </div>
-
-                    <div class="experience-detail-lines">
-                        @foreach (var detail in SelectedExperience.Details)
-                        {
-                            <p>@detail</p>
-                        }
-                    </div>
-
-                    <div class="experience-focus-strip">
-                        <span class="experience-focus-label">Focus</span>
-                        <div class="experience-focus-items">
-                            @foreach (var focus in SelectedExperience.FocusAreas)
-                            {
-                                <span>@focus</span>
-                            }
+                                <div class="timeline-tags">
+                                    @foreach (var tag in chapter.Focus)
+                                    {
+                                        <span>@tag</span>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                }
             </div>
         </div>
     </section>
@@ -112,76 +103,92 @@
 
 @code {
     private string activeStackPanel = "center";
-    private string selectedExperienceId = "education";
+    private string selectedChapterId = string.Empty;
 
-    private readonly List<ExperienceEntry> experienceEntries = new()
+    private readonly List<Chapter> chapters = new()
     {
         new(
-            "education",
-            "01",
-            "Education",
-            "UCO",
-            "Student",
-            "Education directed towards not just development, but software engineering, systems thinking, and problem-solving for applications and companies.",
-            new[]
-            {
-                "Data structures, algorithms, and software engineering principles that could be applied in real-world contexts.",
-                "Full-stack development experience across multiple languages, frameworks, and project types, with a focus on clean code and maintainable systems.",
-                "Mathematics, logic, and problem-solving skills that could be applied to complex technical challenges and product design questions."
-            },
-            new[] { "Foundations", "Problem Solving", "Full Stack", "Systems" }),
-        new(
-            "internship",
-            "02",
-            "Salesforce Internship",
-            "Platform Delivery",
-            "Producer",
-            "Real delivery work inside business constraints, where clean implementation mattered as much as speed and communication.",
-            new[]
-            {
-                "Worked through live Salesforce platform tasks involving flows, debugging, data handling, and feature delivery.",
-                "Learned how to balance correctness, platform limitations, and stakeholder expectations in a production environment.",
-                "Strengthened the habits around testing changes carefully, documenting decisions, and shipping inside an established stack."
-            },
-            new[] { "Salesforce", "Flows", "Apex", "Delivery" }),
-        new(
             "tinek",
-            "03",
-            "Tinek",
-            "Product Building",
-            "Product",
-            "An AI-driven hunting product that combines predictions, data workflows, application design, and long-term product thinking.",
+            "01",
+            "TINEK",
+            "Founder and Software Engineer",
+            "TINEK - tinek.us",
+            "April 2026 - Current",
+            "A mobile-first hunting prediction and property-mapping platform. My own product, and my own problem when it breaks.",
+            "What I built",
             new[]
             {
-                "Building the product around AI integration, analytics, storage, and app-first functionality across mobile and web.",
-                "Using Blazor, APIs, and structured data flows to shape a usable tool instead of a one-off prototype.",
-                "Treating the app as a living product roadmap with room for prediction systems, user data, and ongoing feature expansion."
+                "Designed and built the app mobile-first on C#, Blazor, ASP.NET, JavaScript, SQL, and Leaflet.",
+                "Interactive maps for properties, stands, cameras, and trails.",
+                "Weather API integrations feeding the hunting scores and predictions.",
+                "Database-backed property, mapping, and user features.",
+                "Led the architecture, UI, testing, and deployment myself."
             },
-            new[] { "AI", "Blazor", "APIs", "Analytics" }),
+            new[] { "Blazor", "Leaflet", "APIs", "Product" }),
+        new(
+            "education",
+            "02",
+            "Education",
+            "University of Oklahoma",
+            "B.S. in Software Development and Integration",
+            "Expected August 2027",
+            "Software development and integration: writing the software, then making it work with the systems already running around it.",
+            "Coursework",
+            new[]
+            {
+                "Data structures, algorithms, and the design patterns that keep showing up in every project I build.",
+                "Full-stack coursework across C#, Java, JavaScript, and SQL.",
+                "The integration half: REST and SOAP APIs, databases, and getting separate systems to agree on the same data.",
+                "Dean's Honor Roll at Oklahoma State University and the University of Central Oklahoma.",
+                "Former treasurer of the Central Oklahoma AISES chapter and the Chickasaw Nation CNRR program."
+            },
+            new[] { "Foundations", "Integration", "Full Stack", "APIs" }),
+        new(
+            "americanfidelity",
+            "03",
+            "American Fidelity",
+            "Salesforce Developer Intern",
+            "American Fidelity - Oklahoma City, OK",
+            "August 2025 - August 2026",
+            "Platform work on a live org, inside an Agile team, where whatever I shipped had to hold up for people who depended on it.",
+            "On the job",
+            new[]
+            {
+                "Built Salesforce features with Apex, SOQL, Visualforce, and Lightning components.",
+                "Wired up REST and SOAP integrations to external business systems.",
+                "Configured flows, objects, reports, and validation rules.",
+                "Diagnosed and fixed platform issues inside Agile sprints.",
+                "Wrote and ran the tests that made deployments safe to push."
+            },
+            new[] { "Apex", "SOQL", "Integrations", "Agile" }),
         new(
             "moosharp",
             "04",
-            "MooSharp Website Building",
-            "Client Work",
-            "Client",
-            "Website building for companies under the MooSharp brand, focused on clean presentation, custom direction, and practical delivery.",
+            "MooSharp",
+            "MooSharp",
+            "Portfolio and client websites - moosharp.dev",
+            "Ongoing",
+            "The brand, the portfolio, and the shop. This site is the sample; the client work stays unnamed.",
+            "The work",
             new[]
             {
-                "Built company websites with stronger visual direction, cleaner structure, and clearer communication than generic templates.",
-                "Handled the mix of branding, development, iteration, and client-facing refinement needed to land a finished result.",
-                "Used MooSharp as both the portfolio and the service layer for delivering redacted company website work."
+                "Built this portfolio in Blazor, Razor, JavaScript, HTML, and CSS.",
+                "Reusable project cards, interactive animations, and a desktop-inspired project interface.",
+                "Company sites with real design direction, not a template with the colors swapped.",
+                "Branding, build, revisions, and client back-and-forth until it is finished."
             },
-            new[] { "Branding", "Web Delivery", "Client Work", "UI Systems" })
+            new[] { "Blazor", "Razor", "UI Systems", "Client Work" })
     };
 
-    private ExperienceEntry SelectedExperience => experienceEntries.First(entry => entry.Id == selectedExperienceId);
+    private void ToggleChapter(string id)
+    {
+        selectedChapterId = selectedChapterId == id ? string.Empty : id;
+    }
 
     private void SetStackPanel(string panel)
     {
         activeStackPanel = activeStackPanel == panel ? "center" : panel;
     }
-
-    private void SetExperience(string id) => selectedExperienceId = id;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -204,13 +211,15 @@ document.querySelectorAll('.deck-slide').forEach(sec => observer.observe(sec));
 ");
     }
 
-    private sealed record ExperienceEntry(
+    private sealed record Chapter(
         string Id,
-        string Index,
+        string Numeral,
+        string TabLabel,
         string Title,
-        string Subtitle,
-        string StageLabel,
-        string Overview,
-        string[] Details,
-        string[] FocusAreas);
+        string Org,
+        string Dates,
+        string Lede,
+        string NotesHeading,
+        string[] Notes,
+        string[] Focus);
 }

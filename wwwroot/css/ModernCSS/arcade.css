@@ -210,6 +210,27 @@
     color: #7e97af;
 }
 
+.steam-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    background: linear-gradient(180deg, #2a475e, #1b2838);
+    border: 1px solid rgba(102, 212, 255, 0.22);
+    color: #c7e4f4;
+}
+
+.steam-btn.disabled {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #7e97af;
+    cursor: default;
+}
+
 .visit-btn {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.1);
