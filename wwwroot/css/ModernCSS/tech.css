@@ -8,6 +8,8 @@
 }
 
 .tech-wrapper {
+    /* Explicit width: auto margins inside the flex column would otherwise size this to its content and overflow narrow screens */
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;

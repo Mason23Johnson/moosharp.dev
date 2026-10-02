@@ -24,9 +24,20 @@ body
 {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: 
-        url('/images/moosharpbackgroundblack.jpg') no-repeat center center fixed;
-    background-size: 1920px 1080px;
+    /* Dark base so no white ever shows past the image */
+    background-color: #000;
+}
+
+/* Background lives on a fixed layer (not background-attachment: fixed, which iOS ignores)
+   so it always covers exactly the screen at any size or zoom */
+body::before
+{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: url('/images/moosharpbackgroundblack.jpg') no-repeat center center / cover;
 }
 
 .modern-layout {
@@ -146,13 +157,6 @@ body
 
 @media (max-width: 900px)
 {
-    body
-    {
-        background-attachment: scroll;
-        background-position: center top;
-        background-size: cover;
-    }
-
     .hero-container
     {
         flex-direction: column;

@@ -20,12 +20,16 @@
                 The plan is to combine smart forecasts, field data storage, scouting notes, and long-term utility in
                 one system that works on both mobile and web.
             </p>
-            <div class="feature-meta">
-                <a class="chip chip-link" href="https://tinek.us" target="_blank" rel="noopener noreferrer">tinek.us</a>
-                <span class="chip">Out Now</span>
-                <span class="chip">Prediction Engine</span>
-                <span class="chip">Data Storage</span>
-                <span class="chip">Field Utility</span>
+            <ul class="tag-list">
+                <li>Prediction Engine</li>
+                <li>Data Storage</li>
+                <li>Field Utility</li>
+            </ul>
+            <div class="feature-footer">
+                <span class="status-label status-live"><span class="status-dot"></span>Out Now</span>
+                <a class="card-action primary" href="https://tinek.us" target="_blank" rel="noopener noreferrer">
+                    Visit tinek.us <span class="arrow arrow-out" aria-hidden="true">↗</span>
+                </a>
             </div>
         </div>
     </section>
@@ -34,43 +38,50 @@
         @foreach (var item in Items)
         {
             <article class="upload-card">
-                <div class="upload-card-shell">
-                    <div class="upload-card-face upload-card-front">
-                        <div class="upload-thumb">
-                            @if (!string.IsNullOrEmpty(item.Thumbnail))
-                            {
-                                <img src="@item.Thumbnail" alt="@item.Title" />
-                            }
-                            else
-                            {
-                                <div class="upload-thumb-placeholder">
-                                    <span>@item.Platform</span>
+                <div class="upload-main">
+                    <div class="upload-thumb @(item.IsPreview ? "is-preview" : null)">
+                        @if (item.IsPreview && !string.IsNullOrEmpty(item.Thumbnail) && !string.IsNullOrEmpty(item.ProjectUrl))
+                        {
+                            <div class="preview-window">
+                                <div class="preview-bar" aria-hidden="true">
+                                    <span></span><span></span><span></span>
+                                    <em>@PreviewHost(item.ProjectUrl)</em>
                                 </div>
-                            }
-                            <span class="upload-status">@item.Status</span>
-                        </div>
-                        <div class="upload-body">
-                            <div class="upload-heading">
-                                <h4>@item.Title</h4>
-                                <span class="upload-platform">@item.Platform</span>
+                                <img src="@item.Thumbnail" alt="@item.Title website preview" loading="lazy" />
                             </div>
-                            <p>@item.Summary</p>
-                            <div class="upload-tags">
-                                @foreach (var tag in item.Tags)
-                                {
-                                    <span>@tag</span>
-                                }
+                        }
+                        else if (!string.IsNullOrEmpty(item.Thumbnail))
+                        {
+                            <img src="@item.Thumbnail" alt="@item.Title" loading="lazy" />
+                        }
+                        else
+                        {
+                            <div class="upload-thumb-placeholder">
+                                <span>@item.Platform</span>
                             </div>
-                        </div>
+                        }
                     </div>
 
-                    <div class="upload-card-face upload-card-back">
-                        <div class="upload-hover-panel">
-                            <p class="hover-kicker">Deeper Look</p>
-                            <h5>@item.Title</h5>
-                            <p>@item.DeepDescription</p>
-                            <p class="hover-build">@item.BuildNotes</p>
+                    <div class="upload-body">
+                        <div class="upload-meta">
+                            <span class="upload-platform">@item.Platform</span>
+                            <span class="status-label @StatusTone(item.Status)"><span class="status-dot"></span>@item.Status</span>
                         </div>
+                        <h3>@item.Title</h3>
+                        <p>@item.Summary</p>
+                        <ul class="tag-list">
+                            @foreach (var tag in item.Tags)
+                            {
+                                <li>@tag</li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="upload-reveal">
+                        <p class="hover-kicker">Deeper Look</p>
+                        <h4>@item.Title</h4>
+                        <p>@item.DeepDescription</p>
+                        <p class="hover-build">@item.BuildNotes</p>
                     </div>
                 </div>
 
@@ -79,20 +90,27 @@
                     {
                         @if (item.IsDownload)
                         {
-                            <a class="upload-link" href="@item.ProjectUrl" download>Download</a>
+                            <a class="card-action primary" href="@item.ProjectUrl" download>
+                                Download <span class="arrow arrow-down" aria-hidden="true">↓</span>
+                            </a>
                         }
                         else
                         {
-                            <a class="upload-link" href="@item.ProjectUrl" target="@(item.IsExternal ? "_blank" : null)" rel="@(item.IsExternal ? "noopener noreferrer" : null)">Open</a>
+                            <a class="card-action primary" href="@item.ProjectUrl" target="@(item.IsExternal ? "_blank" : null)" rel="@(item.IsExternal ? "noopener noreferrer" : null)">
+                                @(item.IsExternal ? "Visit Site" : "Open")
+                                <span class="arrow @(item.IsExternal ? "arrow-out" : "arrow-right")" aria-hidden="true">@(item.IsExternal ? "↗" : "→")</span>
+                            </a>
                         }
                     }
                     else if (string.IsNullOrWhiteSpace(item.GithubUrl))
                     {
-                        <span class="upload-link disabled">Coming Soon</span>
+                        <span class="card-action disabled">Coming Soon</span>
                     }
                     @if (!string.IsNullOrWhiteSpace(item.GithubUrl))
                     {
-                        <a class="upload-link upload-link-ghost" href="@item.GithubUrl" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a class="card-action" href="@item.GithubUrl" target="_blank" rel="noopener noreferrer">
+                            GitHub <span class="arrow arrow-out" aria-hidden="true">↗</span>
+                        </a>
                     }
                 </div>
             </article>
@@ -104,6 +122,19 @@
 @code {
     private readonly List<ProjectItem> Items = new()
     {
+        new(
+            "Client Work for VizualRay",
+            "A film and VFX studio creating CGI, motion, and AI-powered visuals for film, ads, and YouTube.",
+            "/images/projects/vizualray.jpg",
+            "https://www.vizualray.com/",
+            "Live",
+            "Web",
+            new[] { "Client Site", "Film", "VFX", "CGI" },
+            "VizualRay is a film and VFX studio that brings ideas to life with CGI, 3D animation, motion work, and AI-enhanced effects for film, advertising, and YouTube creators.",
+            "Client project - visit the live site to see the work in action.",
+            IsDownload: false,
+            IsExternal: true,
+            IsPreview: true),
         new(
             "BeamRunners",
             "High-speed neon arena multiplayer - leave your trail, trap your rivals, last beam standing wins.",
@@ -181,6 +212,19 @@
             GithubUrl: "https://github.com/Mason23Johnson/SteelSeries-Arctis-7-USB-HID-Protocol-Reverse-Engineering")
     };
 
+    private static string StatusTone(string status) => status switch
+    {
+        "Live" or "Playable" or "Download" => "status-live",
+        "Coming Soon" => "status-soon",
+        _ => "status-info"
+    };
+
+    private static string PreviewHost(string url)
+    {
+        var host = new Uri(url).Host;
+        return host.StartsWith("www.") ? host[4..] : host;
+    }
+
     private sealed record ProjectItem(
         string Title,
         string Summary,
@@ -193,5 +237,6 @@
         string BuildNotes,
         bool IsDownload = false,
         bool IsExternal = false,
-        string? GithubUrl = null);
+        string? GithubUrl = null,
+        bool IsPreview = false);
 }
