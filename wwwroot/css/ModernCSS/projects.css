@@ -2,16 +2,20 @@
     --projects-bg: #071019;
     --projects-surface: #0d1724;
     --projects-card: #111d2c;
-    --projects-line: rgba(124, 193, 255, 0.14);
+    --projects-line: rgba(124, 193, 255, 0.12);
+    --projects-line-strong: rgba(90, 209, 255, 0.42);
     --projects-text: #ebf5ff;
     --projects-dim: #9eb8d2;
+    --projects-muted: #7590ab;
     --projects-accent: #5ad1ff;
     --projects-glow: rgba(0, 153, 255, 0.18);
+    --projects-live: #4ade80;
+    --projects-soon: #fbbf24;
 }
 
 .projects-page {
     min-height: 100vh;
-    padding: 110px 24px 80px;
+    padding: 8px 24px 80px;
     color: var(--projects-text);
 }
 
@@ -23,7 +27,7 @@
 }
 
 .projects-hero {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .projects-page-title {
@@ -45,28 +49,6 @@
     background: linear-gradient(90deg, var(--projects-accent), transparent);
 }
 
-.projects-hero-copy,
-.projects-feature,
-.upload-card {
-    border: 1px solid var(--projects-line);
-    background: linear-gradient(180deg, rgba(9, 16, 27, 0.96), rgba(9, 16, 27, 0.84));
-    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.26);
-}
-
-.projects-hero-copy {
-    border-radius: 30px;
-    padding: 22px 28px;
-}
-
-.projects-hero-single {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background:
-        radial-gradient(circle at top right, rgba(90, 209, 255, 0.18), transparent 34%),
-        linear-gradient(180deg, rgba(9, 16, 27, 0.98), rgba(9, 16, 27, 0.86));
-}
-
 .projects-kicker {
     margin: 0 0 12px;
     color: var(--projects-accent);
@@ -75,91 +57,32 @@
     font-size: 0.78rem;
 }
 
-.projects-hero-copy h1,
-.feature-copy h2,
-.upload-hover-panel h5 {
-    margin: 0;
+/* ========== SHARED SURFACE ========== */
+.projects-feature,
+.upload-card {
+    border: 1px solid var(--projects-line);
+    background: linear-gradient(180deg, rgba(14, 24, 38, 0.92), rgba(8, 14, 23, 0.96));
+    transition:
+        transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-.projects-hero-copy h1 {
-    font-size: clamp(1.8rem, 3vw, 3rem);
-    line-height: 1.02;
-    max-width: 16ch;
-}
-
-.projects-summary {
-    margin: 10px 0 0;
-    max-width: 78ch;
-    color: var(--projects-dim);
-    line-height: 1.65;
-}
-
-.projects-badges,
-.feature-meta,
-.upload-tags,
-.panel-meta {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.projects-badges {
-    margin-top: 12px;
-}
-
-.projects-badges span,
-.upload-tags span,
-.panel-meta span,
-.chip {
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(90, 209, 255, 0.18);
-    background: rgba(14, 42, 70, 0.78);
-    color: #a8e4ff;
-    font-size: 0.76rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-.chip-link {
-    text-decoration: none;
-    border-color: rgba(90, 209, 255, 0.45);
-    background: rgba(90, 209, 255, 0.1);
-    color: var(--projects-accent);
-    transition: background 0.18s ease, border-color 0.18s ease;
-}
-
-.chip-link:hover {
-    background: rgba(90, 209, 255, 0.2);
-    border-color: rgba(90, 209, 255, 0.7);
-}
-
-.feature-art img,
-.upload-thumb img {
-    width: 100%;
-    display: block;
-}
-
-.feature-copy p,
-.upload-body p,
-.upload-hover-panel p {
-    margin: 0;
-    line-height: 1.75;
-    color: var(--projects-dim);
-}
-
+/* ========== FEATURE (TINEK) ========== */
 .projects-feature {
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
-    gap: 24px;
+    gap: 32px;
     padding: 24px;
-    border-radius: 30px;
-    margin-bottom: 30px;
+    border-radius: 22px;
+    margin-bottom: 24px;
     overflow: hidden;
 }
 
 .feature-art img {
-    border-radius: 22px;
+    width: 100%;
+    display: block;
+    border-radius: 14px;
     background: linear-gradient(180deg, rgba(18, 44, 69, 0.72), rgba(8, 15, 24, 0.92));
     aspect-ratio: 16/10;
     object-fit: contain;
@@ -171,170 +94,401 @@
     gap: 16px;
 }
 
+.feature-copy h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.feature-copy p {
+    margin: 0;
+    line-height: 1.75;
+    color: var(--projects-dim);
+}
+
+.feature-copy .projects-kicker {
+    margin: 0;
+    color: var(--projects-accent);
+}
+
+.feature-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--projects-line);
+}
+
+/* ========== TAGS / STATUS / ACTIONS (no pills) ========== */
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--projects-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+}
+
+.tag-list li + li::before {
+    content: "\00B7";
+    margin: 0 8px;
+    color: rgba(90, 209, 255, 0.55);
+}
+
+.status-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--projects-dim);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--projects-accent);
+    box-shadow: 0 0 0 3px rgba(90, 209, 255, 0.15);
+}
+
+.status-live .status-dot {
+    background: var(--projects-live);
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.16);
+    animation: projectsStatusPulse 2.4s ease-in-out infinite;
+}
+
+.status-soon .status-dot {
+    background: var(--projects-soon);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.16);
+}
+
+@keyframes projectsStatusPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18); }
+    50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.04); }
+}
+
+.card-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    color: var(--projects-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.card-action.primary {
+    color: var(--projects-accent);
+}
+
+.card-action:hover {
+    color: #ffffff;
+}
+
+.card-action .arrow {
+    display: inline-block;
+    color: var(--projects-accent);
+    transition: transform 0.2s ease;
+}
+
+.card-action:hover .arrow-out { transform: translate(2px, -2px); }
+.card-action:hover .arrow-right { transform: translateX(3px); }
+.card-action:hover .arrow-down { transform: translateY(2px); }
+
+.card-action.disabled {
+    color: var(--projects-muted);
+    font-weight: 500;
+    cursor: default;
+}
+
+.card-action:focus-visible {
+    outline: 2px solid var(--projects-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* ========== CARD GRID ========== */
 .uploads-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
 }
 
 .upload-card {
-    border-radius: 24px;
-    overflow: visible;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-    perspective: 1400px;
-    display: grid;
-    gap: 14px;
-}
-
-.upload-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(90, 209, 255, 0.28);
-}
-
-.upload-card-shell {
     position: relative;
-    min-height: 430px;
-    transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.upload-card:hover .upload-card-shell {
-    transform: rotateY(180deg);
-}
-
-.upload-card-face {
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
     overflow: hidden;
-    border: 1px solid var(--projects-line);
-    background: linear-gradient(180deg, rgba(9, 16, 27, 0.96), rgba(9, 16, 27, 0.84));
-    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.26);
-    backface-visibility: hidden;
 }
 
-.upload-card-back {
-    transform: rotateY(180deg);
-    display: grid;
+.upload-card:focus-within {
+    border-color: var(--projects-line-strong);
+}
+
+/* Lift + zoom only where a real hover exists, so taps on phones don't leave cards stuck raised */
+@media (hover: hover) {
+    .upload-card:hover,
+    .upload-card:focus-within {
+        transform: translateY(-4px);
+        border-color: var(--projects-line-strong);
+        box-shadow:
+            0 0 0 1px rgba(90, 209, 255, 0.08),
+            0 24px 50px -16px rgba(0, 153, 255, 0.35);
+    }
+
+    .upload-card:hover .upload-thumb > img {
+        transform: scale(1.04);
+    }
+
+    .upload-card:hover .preview-window {
+        transform: translateY(-4px);
+    }
+}
+
+.upload-main {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .upload-thumb {
     position: relative;
-    background: linear-gradient(180deg, rgba(21, 51, 77, 0.78), rgba(9, 19, 29, 0.95));
-}
-
-.upload-thumb-placeholder {
     aspect-ratio: 16/10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(21, 51, 77, 0.9), rgba(9, 19, 29, 0.98));
-    color: var(--projects-accent);
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
+    overflow: hidden;
     border-bottom: 1px solid var(--projects-line);
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(32, 78, 118, 0.55), rgba(9, 19, 29, 0.2) 70%),
+        linear-gradient(180deg, rgba(16, 38, 58, 0.8), rgba(9, 17, 27, 0.95));
 }
 
 .upload-thumb img {
-    aspect-ratio: 16/10;
+    width: 100%;
+    height: 100%;
+    display: block;
     object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.upload-status {
-    position: absolute;
-    right: 14px;
-    bottom: 14px;
-    padding: 7px 10px;
-    border-radius: 999px;
-    background: rgba(7, 15, 24, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
+.upload-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--projects-accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    background-image:
+        linear-gradient(rgba(90, 209, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90, 209, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center;
+}
+
+/* Website preview: screenshot framed as a mini browser window */
+.upload-thumb.is-preview {
+    padding: 18px 18px 0;
+}
+
+.preview-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: #05090f;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.preview-bar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    padding: 0 10px;
+    background: rgba(20, 32, 46, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.preview-bar span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.preview-bar em {
+    margin-left: 8px;
+    color: var(--projects-muted);
+    font-size: 0.66rem;
+    font-style: normal;
+    letter-spacing: 0.04em;
+}
+
+.preview-window img {
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .upload-body {
-    padding: 18px;
+    flex: 1;
     display: grid;
-    gap: 14px;
-}
-
-.upload-footer {
-    padding: 0 18px 18px;
-    display: flex;
+    align-content: start;
     gap: 10px;
+    padding: 18px 20px 20px;
 }
 
-.upload-heading {
+.upload-meta {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
 }
 
-.upload-heading h4 {
-    margin: 0;
-    font-size: 1.05rem;
-}
-
 .upload-platform {
     color: var(--projects-accent);
-    font-size: 0.78rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
 }
 
-.upload-link {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 42px;
-    padding: 0 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(90, 209, 255, 0.2);
-    background: linear-gradient(180deg, rgba(12, 107, 177, 0.82), rgba(10, 63, 112, 0.92));
-    color: white;
-    text-decoration: none;
+.upload-body h3 {
+    margin: 0;
+    color: var(--projects-text);
+    font-size: 1.12rem;
     font-weight: 700;
+    letter-spacing: -0.005em;
 }
 
-.upload-link.disabled {
-    background: rgba(255, 255, 255, 0.04);
-    color: #7d97b1;
+.upload-body p {
+    margin: 0;
+    color: var(--projects-dim);
+    font-size: 0.94rem;
+    line-height: 1.65;
 }
 
-.upload-link-ghost {
-    background: transparent;
-    border-color: rgba(90, 209, 255, 0.22);
-    color: var(--projects-accent);
+.upload-body .tag-list {
+    margin-top: 2px;
 }
 
-.upload-link-ghost:hover {
-    background: rgba(90, 209, 255, 0.08);
+.upload-footer {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--projects-line);
 }
 
-.upload-hover-panel {
-    height: 100%;
-    padding: 22px;
-    background:
-        radial-gradient(circle at top right, rgba(90, 209, 255, 0.14), transparent 32%),
-        rgba(6, 12, 20, 0.97);
+/* ========== DEEPER LOOK ========== */
+/* Shown inline on touch / narrow screens; becomes a hover overlay on desktop below */
+.upload-reveal {
     display: grid;
     align-content: start;
+    gap: 8px;
+    padding: 0 20px 18px;
 }
 
-.hover-kicker {
-    margin: 0 0 10px;
+.upload-reveal h4 {
+    display: none;
+}
+
+.upload-reveal p {
+    margin: 0;
+    color: var(--projects-dim);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.upload-reveal .hover-kicker {
+    margin: 0 0 2px;
     color: var(--projects-accent);
-    text-transform: uppercase;
+    font-size: 0.7rem;
     letter-spacing: 0.18em;
-    font-size: 0.72rem;
+    text-transform: uppercase;
 }
 
-.hover-build {
-    margin-top: 10px !important;
-    color: #c8e5fb !important;
+.upload-reveal .hover-build {
+    margin-top: 4px;
+    color: #c8e5fb;
+}
+
+@media (hover: hover) and (min-width: 921px) {
+    .upload-reveal {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        padding: 24px;
+        overflow-y: auto;
+        background:
+            radial-gradient(circle at top right, rgba(90, 209, 255, 0.14), transparent 40%),
+            #060c14;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition:
+            opacity 0.3s ease,
+            transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+            visibility 0s linear 0.35s;
+    }
+
+    .upload-reveal h4 {
+        display: block;
+        margin: 0 0 4px;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .upload-card:hover .upload-reveal,
+    .upload-card:focus-within .upload-reveal {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition-delay: 0.12s, 0.12s, 0s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .upload-card,
+    .upload-thumb img,
+    .preview-window,
+    .upload-reveal {
+        transition: none;
+    }
+
+    .upload-card:hover,
+    .upload-card:focus-within,
+    .upload-card:hover .upload-thumb > img,
+    .upload-card:hover .preview-window {
+        transform: none;
+    }
+
+    .status-live .status-dot {
+        animation: none;
+    }
 }
 
 html,
@@ -345,61 +499,27 @@ body {
 
 @media (max-width: 920px) {
     .projects-page {
-        padding: 98px 16px 48px;
-    }
-
-    .projects-hero-copy,
-    .projects-feature,
-    .upload-body,
-    .upload-hover-panel {
-        border-radius: 22px;
+        padding: 8px 16px 48px;
     }
 
     .projects-feature {
         grid-template-columns: 1fr;
+        gap: 20px;
         padding: 18px;
     }
 
     .uploads-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
     }
-
-    .upload-card-shell {
-        min-height: unset;
-        transform: none !important;
-    }
-
-    .upload-card-face {
-        position: relative;
-        inset: auto;
-    }
-
-    .upload-card-back {
-        transform: none;
-        margin-top: 12px;
-    }
-
 }
 
 @media (max-width: 560px) {
-    .projects-hero-copy {
-        padding: 18px;
-    }
-
     .projects-kicker {
         letter-spacing: 0.16em;
     }
 
     .uploads-grid {
         grid-template-columns: 1fr;
-    }
-
-    .upload-heading {
-        align-items: start;
-        flex-direction: column;
-    }
-
-    .upload-link {
-        width: 100%;
     }
 }

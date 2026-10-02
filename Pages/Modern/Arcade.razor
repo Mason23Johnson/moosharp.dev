@@ -182,7 +182,14 @@
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("startGamesMatrix");
+            // The matrix background script isn't shipped yet; don't let its absence crash the page
+            try
+            {
+                await JS.InvokeVoidAsync("startGamesMatrix");
+            }
+            catch (JSException)
+            {
+            }
         }
     }
 
